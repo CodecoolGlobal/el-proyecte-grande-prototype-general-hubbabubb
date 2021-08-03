@@ -10,8 +10,6 @@ import java.net.URISyntaxException;
 @SpringBootApplication
 public class Main {
 
-	public static void main(String[] args) throws IOException, URISyntaxException {
-		SpringApplication.run(Main.class, args);
-	}
+	public static void main(String[] args) throws IOException, URISyntaxException {SpringApplication.run(Main.class, args); }
 
 }
