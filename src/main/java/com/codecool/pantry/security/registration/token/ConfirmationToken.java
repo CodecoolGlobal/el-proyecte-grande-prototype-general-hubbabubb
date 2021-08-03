@@ -1,6 +1,6 @@
-package com.codecool.pantry.registration.token;
+package com.codecool.pantry.security.registration.token;
 
-import com.codecool.pantry.appuser.AppUser;
+import com.codecool.pantry.entity.appuser.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

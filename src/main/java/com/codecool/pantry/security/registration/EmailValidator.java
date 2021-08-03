@@ -1,4 +1,4 @@
-package com.codecool.pantry.registration;
+package com.codecool.pantry.security.registration;
 
 import java.util.function.Predicate;
 import org.springframework.stereotype.Service;

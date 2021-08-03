@@ -1,4 +1,4 @@
-package com.codecool.pantry.registration;
+package com.codecool.pantry.contoller.appuser.registration;
 
 import lombok.*;
 

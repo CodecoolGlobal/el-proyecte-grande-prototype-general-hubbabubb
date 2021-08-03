@@ -1,5 +1,6 @@
-package com.codecool.pantry.appuser;
+package com.codecool.pantry.repository.appuser;
 
+import com.codecool.pantry.entity.appuser.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

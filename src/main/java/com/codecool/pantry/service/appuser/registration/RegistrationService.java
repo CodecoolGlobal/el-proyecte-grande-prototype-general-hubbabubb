@@ -1,13 +1,14 @@
-package com.codecool.pantry.registration;
+package com.codecool.pantry.service.appuser.registration;
 
-import com.codecool.pantry.appuser.AppUser;
-import com.codecool.pantry.appuser.AppUserRole;
-import com.codecool.pantry.appuser.AppUserService;
+import com.codecool.pantry.contoller.appuser.registration.RegistrationRequest;
+import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.appuser.AppUserRole;
+import com.codecool.pantry.security.registration.EmailValidator;
+import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.email.EmailSender;
-import com.codecool.pantry.registration.token.ConfirmationToken;
-import com.codecool.pantry.registration.token.ConfirmationTokenService;
+import com.codecool.pantry.security.registration.token.ConfirmationToken;
+import com.codecool.pantry.security.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

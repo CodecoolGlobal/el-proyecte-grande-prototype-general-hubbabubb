@@ -1,9 +1,10 @@
-package com.codecool.pantry.appuser;
+package com.codecool.pantry.service.appuser;
 
-import com.codecool.pantry.registration.token.ConfirmationToken;
-import com.codecool.pantry.registration.token.ConfirmationTokenService;
+import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.security.registration.token.ConfirmationToken;
+import com.codecool.pantry.security.registration.token.ConfirmationTokenService;
+import com.codecool.pantry.repository.appuser.AppUserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

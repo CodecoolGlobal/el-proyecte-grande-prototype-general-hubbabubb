@@ -1,4 +1,4 @@
-package com.codecool.pantry.appuser;
+package com.codecool.pantry.entity.appuser;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

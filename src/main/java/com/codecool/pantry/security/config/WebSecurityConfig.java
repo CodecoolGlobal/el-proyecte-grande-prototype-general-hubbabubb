@@ -1,11 +1,9 @@
 package com.codecool.pantry.security.config;
 
-import com.codecool.pantry.appuser.AppUserService;
-import com.codecool.pantry.security.PasswordEnconder;
+import com.codecool.pantry.service.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
