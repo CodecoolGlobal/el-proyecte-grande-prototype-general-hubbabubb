@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
@@ -18,10 +19,11 @@ import javax.persistence.ManyToMany;
 public class Recipe {
 
     @Id
+    @GeneratedValue
     private Long id;
     private String name;
-    @ManyToMany
-    private Set<Ingredient> ingredients;
+//    @ManyToMany
+//    private Set<Ingredient> ingredients;
     private String image;
     private int readyInMinutes;
     private int serving;
