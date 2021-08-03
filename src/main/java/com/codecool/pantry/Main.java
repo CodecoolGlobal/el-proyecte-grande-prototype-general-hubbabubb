@@ -11,9 +11,6 @@ import java.net.URISyntaxException;
 public class Main {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {
-
-		Ingredient ing = new Ingredient();
-		ing.printMap();
 		SpringApplication.run(Main.class, args);
 	}
 
