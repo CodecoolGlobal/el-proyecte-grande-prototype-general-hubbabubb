@@ -1,4 +1,4 @@
-package com.codecool.pantry.contoller;
+package com.codecool.pantry.controller;
 
 
 import com.codecool.pantry.entity.Recipe;

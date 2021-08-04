@@ -1,4 +1,4 @@
-package com.codecool.pantry.service.ingredients;
+package com.codecool.pantry.service.ingredient;
 
 import java.util.ArrayList;
 

@@ -1,10 +1,9 @@
 package com.codecool.pantry.service.appuser;
 
-import com.codecool.pantry.contoller.appuser.registration.RegistrationRequest;
+import com.codecool.pantry.controller.appuser.registration.RegistrationRequest;
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.appuser.AppUserRole;
 import com.codecool.pantry.security.registration.EmailValidator;
-import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.email.EmailSender;
 import com.codecool.pantry.security.registration.token.ConfirmationToken;
 import com.codecool.pantry.security.registration.token.ConfirmationTokenService;

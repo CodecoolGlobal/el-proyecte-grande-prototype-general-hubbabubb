@@ -1,4 +1,4 @@
-package com.codecool.pantry.repository.ingredients;
+package com.codecool.pantry.repository.ingredient;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

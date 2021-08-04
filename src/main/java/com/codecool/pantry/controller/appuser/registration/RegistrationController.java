@@ -1,4 +1,4 @@
-package com.codecool.pantry.contoller.appuser.registration;
+package com.codecool.pantry.controller.appuser.registration;
 
 import com.codecool.pantry.service.appuser.RegistrationService;
 import lombok.AllArgsConstructor;
