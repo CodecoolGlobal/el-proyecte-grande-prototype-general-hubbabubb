@@ -1,8 +1,8 @@
-package com.codecool.pantry.contoller.recipe;
+package com.codecool.pantry.contoller;
 
 
-import com.codecool.pantry.entity.recipe.Recipe;
-import com.codecool.pantry.repository.appuser.RecipeRepository;
+import com.codecool.pantry.entity.Recipe;
+import com.codecool.pantry.repository.RecipeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

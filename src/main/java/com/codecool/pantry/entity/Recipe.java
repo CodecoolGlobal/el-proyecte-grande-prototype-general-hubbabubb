@@ -1,4 +1,4 @@
-package com.codecool.pantry.entity.recipe;
+package com.codecool.pantry.entity;
 
 
 import lombok.AllArgsConstructor;
