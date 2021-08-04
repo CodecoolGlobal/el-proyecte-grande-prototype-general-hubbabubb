@@ -20,8 +20,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: gergohuber@gmail.com
-    password: password
+    username: email.service.pantry@gmail.com
+    password: Pantry123
 
     properties:
       mail:
@@ -29,7 +29,8 @@ spring:
           protocol: smtp
         smtp:
           ssl:
-            trust: "*"
+            trust: "smtp.gmail.com"
+            protocols: TLSv1.2
           auth: true
           starttls:
             enable: true

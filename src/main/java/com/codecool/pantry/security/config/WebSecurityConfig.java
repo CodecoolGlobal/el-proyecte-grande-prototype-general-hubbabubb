@@ -25,11 +25,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //WARN: Should be enabled in production
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("api/v*/registration/**")
-                    .permitAll()
+                .antMatchers("/api/v*/registration/**")
+                .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
+                .authenticated().and()
                 .formLogin();
     }
 
