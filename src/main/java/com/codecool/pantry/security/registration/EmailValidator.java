@@ -11,17 +11,16 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class EmailValidator implements Predicate<String> {
 
-    private static final String EMAIL_PATTERN = "^(.+)@(\\S+)$";
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-
-    public static boolean isValid(final String email) {
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+    public static boolean validate(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+        return matcher.find();
     }
 
     @Override
-    public boolean test(String s) {
-        return false;
+    public boolean test(String email) {
+        return validate(email);
     }
 }

@@ -28,6 +28,7 @@ public class RegistrationService {
         if (!isValidEmail) {
             throw new IllegalStateException(String.format("Not a valid e-mail(%s)", request.getEmail()));
         }
+
         String token = service.signUpUser(new AppUser(
                 request.getFirstName(),
                 request.getLastName(),
@@ -37,7 +38,7 @@ public class RegistrationService {
                 false,
                 false
         ));
-        String link = "http://localhost/8080/api/v1/registration/confirm?token=" + token;
+        String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
         sender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         return token;
     }
