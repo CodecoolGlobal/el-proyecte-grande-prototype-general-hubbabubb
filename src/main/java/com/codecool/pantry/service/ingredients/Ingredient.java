@@ -8,6 +8,11 @@ public class Ingredient{
     private String shoppingListUnits;
     private Set<String> cookingListUnits;
 
+    public Ingredient(){
+
+    }
+
+
     public Ingredient(Integer id, String originalName, String shoppingListUnits, Set<String> cookingListUnits) {
         this.id = id;
         this.originalName = originalName;

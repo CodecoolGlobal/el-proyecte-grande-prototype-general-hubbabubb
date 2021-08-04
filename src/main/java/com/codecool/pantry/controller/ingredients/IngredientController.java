@@ -4,10 +4,7 @@ package com.codecool.pantry.controller.ingredients;
 import com.codecool.pantry.repository.ingredients.IngredientCsvReader;
 import com.codecool.pantry.service.ingredients.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -24,12 +21,16 @@ public class IngredientController implements IngredientCsvReader {
     public IngredientController() throws IOException, URISyntaxException {
     }
 
-
     @GetMapping("/api/v1/pantry/get_ingredients")
     public HashMap<Integer, String> getIngredientList() {
         return ingredientMap;
     }
 
-
-
+    @GetMapping("api/v1/pantry/get_ingredient/{id}")
+        public Ingredient getIngredientFromSpoon(@PathVariable(value="id") Integer id){
+        RestTemplate restTemplate = new RestTemplate();
+        Ingredient ingredient =
+                restTemplate.getForObject("https://api.spoonacular.com/food/ingredients/"+ id +"/information?apiKey=8dc3ef2ffcf54e6781629ee83623d725", Ingredient.class);
+        return ingredient;
+    }
 }
