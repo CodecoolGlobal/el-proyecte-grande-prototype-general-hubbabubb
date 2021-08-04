@@ -12,8 +12,6 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-/target/
-*/target/**
 
 # AWS User-specific
 .idea/**/aws.xml
@@ -95,6 +93,5 @@ modules.xml
 
 # Sonarlint plugin
 .idea/sonarlint
-application.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all
