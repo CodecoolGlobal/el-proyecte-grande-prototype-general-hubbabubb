@@ -31,6 +31,7 @@ public class IngredientController implements IngredientCsvReader {
         RestTemplate restTemplate = new RestTemplate();
         Ingredient ingredient =
                 restTemplate.getForObject("https://api.spoonacular.com/food/ingredients/"+ id +"/information?apiKey=8dc3ef2ffcf54e6781629ee83623d725", Ingredient.class);
+
         return ingredient;
     }
 }

@@ -1,38 +1,57 @@
 package com.codecool.pantry.service.ingredients;
 
-import java.util.Set;
+import java.util.ArrayList;
 
-public class Ingredient{
+public class Ingredient {
     private Integer id;
     private String originalName;
-    private String shoppingListUnits;
-    private Set<String> cookingListUnits;
+    private ArrayList possibleUnits;
+    private ArrayList shoppingListUnits;
 
     public Ingredient(){
 
     }
 
-
-    public Ingredient(Integer id, String originalName, String shoppingListUnits, Set<String> cookingListUnits) {
+    public Ingredient(Integer id, String originalName, ArrayList possibleUnits, ArrayList shoppingListUnits) {
         this.id = id;
         this.originalName = originalName;
+        this.possibleUnits = possibleUnits;
         this.shoppingListUnits = shoppingListUnits;
-        this.cookingListUnits = cookingListUnits;
     }
 
     public Integer getId() {
         return id;
     }
 
+    public Ingredient setId(Integer id) {
+        this.id = id;
+        return this;
+    }
+
     public String getOriginalName() {
         return originalName;
     }
 
-    public String getShoppingListUnits() {
+    public Ingredient setOriginalName(String originalName) {
+        this.originalName = originalName;
+        return this;
+    }
+
+    public ArrayList getPossibleUnits() {
+        return possibleUnits;
+    }
+
+    public Ingredient setPossibleUnits(ArrayList possibleUnits) {
+        this.possibleUnits = possibleUnits;
+        return this;
+    }
+
+    public ArrayList getShoppingListUnits() {
         return shoppingListUnits;
     }
 
-    public Set<String> getCookingListUnits() {
-        return cookingListUnits;
+    public Ingredient setShoppingListUnits(ArrayList shoppingListUnits) {
+        this.shoppingListUnits = shoppingListUnits;
+        return this;
     }
 }
