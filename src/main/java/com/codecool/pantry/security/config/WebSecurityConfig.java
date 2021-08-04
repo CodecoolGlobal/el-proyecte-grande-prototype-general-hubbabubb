@@ -22,15 +22,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //WARN: Should be enabled in production
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("api/v*/registration/**", "/api/v1/recipe", "/api/v1/recipe/*")
-                    .permitAll()
+                .antMatchers("/**")
+                .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin();
+                .authenticated().and()
+                .formLogin()
+                .defaultSuccessUrl("/test")
+                .permitAll();
     }
 
     @Override
