@@ -18,11 +18,6 @@ public class GroceryListController {
         this.groceryListService = groceryListService;
     }
 
-    @GetMapping("api/v1/test")
-    public String test() {
-        return "ALMA!!!!!";
-    }
-
     @GetMapping("api/v1/grocery-list/{id}")
     public GroceryList getGroceryList(@PathVariable(value="id") Long id) {
         return groceryListService.getGroceryList(id).orElseThrow(GroceryListNotFoundException::new);
