@@ -31,16 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .defaultSuccessUrl("/test")
                 .permitAll();
-//        http
-//                //WARN: Should be enabled in production
-//                .csrf().disable()
-//                .authorizeRequests()
-//                    .antMatchers("api/v*/registration/**")
-//                    .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin();
     }
 
     @Override
