@@ -4,9 +4,11 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class EmailValidator implements Predicate<String> {
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =

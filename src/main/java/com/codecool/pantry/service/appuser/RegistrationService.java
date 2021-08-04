@@ -1,4 +1,4 @@
-package com.codecool.pantry.service.appuser.registration;
+package com.codecool.pantry.service.appuser;
 
 import com.codecool.pantry.contoller.appuser.registration.RegistrationRequest;
 import com.codecool.pantry.entity.appuser.AppUser;
