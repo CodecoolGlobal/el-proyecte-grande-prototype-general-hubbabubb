@@ -1,8 +1,8 @@
 package com.codecool.pantry.controller;
 
 
-import com.codecool.pantry.entity.Recipe;
-import com.codecool.pantry.repository.RecipeRepository;
+import com.codecool.pantry.entity.recipe.Recipe;
+import com.codecool.pantry.repository.recipe.RecipeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

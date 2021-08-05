@@ -131,6 +131,7 @@ public class RegistrationService {
                 "    </tr>\n" +
                 "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" +
                 "\n" +
+                "<img src='logo.png' width=200>" +
                 "</div></div>";
     }
 }
