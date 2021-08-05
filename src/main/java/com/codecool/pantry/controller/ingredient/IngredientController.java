@@ -1,9 +1,8 @@
-package com.codecool.pantry.controller.ingredients;
+package com.codecool.pantry.controller.ingredient;
 
 
-import com.codecool.pantry.repository.ingredients.IngredientCsvReader;
-import com.codecool.pantry.service.ingredients.Ingredient;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.codecool.pantry.repository.ingredient.IngredientCsvReader;
+import com.codecool.pantry.service.ingredient.Ingredient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 

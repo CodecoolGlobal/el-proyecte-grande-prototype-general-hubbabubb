@@ -1,4 +1,4 @@
-package com.codecool.pantry.repository;
+package com.codecool.pantry.repository.appuser;
 
 import com.codecool.pantry.entity.appuser.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
