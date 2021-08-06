@@ -1,6 +1,7 @@
 package com.codecool.pantry.entity;
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.grocery_list.GroceryList;
 import com.codecool.pantry.service.ingredients.Ingredient;
 
 import javax.persistence.*;
@@ -27,9 +28,22 @@ public class Pantry {
             updatable = false
     )
     private  Long id;
+
+    @Column(
+            name = "name",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String name;
+
+    @OneToOne
+    private AppUser owner;
+
     @OneToMany
     private Set<AppUser> users = new HashSet<>();
+
+    @OneToOne
+    private GroceryList groceryList;
 
     //TODO: Make Ingredients class immutable for HashMap usage
     //@OneToMany(mappedBy = "pantry")
