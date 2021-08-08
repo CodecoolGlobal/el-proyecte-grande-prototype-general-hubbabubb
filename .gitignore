@@ -7,7 +7,6 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
-target/
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
@@ -56,6 +55,8 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
+target/
+lib/
 out/
 
 # mpeltonen/sbt-idea plugin
@@ -94,8 +95,6 @@ modules.xml
 
 # Sonarlint plugin
 .idea/sonarlint
-
-target
 
 src/main/resources/application.yml
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all
