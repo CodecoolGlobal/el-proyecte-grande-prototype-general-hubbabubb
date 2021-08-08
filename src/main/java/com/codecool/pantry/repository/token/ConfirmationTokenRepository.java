@@ -1,5 +1,6 @@
-package com.codecool.pantry.security.registration.token;
+package com.codecool.pantry.repository.token;
 
+import com.codecool.pantry.entity.token.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

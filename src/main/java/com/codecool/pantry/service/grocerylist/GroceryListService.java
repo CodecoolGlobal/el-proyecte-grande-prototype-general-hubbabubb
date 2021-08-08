@@ -1,6 +1,6 @@
-package com.codecool.pantry.service.grocery_list;
+package com.codecool.pantry.service.grocerylist;
 
-import com.codecool.pantry.entity.grocery_list.GroceryList;
+import com.codecool.pantry.entity.grocerylist.GroceryList;
 import com.codecool.pantry.repository.grocery_list.GroceryListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

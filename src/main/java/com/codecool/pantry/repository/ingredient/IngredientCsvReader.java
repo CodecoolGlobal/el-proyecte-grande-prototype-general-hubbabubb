@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public interface IngredientCsvReader {
     default Map<Integer,String> getIngredientMapFromCsv() throws IOException, URISyntaxException {
-        String filePath = "top-1k-ingredients.csv";
+        String filePath = "data/ingredient_list.csv";
         ClassLoader classLoader = getClass().getClassLoader();
 
         Stream<String> lines = Files.lines(Path.of(Objects.requireNonNull(classLoader.getResource(filePath)).toURI()));

@@ -1,4 +1,4 @@
-package com.codecool.pantry.security.registration.token;
+package com.codecool.pantry.entity.token;
 
 import com.codecool.pantry.entity.appuser.AppUser;
 import lombok.Getter;

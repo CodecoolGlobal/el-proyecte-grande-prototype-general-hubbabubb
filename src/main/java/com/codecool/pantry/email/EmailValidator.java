@@ -1,4 +1,4 @@
-package com.codecool.pantry.security.registration;
+package com.codecool.pantry.email;
 
 import java.util.function.Predicate;
 import java.util.regex.Matcher;

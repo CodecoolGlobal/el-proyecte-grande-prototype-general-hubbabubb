@@ -1,18 +1,14 @@
-package com.codecool.pantry.service.ingredient;
+package com.codecool.pantry.entity.ingredient;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Ingredient {
     private Integer id;
     private String originalName;
-    private ArrayList<String> possibleUnits;
-    private ArrayList<String> shoppingListUnits;
+    private List<String> possibleUnits;
+    private List<String> shoppingListUnits;
 
-    public Ingredient(){
-
-    }
-
-    public Ingredient(Integer id, String originalName, ArrayList<String> possibleUnits, ArrayList<String> shoppingListUnits) {
+    public Ingredient(Integer id, String originalName, List<String> possibleUnits, List<String> shoppingListUnits) {
         this.id = id;
         this.originalName = originalName;
         this.possibleUnits = possibleUnits;
@@ -37,20 +33,20 @@ public class Ingredient {
         return this;
     }
 
-    public ArrayList<String> getPossibleUnits() {
+    public List<String> getPossibleUnits() {
         return possibleUnits;
     }
 
-    public Ingredient setPossibleUnits(ArrayList<String> possibleUnits) {
+    public Ingredient setPossibleUnits(List<String> possibleUnits) {
         this.possibleUnits = possibleUnits;
         return this;
     }
 
-    public ArrayList<String> getShoppingListUnits() {
+    public List<String> getShoppingListUnits() {
         return shoppingListUnits;
     }
 
-    public Ingredient setShoppingListUnits(ArrayList<String> shoppingListUnits) {
+    public Ingredient setShoppingListUnits(List<String> shoppingListUnits) {
         this.shoppingListUnits = shoppingListUnits;
         return this;
     }

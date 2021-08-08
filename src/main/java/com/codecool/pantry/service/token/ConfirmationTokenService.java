@@ -1,5 +1,7 @@
-package com.codecool.pantry.security.registration.token;
+package com.codecool.pantry.service.token;
 
+import com.codecool.pantry.entity.token.ConfirmationToken;
+import com.codecool.pantry.repository.token.ConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
