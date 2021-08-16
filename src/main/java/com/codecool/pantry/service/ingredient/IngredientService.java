@@ -1,6 +1,7 @@
 package com.codecool.pantry.service.ingredient;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,14 @@ public class IngredientService {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    private static final String CSV_LOCATION = "data/ingredient_list.csv";
+    @Value("${ingredients.list.location}")
+    private String csvLocation;
     private final static String CSV_DELIMITER = ";";
 
     public Map<String, Long> readIngredients() {
         Map<String, Long> records = new HashMap<>();
 
-        Resource resource = resourceLoader.getResource("classpath:" + CSV_LOCATION);
+        Resource resource = resourceLoader.getResource("classpath:" + csvLocation);
 
         try {
             Scanner scanner = new Scanner(resource.getFile());
@@ -33,7 +35,7 @@ public class IngredientService {
                 records.put(split[0], id);
             }
         } catch (IOException e) {
-            throw new IllegalStateException(String.format("File not found in path: %s", CSV_LOCATION), e);
+            throw new IllegalStateException(String.format("File not found in path: %s", csvLocation), e);
         }
 
         return  records;
