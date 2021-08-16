@@ -35,17 +35,4 @@ public class Pantry {
             columnDefinition = "TEXT"
     )
     private String name;
-
-    @OneToOne
-    private AppUser owner;
-
-    @OneToMany
-    private Set<AppUser> users = new HashSet<>();
-
-    @OneToOne
-    private GroceryList groceryList;
-
-    //TODO: Make Ingredients class immutable for HashMap usage
-    //@OneToMany(mappedBy = "pantry")
-    //private Map<Ingredient, Integer> ingredientQuantity = new HashMap<>();
 }
