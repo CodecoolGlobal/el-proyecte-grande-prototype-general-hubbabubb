@@ -1,7 +1,10 @@
 package com.codecool.pantry.entity.pantry;
 
 
+import com.codecool.pantry.entity.appuser.AppUser;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "Pantry")
 public class Pantry {
@@ -28,4 +31,7 @@ public class Pantry {
             columnDefinition = "TEXT"
     )
     private String name;
+
+    @OneToMany(mappedBy = "pantry")
+    private List<AppUser> appUsers;
 }
