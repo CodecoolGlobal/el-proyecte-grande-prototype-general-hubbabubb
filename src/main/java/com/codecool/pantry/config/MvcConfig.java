@@ -14,14 +14,14 @@ public class MvcConfig implements WebMvcConfigurer {
             ResourceHandlerRegistry registry) {
 
         registry.addResourceHandler("/static/**")
-                .addResourceLocations("/WEB-INF/view/react/build/static/");
+                .addResourceLocations("/WEB-INF/frontend/build/static/");
         registry.addResourceHandler("/*.js")
-                .addResourceLocations("/WEB-INF/view/react/build/");
+                .addResourceLocations("/WEB-INF/frontend/build/");
         registry.addResourceHandler("/*.json")
-                .addResourceLocations("/WEB-INF/view/react/build/");
+                .addResourceLocations("/WEB-INF/frontend/build/");
         registry.addResourceHandler("/*.ico")
-                .addResourceLocations("/WEB-INF/view/react/build/");
+                .addResourceLocations("/WEB-INF/frontend/build/");
         registry.addResourceHandler("/index.html")
-                .addResourceLocations("/WEB-INF/view/react/build/index.html");
+                .addResourceLocations("/WEB-INF/frontend/build/index.html");
     }
 }

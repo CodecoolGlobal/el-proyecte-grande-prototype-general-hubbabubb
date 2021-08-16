@@ -24,7 +24,6 @@ public class IngredientService {
     public Map<String, Long> readIngredients() {
         Map<String, Long> records = new HashMap<>();
 
-        System.out.println("-- csvLocation: " + csvLocation);
         Resource resource = resourceLoader.getResource("classpath:" + csvLocation);
 
         try {

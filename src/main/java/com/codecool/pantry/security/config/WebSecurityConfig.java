@@ -28,11 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest()
                 .authenticated().and()
-                .formLogin().loginPage("/index.html")
+                .formLogin()
                 .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/homepage.html",true)
+                .defaultSuccessUrl("/",true)
                 .failureUrl("/index.html?error=true")
-                .defaultSuccessUrl("/test")
                 .permitAll();
     }
     @Override
