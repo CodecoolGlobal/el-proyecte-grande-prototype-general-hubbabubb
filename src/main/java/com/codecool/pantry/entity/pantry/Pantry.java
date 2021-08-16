@@ -1,14 +1,7 @@
-package com.codecool.pantry.entity;
+package com.codecool.pantry.entity.pantry;
 
-import com.codecool.pantry.entity.appuser.AppUser;
-import com.codecool.pantry.entity.grocery_list.GroceryList;
-import com.codecool.pantry.service.ingredients.Ingredient;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 @Entity(name = "Pantry")
 public class Pantry {
