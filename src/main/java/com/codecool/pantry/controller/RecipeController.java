@@ -8,10 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @RestController
 public class RecipeController {
+    // TODO: move out api key from every call, store and reat it from properties
 
     private final RecipeRepository recipeRepository;
 
@@ -35,5 +38,19 @@ public class RecipeController {
         final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=8dc3ef2ffcf54e6781629ee83623d725", id);
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForEntity(uri, String.class);
+
+    }
+
+
+    // url paramteres are only like /pasta,beef,"orange"
+    // TODO: !!! only works with exactly 3 ingredients for now, error handling and refactor soon
+    @GetMapping("api/v1/recipe/by-ingredients/{ingredients}")
+    public ResponseEntity<String> searchRecipeByIngredients(@PathVariable("ingredients")List<String> ingredients) {
+        final String uri = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s,+%s,+%s&number=5&apiKey=8dc3ef2ffcf54e6781629ee83623d725",
+                ingredients.get(0), ingredients.get(1), ingredients.get(2));
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(uri, String.class);
+
+
     }
 }
