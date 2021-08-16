@@ -1,6 +1,6 @@
 package com.codecool.pantry.repository.grocery_list;
 
-import com.codecool.pantry.entity.grocery_list.GroceryList;
+import com.codecool.pantry.entity.grocerylist.GroceryList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

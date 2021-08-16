@@ -2,11 +2,10 @@ package com.codecool.pantry.service.appuser;
 
 import com.codecool.pantry.controller.appuser.registration.RegistrationRequest;
 import com.codecool.pantry.entity.appuser.AppUser;
-import com.codecool.pantry.entity.appuser.AppUserRole;
-import com.codecool.pantry.security.registration.EmailValidator;
+import com.codecool.pantry.email.EmailValidator;
 import com.codecool.pantry.email.EmailSender;
-import com.codecool.pantry.security.registration.token.ConfirmationToken;
-import com.codecool.pantry.security.registration.token.ConfirmationTokenService;
+import com.codecool.pantry.entity.token.ConfirmationToken;
+import com.codecool.pantry.service.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +31,7 @@ public class RegistrationService {
                 request.getFirstName(),
                 request.getLastName(),
                 request.getEmail(),
-                request.getPassword(),
-                AppUserRole.FREE,
-                false,
-                false
+                request.getPassword()
         ));
         String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
         sender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
