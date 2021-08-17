@@ -1,10 +1,12 @@
-package com.codecool.pantry.service.appuser;
+package com.codecool.pantry.service.appuser.registration;
 
 import com.codecool.pantry.controller.appuser.registration.RegistrationRequest;
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.email.EmailValidator;
 import com.codecool.pantry.email.EmailSender;
+import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.token.ConfirmationToken;
+import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -58,6 +60,7 @@ public class RegistrationService {
         tokenService.setConfirmedAt(token);
         service.enableAppUser(
                 confirmationToken.getUser().getEmail());
+
         return "confirmed";
     }
 
