@@ -1,5 +1,4 @@
-package com.codecool.pantry.controller;
-
+package com.codecool.pantry.controller.recipe;
 
 import lombok.AllArgsConstructor;
 import com.codecool.pantry.entity.recipe.Recipe;
@@ -14,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 public class RecipeController {
-    // TODO: move out api key from every call, store and reat it from properties
+    // TODO: move out api key from every call, store and read it from properties
 
     private final RecipeRepository recipeRepository;
 
