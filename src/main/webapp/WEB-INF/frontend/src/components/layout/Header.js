@@ -49,7 +49,7 @@ function Header() {
                 <div className="header-dropdown">
                     <button className="header-button">Dropdown</button>
                     <div className="dropdown-content">
-                        <a href="#">Link 1</a>
+                        <a href="/grocery-list">Grocery List</a>
                         <a href="#">Link 2</a>
                         <a href="#">Link 3</a>
                     </div>
