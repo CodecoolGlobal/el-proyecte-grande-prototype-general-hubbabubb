@@ -34,6 +34,10 @@ public class ListItem {
 
 //    private Pantry pantry;
 
+    public ListItem(String name) {
+        this.ingredientName = name;
+    }
+
     public ListItem(String ingredientName, double amount, String unit) {
         this.ingredientName = ingredientName;
         this.amount = amount;
