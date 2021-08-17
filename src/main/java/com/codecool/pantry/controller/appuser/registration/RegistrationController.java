@@ -1,6 +1,6 @@
 package com.codecool.pantry.controller.appuser.registration;
 
-import com.codecool.pantry.service.appuser.RegistrationService;
+import com.codecool.pantry.service.appuser.registration.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

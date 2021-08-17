@@ -48,7 +48,6 @@ public class AppUserService implements UserDetailsService {
         );
         service.saveConfirmationToken(token);
 
-
         return randomToken;
     }
 

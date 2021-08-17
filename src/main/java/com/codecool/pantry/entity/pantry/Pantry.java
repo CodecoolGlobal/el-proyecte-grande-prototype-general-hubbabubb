@@ -2,10 +2,20 @@ package com.codecool.pantry.entity.pantry;
 
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "Pantry")
 public class Pantry {
 
@@ -30,8 +40,8 @@ public class Pantry {
             nullable = false,
             columnDefinition = "TEXT"
     )
-    private String name;
+    private String name = "My Pantry";
 
     @OneToMany(mappedBy = "pantry")
-    private List<AppUser> appUsers;
+    private Set<AppUser> appUsers = new HashSet<>();
 }

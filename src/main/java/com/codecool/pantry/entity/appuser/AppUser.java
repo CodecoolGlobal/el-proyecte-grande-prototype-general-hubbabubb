@@ -1,6 +1,7 @@
 package com.codecool.pantry.entity.appuser;
 
 import com.codecool.pantry.entity.pantry.Pantry;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import java.util.Collections;
 @Setter
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode
 @Table(name = "app_user")
 public class AppUser implements UserDetails {
 
@@ -31,9 +33,6 @@ public class AppUser implements UserDetails {
     )
     private Long id;
 
-    @Column(
-            nullable = false
-    )
     private String firstName;
 
     @Column(
@@ -58,7 +57,7 @@ public class AppUser implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name="pantry_id")
-    private Pantry pantry = new Pantry();
+    private Pantry pantry;
 
     public AppUser(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
