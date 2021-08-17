@@ -37,7 +37,7 @@ public class RecipeController {
         Optional<Recipe> recipe = recipeRepository.findById(id);
 
         if (recipe.isEmpty()) {
-            final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=8dc3ef2ffcf54e6781629ee83623d725", id);
+            final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=%s", id, API_KEY);
             RestTemplate restTemplate = new RestTemplate();
 
             recipe = Optional.of(restTemplate.getForObject(uri, Recipe.class));
@@ -51,7 +51,6 @@ public class RecipeController {
 
     @GetMapping("api/v1/recipe/by-ingredients/{ingredients}")
     public ResponseEntity<String> searchRecipeByIngredients(@PathVariable("ingredients") List<String> ingredients) {
-
         final String uri = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&number=5&apiKey=%s",
                 generateIngredientQuery(ingredients), API_KEY);
         RestTemplate restTemplate = new RestTemplate();
