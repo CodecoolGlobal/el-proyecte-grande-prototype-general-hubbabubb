@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @AllArgsConstructor
@@ -34,12 +35,19 @@ public class RecipeController {
 
     // get recipe by id
     @GetMapping("api/v1/recipe/{id}")
-    public ResponseEntity<String> getRecipeById(@PathVariable(value = "id") Long id) {
+    public Optional<Recipe> getRecipeById(@PathVariable(value = "id") Long id) {
+        Optional<Recipe> recipe = recipeRepository.findById(id);
 
-        final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=8dc3ef2ffcf54e6781629ee83623d725", id);
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(uri, String.class);
+        if (recipe.isEmpty()) {
+            final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=8dc3ef2ffcf54e6781629ee83623d725", id);
+            RestTemplate restTemplate = new RestTemplate();
 
+            recipe = Optional.of(restTemplate.getForObject(uri, Recipe.class));
+
+            recipeRepository.save(recipe.get());
+        }
+
+        return recipe;
     }
 
 
