@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,10 +28,30 @@ public class MealPlan {
 
     private LocalDateTime date;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<AppUser> likes;
+    @ManyToMany
+    @JoinColumn
+    private Set<AppUser> likes;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<AppUser> dislikes;
+    @ManyToMany
+    private Set<AppUser> dislikes;
+
+
+    public void likesHandler(AppUser appUser) {
+        if (likes.contains(appUser)) {
+            likes.remove(appUser);
+        }
+        else {
+            likes.add(appUser);
+        }
+    }
+
+    public void dislikesHandler(AppUser appUser) {
+        if (dislikes.contains(appUser)) {
+            dislikes.remove(appUser);
+        }
+        else {
+            dislikes.add(appUser);
+        }
+    }
 
 }

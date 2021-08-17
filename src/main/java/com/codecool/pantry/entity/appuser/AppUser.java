@@ -1,5 +1,6 @@
 package com.codecool.pantry.entity.appuser;
 
+import com.codecool.pantry.entity.mealplan.MealPlan;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -38,6 +40,12 @@ public class AppUser implements UserDetails {
     private AppUserRole role = AppUserRole.FREE;
     private boolean locked = false;
     private boolean enabled = false;
+
+    @ManyToMany
+    private Set<MealPlan> likedMealPlans;
+
+    @ManyToMany
+    private Set<MealPlan> dislikedMealPlans;
 
     public AppUser(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
