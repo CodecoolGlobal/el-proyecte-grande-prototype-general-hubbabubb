@@ -28,11 +28,10 @@ public class MealPlan {
 
     private LocalDateTime date;
 
-    @ManyToMany
-    @JoinColumn
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<AppUser> likes;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<AppUser> dislikes;
 
 

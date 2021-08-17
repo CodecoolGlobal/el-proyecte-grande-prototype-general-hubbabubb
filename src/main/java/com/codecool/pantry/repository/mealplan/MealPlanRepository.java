@@ -11,24 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface MealPlanRepository extends JpaRepository<MealPlan, Long> {
 
-//    @Transactional
-//    @Modifying
-//    @Query("")
-//    public void addToLikes(String mealPlanId, AppUser appUser);
-//
-//    @Transactional
-//    @Modifying
-//    @Query("")
-//    public void removeFromLikes(String mealPlanId, AppUser appUser);
-//
-//    @Transactional
-//    @Modifying
-//    @Query("")
-//    public void addToDislikes(String mealPlanId, AppUser appUser);
-//
-//    @Transactional
-//    @Modifying
-//    @Query("")
-//    public void removeFromDislikes(String mealPlanId, AppUser appUser);
 
 }

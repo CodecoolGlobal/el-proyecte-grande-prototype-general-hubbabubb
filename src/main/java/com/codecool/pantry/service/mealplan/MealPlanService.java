@@ -24,11 +24,13 @@ public class MealPlanService {
         Optional<AppUser> appUser = appUserRepository.findById(userId);
         Optional<MealPlan> mealPlan = mealPlanRepository.findById(mealPlanId);
         mealPlan.get().likesHandler(appUser.get());
+        mealPlanRepository.save(mealPlan.get());
     }
 
     public void dislike(Long mealPlanId, Long userId) {
         Optional<AppUser> appUser = appUserRepository.findById(userId);
         Optional<MealPlan> mealPlan = mealPlanRepository.findById(mealPlanId);
         mealPlan.get().dislikesHandler(appUser.get());
+        mealPlanRepository.save(mealPlan.get());
     }
 }

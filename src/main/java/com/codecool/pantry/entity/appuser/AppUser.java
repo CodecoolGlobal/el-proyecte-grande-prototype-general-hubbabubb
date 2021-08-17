@@ -41,12 +41,6 @@ public class AppUser implements UserDetails {
     private boolean locked = false;
     private boolean enabled = false;
 
-    @ManyToMany
-    private Set<MealPlan> likedMealPlans;
-
-    @ManyToMany
-    private Set<MealPlan> dislikedMealPlans;
-
     public AppUser(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
