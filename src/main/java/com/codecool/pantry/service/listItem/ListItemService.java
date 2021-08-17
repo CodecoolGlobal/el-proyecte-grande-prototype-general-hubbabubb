@@ -1,8 +1,10 @@
 package com.codecool.pantry.service.listItem;
 
+import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.repository.listItem.ListItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 
 @AllArgsConstructor
 @Service
@@ -14,8 +16,18 @@ public class ListItemService {
         listItemRepository.deleteById(id);
     }
 
-    public void toggleItemStatus(Long id) {
-//        listItemRepository.setCheckedStatus(!listItemRepository.getById(id).isChecked());
+    public ListItem getItemById(Long id) {
+        return listItemRepository.getById(id);
+    }
+
+
+    public ListItem toggleItemStatus(ListItem listItem) {
+        listItem.setChecked(!listItem.isChecked());
+        return listItem;
+    }
+
+    public void updateListItem(ListItem listItem) {
+        listItemRepository.save(listItem);
     }
 
 }

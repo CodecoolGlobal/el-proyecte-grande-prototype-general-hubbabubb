@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -14,29 +15,29 @@ public class PantryService {
 
     private PantryRepository pantryRepository;
 
-    public void test() {
-        pantryRepository.findById(2L);
-    }
-
     public Optional<Pantry> getPantryById(Long id) {
         return pantryRepository.findById(id);
     }
 
-
     public void addGroceryItemToList(Long id, String itemName) {
-        var pantry = getPantryById(id).get();
-        var newList = pantry.getGroceryItems();
+        if (getPantryById(id).isEmpty()) {
+            return;
+        }
+        Pantry pantry = getPantryById(id).get();
+        Set<ListItem> newList = pantry.getGroceryList();
         newList.add(new ListItem(itemName));
-        pantry.setGroceryItems(newList);
+        pantry.setGroceryList(newList);
         pantryRepository.save(pantry);
     }
 
     public void addPantryItemToList(Long id, String itemName) {
-        var pantry = getPantryById(id).get();
-        var newList = pantry.getPantryItems();
+        if (getPantryById(id).isEmpty()) {
+            return;
+        }
+        Pantry pantry = getPantryById(id).get();
+        Set<ListItem> newList = pantry.getPantryList();
         newList.add(new ListItem(itemName));
-        pantry.setPantryItems(newList);
+        pantry.setPantryList(newList);
         pantryRepository.save(pantry);
-
     }
 }

@@ -46,8 +46,8 @@ public class Pantry {
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
     @OneToMany(mappedBy = "pantry")
-    private Set<ListItem> groceryItems = new HashSet<>();
+    private Set<ListItem> groceryList = new HashSet<>();
 
     @OneToMany(mappedBy = "pantry")
-    private Set<ListItem> pantryItems = new HashSet<>();
+    private Set<ListItem> pantryList = new HashSet<>();
 }

@@ -13,44 +13,55 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 public class RecipeController {
-    // TODO: move out api key from every call, store and read it from properties
-
     private final RecipeRepository recipeRepository;
 
+    private final String API_KEY = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
+
     @PostMapping
-    public void createClient(@RequestBody Recipe recipe) {
+    public void saveRecipe(@RequestBody Recipe recipe) {
         recipeRepository.save(recipe);
     }
 
-    // search recipe by name route
+
     @GetMapping("api/v1/recipe/search/{name}")
     public ResponseEntity<String> searchRecipeByName(@PathVariable(value = "name") String name) {
-        final String uri = String.format("https://api.spoonacular.com/recipes/complexSearch?query=%s&number=25&apiKey=8dc3ef2ffcf54e6781629ee83623d725", name);
+        final String uri = String.format("https://api.spoonacular.com/recipes/complexSearch?query=%s&number=25&apiKey=%s",
+                name, API_KEY);
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForEntity(uri, String.class);
     }
 
-
-    // get recipe by id
     @GetMapping("api/v1/recipe/{id}")
     public ResponseEntity<String> getRecipeById(@PathVariable(value = "id") Long id) {
-
-        final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=8dc3ef2ffcf54e6781629ee83623d725", id);
+        final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=%s", id, API_KEY);
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForEntity(uri, String.class);
 
     }
 
 
-    // url paramteres are only like /pasta,beef,"orange"
-    // TODO: !!! only works with exactly 3 ingredients for now, error handling and refactor soon
     @GetMapping("api/v1/recipe/by-ingredients/{ingredients}")
-    public ResponseEntity<String> searchRecipeByIngredients(@PathVariable("ingredients")List<String> ingredients) {
-        final String uri = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s,+%s,+%s&number=5&apiKey=8dc3ef2ffcf54e6781629ee83623d725",
-                ingredients.get(0), ingredients.get(1), ingredients.get(2));
+    public ResponseEntity<String> searchRecipeByIngredients(@PathVariable("ingredients") List<String> ingredients) {
+
+        final String uri = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&number=5&apiKey=%s",
+                generateIngredientQuery(ingredients), API_KEY);
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForEntity(uri, String.class);
+    }
+
+    public String generateIngredientQuery(List<String> ingredients) {
+        if (ingredients.size() < 1) {
+            return "throw-error"; // exception + handling
+        }
+
+        StringBuilder searchQuery = new StringBuilder(ingredients.get(0));
+        for (int i = 1; i < ingredients.size(); i++) {
+            searchQuery.append(",+");
+            searchQuery.append(ingredients.get(i));
+        }
+        return searchQuery.toString();
+
+    }
 
 
     }
-}
