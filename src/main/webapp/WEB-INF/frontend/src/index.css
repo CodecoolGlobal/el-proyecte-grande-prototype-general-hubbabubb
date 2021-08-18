@@ -8,7 +8,7 @@
 
 .main {
     background-image: linear-gradient(#E4F1EB, #F2F8F5);
-    padding: 0 20px 0 20px;
+    padding: 150px 20px 0 20px;
     height: 100vh;
     position: page;
 }
@@ -91,6 +91,7 @@ p, li, ul {
 /* Navbar container */
 .header-navbar {
     position: fixed;
+    width: 100%;
     background-color: rgba(228, 241, 235, 0.8);
 }
 

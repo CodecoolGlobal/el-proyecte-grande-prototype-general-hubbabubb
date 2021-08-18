@@ -22,9 +22,9 @@ export const Pantry = () => {
 
 
     const sampleData =
-        [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:false}, {itemName: "bread", id: 3, checked:true}]
+        [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:false}, {itemName: "bread", id: 3, checked:true}, {itemName: "olive oil", id:4, checked:false}]
 
-    let idCounter = 5;
+    const [idCounter,setIdCounter] = useState(5);
     const [loadedIngredients, setLoadedIngredients] = useState([]);
     const [items, setItems] = useState(sampleData)
     const [inputValue, setInputValue] = useState('');
@@ -52,14 +52,13 @@ export const Pantry = () => {
 
 
     const handleAddButtonClick = () => {
-        if (inputValue === "") {
-            return;
-        }
+
         const newItem = {
             itemName: inputValue,
-            enabled: true,
-            id: idCounter++
+            checked: false,
+            id: idCounter
         };
+        setIdCounter(idCounter + 1)
         const newItems = [...items, newItem];
         // // TODO need to add list ID of course later
         // fetch(`http://localhost:8000/grocery/add/${inputValue}`).catch((e) => {
@@ -69,7 +68,15 @@ export const Pantry = () => {
         setInputValue("");
     };
 
+    function removeAllChecked(id) {
+        let newList = items.filter(item => item.checked )
+        setItems(newList)
+    }
+
     const removeItem = (id) => {
+        let newList = items.filter(item => item.checked === true)
+        setItems(newList)
+
         // fetch(`http://localhost:8000/grocery/remove/${id}`).then(() => getGroceries());
     }
 
@@ -123,7 +130,7 @@ export const Pantry = () => {
 
                                     <Checkbox
                                         edge="start"
-                                        checked={!value.checked}
+                                        checked={value.checked}
                                         color={"default"}
                                         tabIndex={-1}
                                         disableRipple
@@ -147,7 +154,7 @@ export const Pantry = () => {
             </div>
             <h3>Remove checked items</h3>
             {/*<IconButton edge="end" aria-label="delete">*/}
-            <Fab variant="extended">Clear list<DeleteIcon color={"default"}/>
+            <Fab variant="extended">Clear list<DeleteIcon color={"default"} onClick={removeAllChecked}/>
 
             </Fab>
             {/*</IconButton>*/}

@@ -12,19 +12,20 @@ import java.util.List;
 import java.util.Optional;
 
 
-
 @RestController
 @AllArgsConstructor
 public class RecipeController {
     private final RecipeRepository recipeRepository;
 
-    private final String API_KEY2 = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
+    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
 
-    private final String API_KEY = "a22052fbcfef4a2fac111f33a93898d8";
+    private final String API_KEY1 = "a22052fbcfef4a2fac111f33a93898d8";
 
-    private final String API_KEY3 = "e3ab676c899863493beb884738680628e898d79d";
+    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
 
+    private final String API_KEY5 = "b880826d2c53495f8fb1fa608db88577";
 
+    private final String API_KEY4 = "099bdb5cd6ad48e28faab2065fdc4467";
 
 
     @PostMapping
@@ -33,7 +34,7 @@ public class RecipeController {
     }
 
 
-    @GetMapping( path = "api/v1/recipe/search/{name}")
+    @GetMapping(path = "api/v1/recipe/search/{name}")
     public ResponseEntity<String> searchRecipeByName(@PathVariable(value = "name") String name) {
         final String uri = String.format("https://api.spoonacular.com/recipes/complexSearch?query=%s&number=25&apiKey=%s",
                 name, API_KEY);
