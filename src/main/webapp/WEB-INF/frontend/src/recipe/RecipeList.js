@@ -1,9 +1,7 @@
 import {useState} from 'react';
 import React from "react";
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTemperatureHigh} from "@fortawesome/free-solid-svg-icons";
-import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded';
+// import '../component/Card.css'
 import {Link, NavLink} from 'react-router-dom';
 import LaunchIcon from '@material-ui/icons/Launch';
 import {Button,
@@ -17,12 +15,6 @@ const RecipeList = () => {
     const [searchWord, setSearchWord] = useState("")
     const spacing = 2
 
-    // useEffect(() => {
-    //         getRecipes().catch(e => console.log(e))
-    //     },
-    //     [setRecipes]);
-
-    // useEffect(() => setFilterRecipes(filterPosts(recipes, searchQuery)),[recipes,searchQuery])
     const getRecipes = async () => {
         const searchURL = `http://localhost:8080/api/v1/recipe/search/${searchWord}`
         const response = await fetch(
