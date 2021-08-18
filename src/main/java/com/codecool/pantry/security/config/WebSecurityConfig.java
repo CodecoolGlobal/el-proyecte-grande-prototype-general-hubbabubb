@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @AllArgsConstructor
@@ -18,21 +19,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AppUserService service;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private MyBasicAuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated().and()
-                .formLogin()
-                .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/",true)
-                .failureUrl("/index.html?error=true")
-                .permitAll();
+        http.authorizeRequests()
+                .antMatchers("/securityNone").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic()
+                .authenticationEntryPoint(authenticationEntryPoint);
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
