@@ -47,21 +47,21 @@ function Header() {
         <Row className="nav-fill" lg={5} md={5}>
             <Col className="center-button">
                 <div className="header-dropdown">
-                    <button className="header-button">Dropdown</button>
+                    <button className="header-button">Pantry</button>
                     <div className="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
+                        <a href="/grocery-list">Grocery List</a>
+                        <a href="/pantry">Pantry Content</a>
+                        <a href="#">Meal Plan</a>
                     </div>
                 </div>
             </Col>
             <Col className="center-button">
                 <div className="header-dropdown">
-                    <button className="header-button">Dropdown</button>
+                    <button className="header-button">Recipes</button>
                     <div className="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
+                        <a href="#">Search by name</a>
+                        <a href="#">From my pantry</a>
+                        <a href="#">Favorite recipes</a>
                     </div>
                 </div>
             </Col>
@@ -73,11 +73,11 @@ function Header() {
             </Col>
             <Col className="center-button">
                 <div className="header-dropdown">
-                    <button className="header-button">Dropdown</button>
+                    <button className="header-button">Tools</button>
                     <div className="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
+                        <a href="#">Pantry Settings</a>
+                        <a href="#">Ingredient info</a>
+                        <a href="#">Unit converter</a>
                     </div>
                 </div>
             </Col>
