@@ -11,8 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 
-@AllArgsConstructor
+
 @RestController
+@AllArgsConstructor
 public class RecipeController {
     private final RecipeRepository recipeRepository;
 
@@ -24,7 +25,16 @@ public class RecipeController {
     }
 
 
-    @GetMapping("api/v1/recipe/search/{name}")
+    @GetMapping( path = "api/v1/recipe/search-fixed/pizza")
+    public ResponseEntity<String> searckkhRecipeByName() {
+        final String uri = String.format("https://api.spoonacular.com/recipes/complexSearch?query=pizza&number=25&apiKey=%s",
+                 API_KEY);
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(uri, String.class);
+    }
+
+
+    @GetMapping( path = "api/v1/recipe/search/{name}")
     public ResponseEntity<String> searchRecipeByName(@PathVariable(value = "name") String name) {
         final String uri = String.format("https://api.spoonacular.com/recipes/complexSearch?query=%s&number=25&apiKey=%s",
                 name, API_KEY);
@@ -72,4 +82,4 @@ public class RecipeController {
     }
 
 
-    }
+}

@@ -9,6 +9,7 @@ import Favorites from "./pages/Favorites";
 import LoginForm from "./components/login/LoginForm";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
+import RecipeList from './recipe/RecipeList';
 
 function App() {
     return (
@@ -29,8 +30,8 @@ function App() {
                 <Route path='/login'>
                     <LoginForm/>
                 </Route>
-                <Route path='/favorites'>
-                    <Favorites/>
+                <Route path='/search-recipe'>
+                    <RecipeList/>
                 </Route>
             </Switch>
         </Layout>
