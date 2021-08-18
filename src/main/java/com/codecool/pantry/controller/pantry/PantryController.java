@@ -6,7 +6,6 @@ import com.codecool.pantry.service.listItem.ListItemService;
 import com.codecool.pantry.service.pantry.PantryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -52,9 +51,6 @@ public class PantryController {
         itemService.updateListItem(updatedItem);
     }
 
-//    @ResponseStatus(value= HttpStatus.NOT_FOUND, reason="Not found List with the given ID")  // 404
-//    public class ListNotFoundException extends RuntimeException {
-//    }
 
     @GetMapping(path = "api/v1/pantry/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Pantry getPantryById(@PathVariable(value = "id") Long id) {

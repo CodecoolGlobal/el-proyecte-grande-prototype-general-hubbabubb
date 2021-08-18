@@ -5,7 +5,7 @@ import logo from "../../components/logo.png"
 import './Header.module.css';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faSearch, faEllipsisV} from '@fortawesome/free-solid-svg-icons'
+import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
 import LoginForm from "../login/LoginForm";
 
 function Header() {
@@ -51,7 +51,7 @@ function Header() {
                     <div className="dropdown-content">
                         <a href="/grocery-list">Grocery List</a>
                         <a href="/pantry">Pantry Content</a>
-                        <a href="#">Meal Plan</a>
+                        <a href="/meal-plan">Meal Plan</a>
                     </div>
                 </div>
             </Col>

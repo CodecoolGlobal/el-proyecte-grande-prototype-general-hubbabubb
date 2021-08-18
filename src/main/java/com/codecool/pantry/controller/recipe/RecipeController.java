@@ -1,6 +1,6 @@
 package com.codecool.pantry.controller.recipe;
 
-import com.codecool.pantry.entity.appuser.AppUser;
+
 import lombok.AllArgsConstructor;
 import com.codecool.pantry.entity.recipe.Recipe;
 import com.codecool.pantry.repository.recipe.RecipeRepository;
@@ -17,15 +17,15 @@ import java.util.Optional;
 public class RecipeController {
     private final RecipeRepository recipeRepository;
 
-    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
+//    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
+//
+//    private final String API_KEY1 = "a22052fbcfef4a2fac111f33a93898d8";
+//
+//    private final String API_KEY4 = "2b5973da3e1542668e205f85165a8786";
 
-    private final String API_KEY1 = "a22052fbcfef4a2fac111f33a93898d8";
+    private final String API_KEY = "b880826d2c53495f8fb1fa608db88577";
 
-    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
-
-    private final String API_KEY5 = "b880826d2c53495f8fb1fa608db88577";
-
-    private final String API_KEY4 = "099bdb5cd6ad48e28faab2065fdc4467";
+//    private final String API_KEY33 = "099bdb5cd6ad48e28faab2065fdc4467";
 
 
     @PostMapping
@@ -51,9 +51,11 @@ public class RecipeController {
             final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=%s", id, API_KEY);
             RestTemplate restTemplate = new RestTemplate();
 
-            recipe = Optional.of(restTemplate.getForObject(uri, Recipe.class));
+            recipe = Optional.ofNullable(restTemplate.getForObject(uri, Recipe.class));
 
-            recipeRepository.save(recipe.get());
+            recipe.ifPresent(recipeRepository::save);
+
+
         }
 
         return recipe;

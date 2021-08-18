@@ -50,11 +50,10 @@ public class PantryService {
         Set<ListItem> groceryList = pantry.getGroceryList();
         Set<ListItem> pantryList = pantry.getPantryList();
 
-        if (fromGroceryToPantry){
+        if (fromGroceryToPantry) {
             pantryList.addAll(changedItems);
             groceryList.removeAll(changedItems);
-        }
-        else {
+        } else {
             groceryList.addAll(changedItems);
             pantryList.removeAll(changedItems);
         }

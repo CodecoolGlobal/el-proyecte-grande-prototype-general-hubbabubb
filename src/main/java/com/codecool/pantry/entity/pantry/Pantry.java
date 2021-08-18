@@ -34,7 +34,7 @@ public class Pantry {
             name = "id",
             updatable = false
     )
-    private  Long id;
+    private Long id;
 
     @Column(
             name = "name",

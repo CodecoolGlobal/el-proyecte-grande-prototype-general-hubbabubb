@@ -5,6 +5,8 @@ import com.codecool.pantry.service.mealplan.MealPlanService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 
 @AllArgsConstructor
 @RestController
@@ -13,14 +15,14 @@ public class MealPlanController {
 
     private MealPlanService mealPlanService;
 
-    @PostMapping(path = "/save")
-    public void saveMealPlan(@RequestBody MealPlan mealPlan) {
-        mealPlanService.saveMealPlan(mealPlan);
+    @PostMapping(path = "/save/{recipeId}/{date}")
+    public void saveMealPlan(@PathVariable("recipeId") Long recipeId, @PathVariable("date") LocalDateTime date) {
+        mealPlanService.saveMealPlan(recipeId, date);
     }
 
     @GetMapping(path = "/like/{mealPlanId}/{userId}")
     public String toLikes(@PathVariable("mealPlanId") Long mealPlanId,
-                             @PathVariable("userId") Long userId) {
+                          @PathVariable("userId") Long userId) {
         mealPlanService.like(mealPlanId, userId);
         return "likes route" + mealPlanId + " " + userId;
     }

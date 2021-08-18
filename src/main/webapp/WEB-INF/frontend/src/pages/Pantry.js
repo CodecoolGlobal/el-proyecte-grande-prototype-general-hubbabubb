@@ -22,21 +22,25 @@ export const Pantry = () => {
 
 
     const sampleData =
-        [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:false}, {itemName: "bread", id: 3, checked:true}, {itemName: "olive oil", id:4, checked:false}]
+        [{itemName: 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked: false}, {
+            itemName: "bread",
+            id: 3,
+            checked: true
+        }, {itemName: "olive oil", id: 4, checked: false}]
 
-    const [idCounter,setIdCounter] = useState(5);
+    const [idCounter, setIdCounter] = useState(5);
     const [loadedIngredients, setLoadedIngredients] = useState([]);
     const [items, setItems] = useState(sampleData)
     const [inputValue, setInputValue] = useState('');
 
-    const getGroceries = async () => {
-        // // TODO: grocery list id here as well
-        // const groceryLink = "http://localhost:8000/grocery/list/1"
-        // await fetch(groceryLink)
-        //     .then(response => response.json()
-        //         .then((json) => setItems(json)))
-        setItems(sampleData)
-    }
+    // const getGroceries = async () => {
+    //     // // TODO: grocery list id here as well
+    //     // const groceryLink = "http://localhost:8000/grocery/list/1"
+    //     // await fetch(groceryLink)
+    //     //     .then(response => response.json()
+    //     //         .then((json) => setItems(json)))
+    //     setItems(sampleData)
+    // }
 
     useEffect(() => {
         fetch('/api/v1/ingredient')
@@ -68,13 +72,13 @@ export const Pantry = () => {
         setInputValue("");
     };
 
-    function removeAllChecked(id) {
-        let newList = items.filter(item => item.checked )
+    function removeAllChecked() {
+        let newList = items.filter(item => item.checked)
         setItems(newList)
     }
 
     const removeItem = (id) => {
-        let newList = items.filter(item => item.checked === true)
+        let newList = items.filter(item => item.id !== id)
         setItems(newList)
 
         // fetch(`http://localhost:8000/grocery/remove/${id}`).then(() => getGroceries());
@@ -107,10 +111,10 @@ export const Pantry = () => {
                 id="ingredients"
                 options={loadedIngredients}
                 placeholder="Choose an ingredient...">
-                {({ onClear, selected }) => (
+                {({onClear, selected}) => (
                     <div className="rbt-aux">
-                        {!!selected.length && <ClearButton onClick={onClear} />}
-                        {!selected.length && <Spinner animation="fade" size="sm" />}
+                        {!!selected.length && <ClearButton onClick={onClear}/>}
+                        {!selected.length && <Spinner animation="fade" size="sm"/>}
                     </div>
                 )}
             </Typeahead>
@@ -120,11 +124,12 @@ export const Pantry = () => {
 
 
             <div className={"grocery-list"}>
-                <List >
+                <List>
                     {items && items.map((value) => {
                         const labelId = `checkbox-list-label-${value.id}`;
                         return (
-                            <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button onClick={() => toggleComplete(value.id)}>
+                            <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button
+                                      onClick={() => toggleComplete(value.id)}>
                                 <ListItemIcon>
 
 

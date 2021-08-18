@@ -3,8 +3,8 @@ import React from "react";
 import SearchIcon from '@material-ui/icons/Search';
 import LaunchIcon from '@material-ui/icons/Launch';
 import {
-    Button, Divider, Fab,
-    Grid, makeStyles, Paper
+    Divider, Fab,
+    Grid, Paper
 } from "@material-ui/core";
 
 import { Modal } from "react-bootstrap"

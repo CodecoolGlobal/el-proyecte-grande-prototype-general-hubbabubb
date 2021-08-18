@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Button} from '@material-ui/core';
 
 
 function Card(props) {
@@ -10,14 +11,14 @@ function Card(props) {
             recipeUrl).then(res => res.json()).then(json => setRecipe(json));
     }
 
-    useEffect(() => getRecipe(), [setRecipe])
+    useEffect(() => {getRecipe()}, [setRecipe])
 
     return (
 
         <div className="card_container">
             <div className="card">
                 <div className="card">
-                    <img className="card_img" src={recipe.image} alt="recepie-pic"/>
+                    <img className="card_img" src={recipe.image} alt="Recipe picture"/>
                     <h2 className="card_title">{recipe.title}</h2>
                     <table>
                         <tr>Vegetarian : {recipe.vegetarian === "true" ? "True" : "False"}</tr>
@@ -26,15 +27,15 @@ function Card(props) {
                     </table>
                 </div>
                 {/*<div>*/}
-                {/*  <IngredientList recepie={recipe} />*/}
+                {/*  <IngredientList recipe={recipe} />*/}
                 {/*</div>*/}
                 <div
                     dangerouslySetInnerHTML={{__html: recipe.instructions}}
                     className="creation_paragraph"
                 />
                 <div className="btn_container">
-                    <button className="card_btn">Add To Meal Plan</button>
-                    <button className="card_btn">Add To Grocery List</button>
+                    <Button color={"primary"} className="card_btn">Add To Meal Plan</Button>
+                    <Button color={"secondary"} className="card_btn">Add To Grocery List</Button>
                 </div>
             </div>
         </div>

@@ -31,14 +31,14 @@ export const GroceryList = () => {
     const [inputValue, setInputValue] = useState('');
 
 
-    const getGroceries = async () => {
-        // // TODO: grocery list id here as well
-        // const groceryLink = "http://localhost:8000/grocery/list/1"
-        // await fetch(groceryLink)
-        //     .then(response => response.json()
-        //         .then((json) => setItems(json)))
-        setItems(sampleData)
-    }
+    // const getGroceries = async () => {
+    //     // // TODO: grocery list id here as well
+    //     // const groceryLink = "http://localhost:8000/grocery/list/1"
+    //     // await fetch(groceryLink)
+    //     //     .then(response => response.json()
+    //     //         .then((json) => setItems(json)))
+    //     setItems(sampleData)
+    // }
 
     useEffect(() => {
         fetch('/api/v1/ingredient')
@@ -95,7 +95,7 @@ export const GroceryList = () => {
     };
 
 
-    function removeAllChecked(id) {
+    function removeAllChecked() {
         let newList = items.filter(item => item.checked === true)
         setItems(newList)
     }
@@ -106,7 +106,8 @@ export const GroceryList = () => {
 
             <h1>Grocery List</h1>
                  <Typeahead
-                    onChange={handleChange}
+                     className="cart"
+                     onChange={handleChange}
                     id="ingredients"
                     options={loadedIngredients}
                     placeholder="Choose an ingredient...">
@@ -118,7 +119,7 @@ export const GroceryList = () => {
                     )}
                 </Typeahead>
                 <Fab color="default" aria-label="add" onClick={() => handleAddButtonClick()}>
-                    <AddShoppingCartSharpIcon/>
+                    <AddShoppingCartSharpIcon />
                 </Fab>
 
 
