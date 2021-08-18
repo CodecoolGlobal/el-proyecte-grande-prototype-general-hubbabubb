@@ -8,6 +8,7 @@ import './App.module.css';
 import Favorites from "./pages/Favorites";
 import LoginForm from "./components/login/LoginForm";
 import {GroceryList} from './pages/GroceryList';
+import {Pantry} from './pages/Pantry';
 
 function App() {
     return (
@@ -17,11 +18,13 @@ function App() {
                     <Home />
                 </Route>
                 <Route path='/grocery-list'>
-
                     <GroceryList/>
                 </Route>
                 <Route path='/register'>
                     <Register/>
+                </Route>
+                <Route path='/pantry'>
+                    <Pantry/>
                 </Route>
                 <Route path='/login'>
                     <LoginForm/>

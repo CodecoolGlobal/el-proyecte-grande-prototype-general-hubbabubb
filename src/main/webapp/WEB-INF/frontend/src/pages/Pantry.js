@@ -1,10 +1,9 @@
-
 import {useEffect, useState} from 'react';
 
 
 import {Spinner} from 'react-bootstrap';
 import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
-import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
+import DeleteIcon from '@material-ui/icons/Delete';
 import KitchenIcon from '@material-ui/icons/Kitchen';
 import {
     Checkbox,
@@ -19,7 +18,7 @@ import Typeahead from 'react-bootstrap-typeahead/lib/components/AsyncTypeahead';
 import {ClearButton} from 'react-bootstrap-typeahead';
 
 
-export const GroceryList = () => {
+export const Pantry = () => {
 
 
     const sampleData =
@@ -27,9 +26,7 @@ export const GroceryList = () => {
 
     const [loadedIngredients, setLoadedIngredients] = useState([]);
     const [items, setItems] = useState(sampleData)
-
     const [inputValue, setInputValue] = useState('');
-
 
     const getGroceries = async () => {
         // // TODO: grocery list id here as well
@@ -51,7 +48,6 @@ export const GroceryList = () => {
                 setLoadedIngredients(result);
             });
     }, [])
-
 
 
     const handleAddButtonClick = () => {
@@ -96,62 +92,62 @@ export const GroceryList = () => {
 
         <div className="grocery-list-container">
 
-            <h1>Grocery List</h1>
-                 <Typeahead
-                    onChange={handleChange}
-                    id="ingredients"
-                    options={loadedIngredients}
-                    placeholder="Choose an ingredient...">
-                    {({ onClear, selected }) => (
-                        <div className="rbt-aux">
-                            {!!selected.length && <ClearButton onClick={onClear} />}
-                            {!selected.length && <Spinner animation="fade" size="sm" />}
-                        </div>
-                    )}
-                </Typeahead>
-                <Fab color="default" aria-label="add" onClick={() => handleAddButtonClick()}>
-                    <AddShoppingCartSharpIcon/>
-                </Fab>
+            <h1>Fridge content</h1>
+            <Typeahead
+                onChange={handleChange}
+                id="ingredients"
+                options={loadedIngredients}
+                placeholder="Choose an ingredient...">
+                {({ onClear, selected }) => (
+                    <div className="rbt-aux">
+                        {!!selected.length && <ClearButton onClick={onClear} />}
+                        {!selected.length && <Spinner animation="fade" size="sm" />}
+                    </div>
+                )}
+            </Typeahead>
+            <Fab color="default" aria-label="add" onClick={() => handleAddButtonClick()}>
+                <KitchenIcon/>
+            </Fab>
 
 
             <div className={"grocery-list"}>
-            <List >
-                {items && items.map((value) => {
-                    const labelId = `checkbox-list-label-${value.id}`;
-                    return (
-                        <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button onClick={() => toggleComplete(value.id)}>
-                            <ListItemIcon>
+                <List >
+                    {items && items.map((value) => {
+                        const labelId = `checkbox-list-label-${value.id}`;
+                        return (
+                            <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button onClick={() => toggleComplete(value.id)}>
+                                <ListItemIcon>
 
 
-                                <Checkbox
-                                    edge="start"
-                                    checked={!value.checked}
-                                    color={"default"}
-                                    tabIndex={-1}
-                                    disableRipple
-                                    inputProps={{'aria-labelledby': labelId}}
-                                />
+                                    <Checkbox
+                                        edge="start"
+                                        checked={!value.checked}
+                                        color={"default"}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        inputProps={{'aria-labelledby': labelId}}
+                                    />
 
-                            </ListItemIcon>
-                            <ListItemText id={labelId} primary={value.checked ? value.itemName :
-                                <strike>{value.itemName}</strike>}/>
-                            <ListItemSecondaryAction>
-                                <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">
-                                    <KitchenIcon color={"default"}/>
-                                    {/*<RemoveShoppingCartIcon color={"default"}/>*/}
-                                </IconButton>
-                            </ListItemSecondaryAction>
+                                </ListItemIcon>
+                                <ListItemText id={labelId} primary={value.checked ? value.itemName :
+                                    <strike>{value.itemName}</strike>}/>
+                                <ListItemSecondaryAction>
+                                    <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">
+                                        <AddShoppingCartSharpIcon color={"default"}/>
+                                        {/*<RemoveShoppingCartIcon color={"default"}/>*/}
+                                    </IconButton>
+                                </ListItemSecondaryAction>
 
-                        </ListItem>
-                    );
-                })}
-            </List>
+                            </ListItem>
+                        );
+                    })}
+                </List>
             </div>
             <h3>Remove checked items</h3>
             {/*<IconButton edge="end" aria-label="delete">*/}
-                <Fab variant="extended">Clear list<RemoveShoppingCartIcon color={"default"}/>
+            <Fab variant="extended">Clear list<DeleteIcon color={"default"}/>
 
-                </Fab>
+            </Fab>
             {/*</IconButton>*/}
         </div>
 
