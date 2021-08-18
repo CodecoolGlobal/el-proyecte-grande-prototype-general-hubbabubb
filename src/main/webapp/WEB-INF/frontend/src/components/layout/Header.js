@@ -1,6 +1,6 @@
 import React, {useContext, useRef} from "react";
 import FavoritesContext from "../../store/favorites-context";
-import {Nav, Navbar, NavDropdown, Badge, Row, Col, InputGroup, FormControl, Container} from "react-bootstrap";
+import {Row, Col} from "react-bootstrap";
 import logo from "../../components/logo.png"
 import './Header.module.css';
 
