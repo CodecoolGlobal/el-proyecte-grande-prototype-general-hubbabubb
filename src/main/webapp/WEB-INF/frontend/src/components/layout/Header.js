@@ -49,8 +49,8 @@ function Header() {
                 <div className="header-dropdown">
                     <button className="header-button">Dropdown</button>
                     <div className="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
+                        <a href="/grocery-list">Grocery List[Test]</a>
+                        <a href="/pantry">Pantry Items [Test]</a>
                         <a href="#">Link 3</a>
                     </div>
                 </div>
