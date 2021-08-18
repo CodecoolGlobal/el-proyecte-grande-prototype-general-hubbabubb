@@ -3,16 +3,14 @@ import React, {useEffect, useState} from 'react';
 
 function Card(props) {
     let id = props.id;
-    const [recipe, setRecipe] = useState({id: 5, title: "alma", image: ""})
-
     const recipeUrl = `http://localhost:8080/api/v1/recipe/${id}`
-
+    const [recipe, setRecipe] = useState({id: 58987797, title: "Loading...", image: ""})
     const getRecipe = () => {
         fetch(
             recipeUrl).then(res => res.json()).then(json => setRecipe(json));
     }
 
-    useEffect(() => getRecipe(), [recipe])
+    useEffect(() => getRecipe(), [setRecipe])
 
     return (
 
