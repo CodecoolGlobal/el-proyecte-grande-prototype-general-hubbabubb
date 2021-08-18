@@ -85,13 +85,27 @@
 				<version>${project.parent.version}</version>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+				<configuration>
+					<warSourceExcludes>
+						WEB-INF/frontend/node/**,
+						WEB-INF/frontend/node_modules/**,
+						WEB-INF/frontend/public/**,
+						WEB-INF/frontend/src/**,
+						WEB-INF/frontend/*
+					</warSourceExcludes>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.6</version>
+				<version>1.11.3</version>
 				<configuration>
 					<nodeVersion>v8.11.3</nodeVersion>
 					<npmVersion>6.1.0</npmVersion>
-					<workingDirectory>src/main/webapp/WEB-INF/view/react</workingDirectory>
+					<workingDirectory>src/main/webapp/WEB-INF/frontend</workingDirectory>
 				</configuration>
 				<executions>
 					<execution>
