@@ -24,9 +24,9 @@ function Card() {
                     <img className="card_img" src={recipe.image} alt="recepie-pic"/>
                     <h2 className="card_title">{recipe.title}</h2>
                     <table>
-                        <tr>Vegetarian : {recipe.vegetarian ? "True" : "False"}</tr>
-                        <tr>Vegan : {recipe.vegan ? "True" : "False"}</tr>
-                        <tr>GlutenFree : {recipe.glutenFree ? "True" : "False"}</tr>
+                        <tr>Vegetarian : {recipe.vegetarian === "true" ? "True" : "False"}</tr>
+                        <tr>Vegan : {recipe.vegan === "true" ? "True" : "False"}</tr>
+                        <tr>GlutenFree : {recipe.glutenFree ==="true" ? "True" : "False"}</tr>
                     </table>
                 </div>
                 {/*<div>*/}

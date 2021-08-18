@@ -1,11 +1,10 @@
 import {useState} from 'react';
 import React from "react";
+import SearchIcon from '@material-ui/icons/Search';
 
-// import '../component/Card.css'
 import {Link, NavLink} from 'react-router-dom';
 import LaunchIcon from '@material-ui/icons/Launch';
-import {Button,
-    Divider, Fab,
+import {Button,    Divider, Fab,
     Grid, Paper
 } from "@material-ui/core";
 
@@ -25,7 +24,9 @@ const RecipeList = () => {
     return (
         <div>
 
-            <div className={"inputFields"}>
+
+            <div className={"inputFields"} style={{textAlign:"center"}}>
+            <h1>Search recipe by name</h1>
 
                 <label className="custom-field">
 
@@ -37,8 +38,10 @@ const RecipeList = () => {
                            id={"recipe-search"}
                            placeholder="&nbsp;"
                     />
-                    <span className="placeholder">Search by recipe name...</span>
-                    <Button onClick={getRecipes}>Search</Button>
+
+                    <Fab size="medium" color="primary" aria-label="add" onClick={getRecipes}>
+                        <SearchIcon />
+                    </Fab>
                     {/*<span className="error-message" aria-live="polite">Hiányzó adat</span>*/}
                 </label>
 
