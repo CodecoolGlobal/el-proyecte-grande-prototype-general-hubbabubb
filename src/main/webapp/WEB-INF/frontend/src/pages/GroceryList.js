@@ -25,8 +25,7 @@ export const GroceryList = () => {
     const sampleData =
         [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:true}]
 
-    const [loadedIngredients, setLoadedIngredients] = useState([]);
-    const [items, setItems] = useState(sampleData)
+
 
     const [inputValue, setInputValue] = useState('');
 
@@ -39,6 +38,9 @@ export const GroceryList = () => {
         //         .then((json) => setItems(json)))
         setItems(sampleData)
     }
+
+    const [loadedIngredients, setLoadedIngredients] = useState([]);
+    const [items, setItems] = useState(sampleData)
 
     useEffect(() => {
         fetch('/api/v1/ingredient')
