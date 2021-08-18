@@ -9,7 +9,10 @@ import Favorites from "./pages/Favorites";
 import LoginForm from "./components/login/LoginForm";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
+import RecipeList from './recipe/RecipeList';
+import Card from './components/Card';
 import {useEffect, useState} from "react";
+
 
 function App() {
 
@@ -19,20 +22,23 @@ function App() {
                 <Route path='/' exact>
                     <Home/>
                 </Route>
-                <Route path='/grocery-list'>
+                <Route path="/grocery-list">
                     <GroceryList/>
                 </Route>
-                <Route path='/register'>
+                <Route path="/register">
                     <Register/>
                 </Route>
-                <Route path='/pantry'>
+                <Route path="/pantry">
                     <Pantry/>
                 </Route>
-                <Route path='/login'>
+                <Route path="/login">
                     <LoginForm/>
                 </Route>
-                <Route path='/favorites'>
-                    <Favorites/>
+                <Route path="/search-recipe">
+                    <RecipeList/>
+                </Route>
+                <Route path="/recipe/:id">
+                    <Card/>
                 </Route>
             </Switch>
         </Layout>
