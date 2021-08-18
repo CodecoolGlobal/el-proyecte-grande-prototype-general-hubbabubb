@@ -98,7 +98,8 @@ export const GroceryList = () => {
 
             <h1>Grocery List</h1>
                  <Typeahead
-                    onChange={handleChange}
+                     className="cart"
+                     onChange={handleChange}
                     id="ingredients"
                     options={loadedIngredients}
                     placeholder="Choose an ingredient...">
@@ -110,7 +111,7 @@ export const GroceryList = () => {
                     )}
                 </Typeahead>
                 <Fab color="default" aria-label="add" onClick={() => handleAddButtonClick()}>
-                    <AddShoppingCartSharpIcon/>
+                    <AddShoppingCartSharpIcon />
                 </Fab>
 
 

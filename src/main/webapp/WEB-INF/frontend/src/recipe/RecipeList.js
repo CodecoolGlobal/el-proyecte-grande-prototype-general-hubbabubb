@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import React from "react";
 import SearchIcon from '@material-ui/icons/Search';
-import SampleModal from '../components/SampleModal'
 import LaunchIcon from '@material-ui/icons/Launch';
 import {
     Button, Divider, Fab,
