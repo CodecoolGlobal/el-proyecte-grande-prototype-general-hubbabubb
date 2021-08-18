@@ -27,6 +27,10 @@ public class AppUserService implements UserDetailsService {
         return repository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format("Can not find user: %s", email)));
     }
 
+    public AppUser getUserByEmail(String email) throws UsernameNotFoundException {
+        return repository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format("Can not find user: %s", email)));
+    }
+
     public String signUpUser(AppUser user) {
         boolean userExists = repository.findByEmail(user.getEmail())
                 .isPresent();

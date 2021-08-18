@@ -90,8 +90,7 @@ p, li, ul {
 
 /* Navbar container */
 .header-navbar {
-
-    position: sticky;
+    position: fixed;
     background-color: rgba(228, 241, 235, 0.8);
 }
 

@@ -19,6 +19,7 @@ public class AppUserController {
         return null;
     }
 
+    /*@CrossOrigin(origins = "http://localhost/")
     @GetMapping
     public AppUser getUser(Authentication authentication) {
         AppUser user = null;
@@ -28,5 +29,13 @@ public class AppUserController {
         }
 
         return user;
+    }*/
+
+    @CrossOrigin(origins = "http://localhost/")
+    @GetMapping(path = "/default")
+    public AppUser getDefaultUser() {
+        AppUser appUser = service.getUserByEmail("user@pantry.hu");
+        System.out.println("---appUser: " + appUser);
+        return appUser;
     }
 }

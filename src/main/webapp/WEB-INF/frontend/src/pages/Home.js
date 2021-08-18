@@ -23,6 +23,19 @@ function Home() {
             });
     }, [])
 
+    /*const [pantry, setPantry] = useState({});
+
+    useEffect(() => {
+        fetch('api/v1/pantry/1')
+            .then(response => response.json())
+            .then(data => {
+                setPantry(data);
+                console.log(pantry);
+            });
+    }, [])*/
+
+
+
     if (isLoading) {
         return <section>
             <p>Loading...</p>
@@ -32,18 +45,7 @@ function Home() {
 
 
     return <section>
-        <h1>All ingredients:</h1>
-        <Typeahead
-            id="ingredients"
-            options={loadedIngredients}
-            placeholder="Choose an ingredient...">
-            {({ onClear, selected }) => (
-                <div className="rbt-aux">
-                    {!!selected.length && <ClearButton onClick={onClear} />}
-                    {!selected.length && <Spinner animation="grow" size="sm" />}
-                </div>
-            )}
-        </Typeahead>
+
     </section>
 }
 

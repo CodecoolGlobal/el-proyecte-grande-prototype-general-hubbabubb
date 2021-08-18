@@ -48,8 +48,10 @@ public class Pantry {
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
     @OneToMany(mappedBy = "pantry")
+    @JsonManagedReference
     private Set<ListItem> groceryList = new HashSet<>();
 
     @OneToMany(mappedBy = "pantry")
+    @JsonManagedReference
     private Set<ListItem> pantryList = new HashSet<>();
 }
