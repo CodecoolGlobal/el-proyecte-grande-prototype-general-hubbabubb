@@ -64,7 +64,7 @@ export const FromMyPantry = () => {
 
 
     return (
-        <div style={{textAlign:"center"}}>
+        <div className={"grocery-list-container"}>
             <h1>Cook from my pantry</h1>
         <div className={"grocery-list"} style={{textAlign:"center"}}>
             <List >
@@ -77,15 +77,16 @@ export const FromMyPantry = () => {
 
                                 <Checkbox
                                     edge="start"
-                                    checked={!value.checked}
-                                    color={"default"}
+                                    checked={value.checked}
+                                    color={"secondary"}
                                     tabIndex={-1}
-                                    disableRipple
+                                    indeterminate
+                                    // inputProps={{ 'aria-label': 'indeterminate checkbox' }}
                                     inputProps={{'aria-labelledby': labelId}}
                                 />
 
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={value.checked ? value.itemName :
+                            <ListItemText id={labelId} primary={!value.checked ? value.itemName :
                                 <strike>{value.itemName}</strike>}/>
                             {/*<ListItemSecondaryAction>*/}
                             {/*    <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">*/}

@@ -138,7 +138,7 @@ export const Pantry = () => {
                                     />
 
                                 </ListItemIcon>
-                                <ListItemText id={labelId} primary={value.checked ? value.itemName :
+                                <ListItemText id={labelId} primary={!value.checked ? value.itemName :
                                     <strike>{value.itemName}</strike>}/>
                                 <ListItemSecondaryAction>
                                     <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">
