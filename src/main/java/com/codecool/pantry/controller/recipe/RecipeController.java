@@ -24,7 +24,7 @@ public class RecipeController {
     }
 
 
-    @GetMapping("api/v1/recipe/search/{name}")
+        @GetMapping("api/v1/recipe/search/{name}")
     public ResponseEntity<String> searchRecipeByName(@PathVariable(value = "name") String name) {
         final String uri = String.format("https://api.spoonacular.com/recipes/complexSearch?query=%s&number=25&apiKey=%s",
                 name, API_KEY);

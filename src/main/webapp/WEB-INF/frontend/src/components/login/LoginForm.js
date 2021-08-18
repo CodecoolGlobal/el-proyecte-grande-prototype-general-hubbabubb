@@ -1,85 +1,52 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Input from './Input'
+import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
-class LoginForm extends Component {
+export default function LoginForm() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    constructor(props) {
-        super(props)
-        if(props.error) {
-            this.state = {
-                failure: 'wrong username or password!',
-                errcount: 0
-            }
-        } else {
-            this.state = { errcount: 0 }
-        }
+    function validateForm() {
+        return email.length > 0 && password.length > 0;
     }
 
-    handleError = (field, errmsg) => {
-        if(!field) return
+    function handleSubmit(event) {
+        let headers = new Headers();
+        headers.set('Authorization', 'Basic ' + Buffer.from(email + ":" + password).toString('base64'),);
 
-        if(errmsg) {
-            this.setState((prevState) => ({
-                failure: '',
-                errcount: prevState.errcount + 1,
-                errmsgs: {...prevState.errmsgs, [field]: errmsg}
-            }))
-        } else {
-            this.setState((prevState) => ({
-                failure: '',
-                errcount: prevState.errcount===1? 0 : prevState.errcount-1,
-                errmsgs: {...prevState.errmsgs, [field]: ''}
-            }))
-        }
+        event.preventDefault();
+        fetch("http://localhost:8080/api/v1/user", {
+            method:'GET',
+            headers: headers,
+        })
+            .then(data => data.json())
+            .then(json => console.log(json))
     }
 
-    renderError = () => {
-        if(this.state.errcount || this.state.failure) {
-            const errmsg = this.state.failure
-                || Object.values(this.state.errmsgs).find(v=>v)
-            return <div className="error">{errmsg}</div>
-        }
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault()
-        if(!this.state.errcount) {
-            const data = new FormData(this.form)
-            fetch(this.form.action, {
-                method: this.form.method,
-                body: new URLSearchParams(data)
-            })
-                .then(v => {
-                    if(v.redirected) window.location = v.url
-                })
-                .catch(e => console.warn(e))
-        }
-    }
-
-    render() {
-        const inputs = this.props.inputs.map(
-            ({name, placeholder, type, value, className}, index) => (
-                <Input key={index} name={name} placeholder={placeholder} type={type} value={value}
-                       className={type==='submit'? className : ''} handleError={this.handleError} />
-            )
-        )
-        const errors = this.renderError()
-        return (
-            <form {...this.props} onSubmit={this.handleSubmit} ref={fm => {this.form=fm}} >
-                {inputs}
-                {errors}
-            </form>
-        )
-    }
+    return (
+        <div className="Login">
+            <Form onSubmit={handleSubmit}>
+                <Form.Group size="lg" controlId="email">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                        autoFocus
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </Form.Group>
+                <Form.Group size="lg" controlId="password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </Form.Group>
+                <Button block size="lg" type="submit" disabled={!validateForm()}>
+                    Login
+                </Button>
+            </Form>
+        </div>
+    );
 }
-
-LoginForm.propTypes = {
-    name: PropTypes.string,
-    action: PropTypes.string,
-    method: PropTypes.string,
-    inputs: PropTypes.array,
-    error: PropTypes.string
-}
-
-export default LoginForm;

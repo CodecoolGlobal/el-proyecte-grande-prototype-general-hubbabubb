@@ -1,4 +1,4 @@
-import { Route, Switch} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -9,13 +9,15 @@ import Favorites from "./pages/Favorites";
 import LoginForm from "./components/login/LoginForm";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
+import {useEffect, useState} from "react";
 
 function App() {
+
     return (
         <Layout>
             <Switch>
                 <Route path='/' exact>
-                    <Home />
+                    <Home/>
                 </Route>
                 <Route path='/grocery-list'>
                     <GroceryList/>

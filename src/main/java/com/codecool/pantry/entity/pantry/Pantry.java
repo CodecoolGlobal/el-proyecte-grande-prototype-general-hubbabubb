@@ -3,6 +3,7 @@ package com.codecool.pantry.entity.pantry;
 
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.listitem.ListItem;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,11 +44,14 @@ public class Pantry {
     private String name = "My Pantry";
 
     @OneToMany(mappedBy = "pantry")
+    @JsonManagedReference
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
     @OneToMany(mappedBy = "pantry")
+    @JsonManagedReference
     private Set<ListItem> groceryList = new HashSet<>();
 
     @OneToMany(mappedBy = "pantry")
+    @JsonManagedReference
     private Set<ListItem> pantryList = new HashSet<>();
 }
