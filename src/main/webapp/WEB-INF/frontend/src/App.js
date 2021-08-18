@@ -4,24 +4,20 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Layout from "./components/layout/Layout";
 
-import './App.module.css';
-import Favorites from "./pages/Favorites";
 import LoginForm from "./components/login/LoginForm";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
 import RecipeList from './recipe/RecipeList';
 import Card from './components/Card';
-import {useEffect, useState} from "react";
 
 import {FromMyPantry} from './pages/FromMyPantry';
 
 function App() {
-
     return (
         <Layout>
             <Switch>
                 <Route path='/' exact>
-                    <Home/>
+                    <Home />
                 </Route>
                 <Route path="/grocery-list">
                     <GroceryList/>

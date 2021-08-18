@@ -20,13 +20,10 @@ export const FromMyPantry = () => {
     const sampleData =
         [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:false}, {itemName: "bread", id: 3, checked:true}]
 
-
-
     const [items, setItems] = useState(sampleData)
     const [recipes, setRecipes] = useState()
     const spacing = 2
     let ingredients = "";
-
 
     const getRecipes = async () => {
         console.log(recipes)
@@ -61,20 +58,16 @@ export const FromMyPantry = () => {
         setItems(newItems);
     };
 
-
-
     return (
         <div className={"grocery-list-container"}>
             <h1>Cook from my pantry</h1>
-        <div className={"grocery-list"} style={{textAlign:"center"}}>
+        <div className={"grocery-list"} >
             <List >
                 {items && items.map((value) => {
                     const labelId = `checkbox-list-label-${value.id}`;
                     return (
                         <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button onClick={() => toggleComplete(value.id)}>
                             <ListItemIcon>
-
-
                                 <Checkbox
                                     edge="start"
                                     checked={value.checked}
@@ -84,7 +77,6 @@ export const FromMyPantry = () => {
                                     // inputProps={{ 'aria-label': 'indeterminate checkbox' }}
                                     inputProps={{'aria-labelledby': labelId}}
                                 />
-
                             </ListItemIcon>
                             <ListItemText id={labelId} primary={!value.checked ? value.itemName :
                                 <strike>{value.itemName}</strike>}/>
