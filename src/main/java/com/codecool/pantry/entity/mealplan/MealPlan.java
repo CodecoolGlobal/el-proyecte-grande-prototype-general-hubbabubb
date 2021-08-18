@@ -29,10 +29,10 @@ public class MealPlan {
     private LocalDateTime date;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<AppUser> likes;
+    private Set<AppUser> likedUsers;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<AppUser> dislikes;
+    private Set<AppUser> dislikedUsers;
 
     public MealPlan(Recipe recipe, LocalDateTime date) {
         this.recipe = recipe;
@@ -40,20 +40,20 @@ public class MealPlan {
     }
 
     public void likesHandler(AppUser appUser) {
-        if (likes.contains(appUser)) {
-            likes.remove(appUser);
+        if (likedUsers.contains(appUser)) {
+            likedUsers.remove(appUser);
         }
         else {
-            likes.add(appUser);
+            likedUsers.add(appUser);
         }
     }
 
     public void dislikesHandler(AppUser appUser) {
-        if (dislikes.contains(appUser)) {
-            dislikes.remove(appUser);
+        if (dislikedUsers.contains(appUser)) {
+            dislikedUsers.remove(appUser);
         }
         else {
-            dislikes.add(appUser);
+            dislikedUsers.add(appUser);
         }
     }
 

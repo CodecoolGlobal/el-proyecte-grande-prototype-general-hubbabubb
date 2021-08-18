@@ -20,6 +20,10 @@ public class MealPlanService {
         mealPlanRepository.save(mealPlan);
     }
 
+    public MealPlan getMealPlan(Long id) {
+        return mealPlanRepository.findById(id).get();
+    }
+
     public void like(Long mealPlanId, Long userId) {
         Optional<AppUser> appUser = appUserRepository.findById(userId);
         Optional<MealPlan> mealPlan = mealPlanRepository.findById(mealPlanId);
