@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import './Card.css'
-import IngredientList from './IngredientList';
-import {useParams} from 'react-router-dom';
 
-function Card() {
-    let {id} = useParams();
+
+function Card(props) {
+    let id = props.id;
     const [recipe, setRecipe] = useState({id: 5, title: "alma", image: ""})
 
     const recipeUrl = `http://localhost:8080/api/v1/recipe/${id}`
