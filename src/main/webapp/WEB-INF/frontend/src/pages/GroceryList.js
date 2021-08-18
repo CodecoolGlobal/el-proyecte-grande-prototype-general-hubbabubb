@@ -23,11 +23,11 @@ export const GroceryList = () => {
 
 
     const sampleData =
-        [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:true}]
+        [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:true}, {itemName: "orange", id:3, checked:false},{itemName: "milk", id:4, checked:false}]
 
     const [loadedIngredients, setLoadedIngredients] = useState([]);
     const [items, setItems] = useState(sampleData)
-
+    const [idCounter,setIdCounter] = useState(5);
     const [inputValue, setInputValue] = useState('');
 
 
@@ -60,8 +60,10 @@ export const GroceryList = () => {
         }
         const newItem = {
             itemName: inputValue,
-            enabled: true
+            checked: true,
+            id: idCounter
         };
+        setIdCounter(idCounter + 1);
         const newItems = [...items, newItem];
         // // TODO need to add list ID of course later
         // fetch(`http://localhost:8000/grocery/add/${inputValue}`).catch((e) => {
@@ -72,7 +74,8 @@ export const GroceryList = () => {
     };
 
     const removeItem = (id) => {
-        fetch(`http://localhost:8000/grocery/remove/${id}`).then(() => getGroceries());
+        let newList = items.filter(item => item.id !== id)
+        setItems(newList)
     }
 
 
@@ -91,6 +94,11 @@ export const GroceryList = () => {
         setItems(newItems);
     };
 
+
+    function removeAllChecked(id) {
+        let newList = items.filter(item => item.checked === true)
+        setItems(newList)
+    }
 
     return (
 
@@ -122,8 +130,6 @@ export const GroceryList = () => {
                     return (
                         <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button onClick={() => toggleComplete(value.id)}>
                             <ListItemIcon>
-
-
                                 <Checkbox
                                     edge="start"
                                     checked={!value.checked}
@@ -150,7 +156,7 @@ export const GroceryList = () => {
             </div>
             <h3>Remove checked items</h3>
             {/*<IconButton edge="end" aria-label="delete">*/}
-                <Fab variant="extended">Clear list<RemoveShoppingCartIcon color={"default"}/>
+                <Fab variant="extended">Clear list<RemoveShoppingCartIcon color={"default"} onClick={removeAllChecked}/>
 
                 </Fab>
             {/*</IconButton>*/}
