@@ -22,8 +22,9 @@ export const Pantry = () => {
 
 
     const sampleData =
-        [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:true}]
+        [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:false}, {itemName: "bread", id: 3, checked:true}]
 
+    let idCounter = 5;
     const [loadedIngredients, setLoadedIngredients] = useState([]);
     const [items, setItems] = useState(sampleData)
     const [inputValue, setInputValue] = useState('');
@@ -56,7 +57,8 @@ export const Pantry = () => {
         }
         const newItem = {
             itemName: inputValue,
-            enabled: true
+            enabled: true,
+            id: idCounter++
         };
         const newItems = [...items, newItem];
         // // TODO need to add list ID of course later
@@ -68,7 +70,7 @@ export const Pantry = () => {
     };
 
     const removeItem = (id) => {
-        fetch(`http://localhost:8000/grocery/remove/${id}`).then(() => getGroceries());
+        // fetch(`http://localhost:8000/grocery/remove/${id}`).then(() => getGroceries());
     }
 
 

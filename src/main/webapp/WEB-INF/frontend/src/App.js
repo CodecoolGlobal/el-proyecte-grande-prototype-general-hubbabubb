@@ -11,6 +11,7 @@ import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
 import RecipeList from './recipe/RecipeList';
 import Card from './components/Card';
+import {FromMyPantry} from './pages/FromMyPantry';
 
 function App() {
     return (
@@ -27,6 +28,9 @@ function App() {
                 </Route>
                 <Route path="/pantry">
                     <Pantry/>
+                </Route>
+                <Route path="/from-my-pantry">
+                    <FromMyPantry/>
                 </Route>
                 <Route path="/login">
                     <LoginForm/>
