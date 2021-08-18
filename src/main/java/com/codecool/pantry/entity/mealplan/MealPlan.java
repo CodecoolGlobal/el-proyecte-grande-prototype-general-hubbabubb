@@ -34,6 +34,10 @@ public class MealPlan {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<AppUser> dislikes;
 
+    public MealPlan(Recipe recipe, LocalDateTime date) {
+        this.recipe = recipe;
+        this.date = date;
+    }
 
     public void likesHandler(AppUser appUser) {
         if (likes.contains(appUser)) {
