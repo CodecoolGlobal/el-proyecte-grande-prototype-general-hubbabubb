@@ -60,7 +60,7 @@ function Header() {
                     <button className="header-button">Recipes</button>
                     <div className="dropdown-content">
                         <a href="/search-recipe">Search by name</a>
-                        <a href="#">From my pantry</a>
+                        <a href="/from-my-pantry">From my pantry</a>
                         <a href="#">Favorite recipes</a>
                     </div>
                 </div>

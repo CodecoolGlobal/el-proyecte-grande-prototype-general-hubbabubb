@@ -11,13 +11,16 @@ import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
 import RecipeList from './recipe/RecipeList';
 import Card from './components/Card';
+import {useEffect, useState} from "react";
+
 import {FromMyPantry} from './pages/FromMyPantry';
 
 function App() {
+
     return (
         <Layout>
             <Switch>
-                <Route path="/" exact>
+                <Route path='/' exact>
                     <Home/>
                 </Route>
                 <Route path="/grocery-list">

@@ -1,6 +1,7 @@
 package com.codecool.pantry.entity.appuser;
 
 import com.codecool.pantry.entity.pantry.Pantry;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
