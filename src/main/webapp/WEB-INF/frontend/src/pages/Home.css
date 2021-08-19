@@ -1,4 +1,5 @@
 .App {
+    padding-top: 50px;
     text-align: center;
 }
 
@@ -15,7 +16,7 @@
 
 .App-header {
     padding: 0;
-    margin: -250px;
+    margin: -200px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
