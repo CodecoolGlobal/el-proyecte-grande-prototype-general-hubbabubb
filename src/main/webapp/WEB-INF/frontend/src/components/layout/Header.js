@@ -3,6 +3,7 @@ import FavoritesContext from "../../store/favorites-context";
 import {Row, Col} from "react-bootstrap";
 import logo from "../../components/logo.png"
 import './Header.module.css';
+import {NavLink} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
@@ -49,9 +50,9 @@ function Header() {
                 <div className="header-dropdown">
                     <button className="header-button">Pantry</button>
                     <div className="dropdown-content">
-                        <a href="/grocery-list">Grocery List</a>
-                        <a href="/pantry">Pantry Content</a>
-                        <a href="/meal-plan">Meal Plan</a>
+                        <NavLink to="/grocery-list">Grocery List</NavLink>
+                        <NavLink to="/pantry">Pantry Content</NavLink>
+                        <NavLink to="/meal-plan">Meal Plan</NavLink>
                     </div>
                 </div>
             </Col>
@@ -59,9 +60,9 @@ function Header() {
                 <div className="header-dropdown">
                     <button className="header-button">Recipes</button>
                     <div className="dropdown-content">
-                        <a href="/search-recipe">Search by name</a>
-                        <a href="/from-my-pantry">From my pantry</a>
-                        <a href="#">Favorite recipes</a>
+                        <NavLink to="/search-recipe">Search by name</NavLink>
+                        <NavLink to="/from-my-pantry">From my pantry</NavLink>
+                        <NavLink to="#">Favorite recipes</NavLink>
                     </div>
                 </div>
             </Col>
@@ -75,9 +76,9 @@ function Header() {
                 <div className="header-dropdown">
                     <button className="header-button">Tools</button>
                     <div className="dropdown-content">
-                        <a href="#">Pantry Settings</a>
-                        <a href="#">Ingredient info</a>
-                        <a href="#">Unit converter</a>
+                        <NavLink to="#">Pantry Settings</NavLink>
+                        <NavLink to="#">Ingredient info</NavLink>
+                        <NavLink to="#">Unit converter</NavLink>
                     </div>
                 </div>
             </Col>
