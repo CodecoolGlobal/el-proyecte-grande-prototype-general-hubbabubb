@@ -40,4 +40,26 @@ public class PantryService {
         pantry.setPantryList(newList);
         pantryRepository.save(pantry);
     }
+
+    public void moveItemsBetweenGroceryAndPantry(Long id, Set<ListItem> changedItems, boolean fromGroceryToPantry) {
+        if (getPantryById(id).isEmpty()) {
+            return;
+        }
+        Pantry pantry = getPantryById(id).get();
+
+        Set<ListItem> groceryList = pantry.getGroceryList();
+        Set<ListItem> pantryList = pantry.getPantryList();
+
+        if (fromGroceryToPantry) {
+            pantryList.addAll(changedItems);
+            groceryList.removeAll(changedItems);
+        } else {
+            groceryList.addAll(changedItems);
+            pantryList.removeAll(changedItems);
+        }
+
+        pantry.setPantryList(pantryList);
+        pantry.setGroceryList(groceryList);
+        pantryRepository.save(pantry);
+    }
 }

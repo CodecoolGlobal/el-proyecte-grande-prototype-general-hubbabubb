@@ -10,8 +10,10 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "base-64": "^1.0.0",
     "bootstrap": "^5.0.2",
     "http-proxy-middleware": "^0.19.1",
+    "material-ui": "^0.20.2",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0-beta.4",
     "react-bootstrap-typeahead": "^5.2.0",
@@ -49,6 +51,7 @@
   "proxy": "http://localhost:8080",
   "devDependencies": {
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/pickers": "^3.3.10",
     "prop-types": "^15.7.2"
   }
 }

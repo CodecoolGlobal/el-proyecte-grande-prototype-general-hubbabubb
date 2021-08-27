@@ -26,7 +26,7 @@ public class ListItem {
     private LocalDateTime expirationDate; //How important is it? Maybe in the future?
 
     @ManyToOne()
-    @JoinColumn(name="pantry_id")
+    @JoinColumn(name = "pantry_id")
     private Pantry pantry;
 
     public ListItem(String ingredientName) {
