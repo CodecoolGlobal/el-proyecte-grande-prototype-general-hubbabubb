@@ -25,6 +25,7 @@ export const GroceryList = () => {
     const sampleData =
         [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:true}, {itemName: "orange", id:3, checked:false},{itemName: "milk", id:4, checked:false}]
 
+
     const [loadedIngredients, setLoadedIngredients] = useState([]);
     const [items, setItems] = useState(sampleData)
     const [idCounter,setIdCounter] = useState(5);
