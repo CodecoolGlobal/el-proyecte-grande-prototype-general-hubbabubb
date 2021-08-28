@@ -12,6 +12,7 @@ import Card from './components/Card';
 
 import {FromMyPantry} from './pages/FromMyPantry';
 import MealPlan from './pages/MealPlan';
+import Login from './Login';
 
 function App() {
     return (
@@ -36,7 +37,7 @@ function App() {
                     <MealPlan/>
                 </Route>
                 <Route path="/login">
-                    <LoginForm/>
+                        <Login/>
                 </Route>
                 <Route path="/search-recipe">
                     <RecipeList/>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import axios from 'axios';
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -10,17 +11,26 @@ export default function LoginForm() {
         return email.length > 0 && password.length > 0;
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         let headers = new Headers();
         headers.set('Authorization', 'Basic ' + Buffer.from(email + ":" + password).toString('base64'),);
 
         event.preventDefault();
-        fetch("http://localhost:8080/api/v1/user", {
-            method:'GET',
-            headers: headers,
-        })
-            .then(data => data.json())
-            .then(json => console.log(json))
+        const response = await axios.post("http://localhost:8080/api/v1/user/authenticate", {
+            email: email,
+            password: password
+        });
+        localStorage.setItem("jwtToken", response.data.token);
+        localStorage.setItem("username", response.data.name)
+        console.log(response.data);
+
+        // fetch("http://localhost:8080/api/v1/user/authenticate", {
+        //     method: 'GET',
+        //     headers: headers,
+        // })
+        //     .then(data => data.json())
+        //     .then(json => () => localStorage.setItem("jwtToken", json.token)
+        //     )
     }
 
     return (

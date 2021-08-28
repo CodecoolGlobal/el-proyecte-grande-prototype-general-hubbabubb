@@ -3,7 +3,18 @@ server:
     include-message: always
     include-binding-errors: always
 
+jwt:
+  auth:
+    app: Spring-Security-App
+    secret-key: ???KKK
+    expires_in: 33600
+
+
+
 spring:
+  h2:
+    console:
+      enabled: true
   datasource:
     password: Delpiero10
     url: jdbc:postgresql://localhost:5432/pantry

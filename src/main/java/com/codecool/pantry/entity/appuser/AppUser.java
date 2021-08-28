@@ -57,9 +57,9 @@ public class AppUser implements UserDetails {
     private boolean locked = false;
     private boolean enabled = false;
 
-    @ManyToOne
-    @JoinColumn(name="pantry_id")
-    private Pantry pantry;
+//    @ManyToOne
+//    @JoinColumn(name="pantry_id")
+//    private Pantry pantry;
 
     public AppUser(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;

@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {FavoritesContextProvider} from "./store/favorites-context";
+import {Provider} from 'react-cookie/es6/CookiesContext';
 
 /*fetch("http://localhost:8080/api/v1/user")
     .then(data => data.json())

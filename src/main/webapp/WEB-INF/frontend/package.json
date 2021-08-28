@@ -19,6 +19,7 @@
     "react-bootstrap-typeahead": "^5.2.0",
     "react-cookie": "^4.0.3",
     "react-dom": "^17.0.2",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "reactstrap": "^8.9.0",
@@ -52,6 +53,8 @@
   "devDependencies": {
     "@material-ui/icons": "^4.11.2",
     "@material-ui/pickers": "^3.3.10",
-    "prop-types": "^15.7.2"
+    "axios": "^0.21.1",
+    "prop-types": "^15.7.2",
+    "react-redux": "^7.2.4"
   }
 }

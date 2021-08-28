@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import React from "react";
 import SearchIcon from '@material-ui/icons/Search';
 import LaunchIcon from '@material-ui/icons/Launch';
@@ -7,9 +7,9 @@ import {
     Grid, Paper
 } from "@material-ui/core";
 
-import { Modal } from "react-bootstrap"
+import {Modal} from "react-bootstrap"
 import Card from "../components/Card";
-
+import axios from 'axios';
 
 
 const RecipeList = () => {
@@ -17,12 +17,24 @@ const RecipeList = () => {
     const [searchWord, setSearchWord] = useState("")
     const spacing = 2
 
-    const getRecipes = async () => {
+    const getRecipes = () => {
+
+        const myHeaders = new Headers();
+
+        // myHeaders.append('Content-Type', 'application-json');
+        myHeaders.append('Authorization', localStorage.jwtToken);
+        // myHeaders.append("Access-Control-Allow-Origin", "*")
+        // myHeaders.append('Authorization', "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHVzZXIuY29tIiwiaWF0IjoxNjMwMTU1NTA0LCJleHAiOjE2MzAxNTY0MDR9.33OwS-X1OK4LucALwQ1CJxvOCvzbsDZC5OShXJ7nYrY");
+        console.log(myHeaders.get('Authorization'))
         const searchURL = `http://localhost:8080/api/v1/recipe/search/${searchWord}`
-        const response = await fetch(
-            searchURL);
-        await response.json().then((json) => setRecipes(json.results));
-    }
+        fetch(
+            searchURL, {method: 'GET', headers: myHeaders}).then(response =>
+            response.json()).then(json =>
+            setRecipes(json.results)).catch(err => console.log(err.message))
+    };
+
+
+    useEffect(() => getRecipes(), [])
 
     const [show, setShow] = useState(false);
 
@@ -54,14 +66,15 @@ const RecipeList = () => {
             </div>
 
             <div>
-                <Grid container xs={12} spacing={1}>
+                <Grid container spacing={1}>
                     <Grid item xs={12}>
                         <Grid wrap={"wrap"} container direction={"row"} justifyContent={"space-evenly"}
                               alignItems={"flex-start"} spacing={spacing}>
                             {recipes && recipes.map(recipe =>
 
 
-                                <Grid onClick={handleShow} alignContent={"center"} key={recipe.id} style={{textAlign: "center"}} item>
+                                <Grid onClick={handleShow} alignContent={"center"} key={recipe.id}
+                                      style={{textAlign: "center"}} item>
                                     <h2>{recipe.title}</h2>
                                     <img className="recipeImageBox"
                                          src={recipe.image}
@@ -70,18 +83,18 @@ const RecipeList = () => {
                                     {/*<p><QueryBuilderRoundedIcon/> 45 minutes </p>*/}
                                     {/*<p><FontAwesomeIcon icon={faTemperatureHigh}/> 180 °C</p>*/}
 
-                                        <Fab variant="extended"
-                                             color={"default"}
-                                             size={"large"}
+                                    <Fab variant="extended"
+                                         color={"default"}
+                                         size={"large"}
 
-                                        >Recipe<LaunchIcon/></Fab>
+                                    >Recipe<LaunchIcon/></Fab>
                                     <Paper/>
                                     <>
                                         <Modal show={show} onHide={handleClose}>
                                             <Modal.Header closeButton>
                                                 <Modal.Title>{recipe.title}</Modal.Title>
                                             </Modal.Header>
-                                            <Modal.Body><Card id={recipe.id} /></Modal.Body>
+                                            <Modal.Body><Card id={recipe.id}/></Modal.Body>
                                             <Modal.Footer>
                                                 <button onClick={handleClose}>
                                                     Close
