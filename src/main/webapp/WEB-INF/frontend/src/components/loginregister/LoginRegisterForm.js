@@ -92,9 +92,9 @@ const InnerContainer = styled.div`
     padding: 0 1.8em;
 `;
 
-export default function LoginRegisterForm() {
+export default function LoginRegisterForm(props) {
     const [isExpanded, setExpanded] = useState(false);
-    const [active, setActive] = useState("login")
+    const [active, setActive] = useState(props.active)
     const [isSuccessful, setIsSuccessful] = useState()
 
     const playExpandedAnimation = () => {
