@@ -12,7 +12,7 @@ const RegisterLoginContainer = styled.div`
     justify-content: center;
 `;
 
-function LoginRegister() {
+function LoginRegister(props) {
         return <Container>
         <Row className="justify-content-md-center">
             <Col >
@@ -20,7 +20,7 @@ function LoginRegister() {
             </Col>
             <Col>
                 <RegisterLoginContainer>
-                    <LoginRegisterForm />
+                    <LoginRegisterForm active={props.active}/>
                 </RegisterLoginContainer>
             </Col>
         </Row>
