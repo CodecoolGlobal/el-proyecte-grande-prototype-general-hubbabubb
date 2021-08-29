@@ -202,7 +202,7 @@ if (true) {
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(__react_refresh_utils__, __react_refresh_error_overlay__) {/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/Home */ "./src/pages/Home.js");
-/* harmony import */ var _pages_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Register */ "./src/pages/Register.js");
+/* harmony import */ var _pages_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/LoginRegister */ "./src/pages/Register.js");
 /* harmony import */ var _components_layout_Layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/layout/Layout */ "./src/components/layout/Layout.js");
 /* harmony import */ var _components_login_LoginForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/login/LoginForm */ "./src/components/login/LoginForm.js");
 /* harmony import */ var _pages_GroceryList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/GroceryList */ "./src/pages/GroceryList.js");
@@ -3563,7 +3563,7 @@ if (true) {
 
 /***/ "./src/pages/Register.js":
 /*!*******************************!*\
-  !*** ./src/pages/Register.js ***!
+  !*** ./src/pages/LoginRegister.js ***!
   \*******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -3577,7 +3577,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/react-refresh/runtime.js */ "./node_modules/react-refresh/runtime.js");
 __webpack_require__.$Refresh$.setup(module.i);
 
-var _jsxFileName = "/Users/hubbabubb/Documents/codecool/04. Java Spring/el-proyecte-grande-prototype-general-hubbabubb/src/main/webapp/WEB-INF/frontend/src/pages/Register.js";
+var _jsxFileName = "/Users/hubbabubb/Documents/codecool/04. Java Spring/el-proyecte-grande-prototype-general-hubbabubb/src/main/webapp/WEB-INF/frontend/src/pages/LoginRegister.js";
 
 
 

@@ -1,5 +1,10 @@
 .logo {
-    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    padding-top: 50px;
+    margin-right: -50px;
 }
 
 .pantry {

@@ -1,10 +1,10 @@
 import {Route, Switch} from 'react-router-dom';
 
 import Home from "./pages/Home";
-import Register from "./pages/Register";
+import LoginRegister from "./pages/LoginRegister";
 import Layout from "./components/layout/Layout";
 
-import LoginForm from "./components/login/LoginForm";
+import LoginForm from "./components/loginregister/LoginForm";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
 import RecipeList from './recipe/RecipeList';
@@ -14,9 +14,7 @@ import {FromMyPantry} from './pages/FromMyPantry';
 import MealPlan from './pages/MealPlan';
 import Login from './Login';
 
-
 function App() {
-
     return (
         <Layout>
             <Switch>
@@ -27,7 +25,7 @@ function App() {
                     <GroceryList/>
                 </Route>
                 <Route path="/register">
-                    <Register/>
+                    <LoginRegister/>
                 </Route>
                 <Route path="/pantry">
                     <Pantry/>

@@ -7,11 +7,11 @@ import {NavLink} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
-import LoginForm from "../login/LoginForm";
+import LoginForm from "../loginregister/LoginForm";
 
 function Header() {
     let favoritesContext = useContext(FavoritesContext);
-    const navigation = useRef();
+    const navigation = useRef("navigation");
 
     const inputs = [{
         name: "username",
