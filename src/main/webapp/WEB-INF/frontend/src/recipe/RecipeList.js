@@ -17,7 +17,7 @@ const RecipeList = () => {
     const [searchWord, setSearchWord] = useState("")
     const spacing = 2
 
-    const getRecipes = () => {
+    const getRecipes =  () => {
 
         const myHeaders = new Headers();
 
