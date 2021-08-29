@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import LoginRegister from "./pages/LoginRegister";
 import Layout from "./components/layout/Layout";
 
-import LoginForm from "./components/loginregister/LoginForm";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
 import RecipeList from './recipe/RecipeList';

@@ -11,7 +11,7 @@ export default function LoginForm(props) {
             <Input type={'password'} placeholder={'Password'}/>
             <SubmitButton type={'submit'}>Login</SubmitButton>
         </FormContainer>
-        <MutedLink>New here? <HighlightedText href="#" onClick={value}>
+        <MutedLink>New here? <HighlightedText href="#" onClick={switchToRegister}>
             Register
         </HighlightedText></MutedLink>
     </BoxContainer>
