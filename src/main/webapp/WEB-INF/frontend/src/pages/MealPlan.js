@@ -3,6 +3,7 @@ import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import StarsIcon from '@material-ui/icons/Stars';
+import {hostName} from "../util/constants";
 
 
 function MealPlan() {
@@ -180,7 +181,7 @@ function MealPlan() {
     }
 
     function sendDislike(mealPlanId) {
-        fetch(`http://localhost:8080/api/v1/meal-plan/dislike/${mealPlanId}/${userId}`)
+        fetch(`${hostName}/api/v1/meal-plan/dislike/${mealPlanId}/${userId}`)
             .then(() => {
                 console.log("DislikeSent")
             });

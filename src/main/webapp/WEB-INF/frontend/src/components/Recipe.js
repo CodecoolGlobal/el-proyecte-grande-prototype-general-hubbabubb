@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {Button} from '@material-ui/core';
-
+import {hostName} from "../util/constants";
 
 function Recipe(props) {
     let id = props.id;
-    const recipeUrl = `http://localhost:8080/api/v1/recipe/${id}`
+    const recipeUrl = `${hostName}/api/v1/recipe/${id}`
+    const myHeaders = new Headers();
+    myHeaders.append('Authorization', localStorage.jwtToken);
     const [recipe, setRecipe] = useState({id: 58987797, title: "Loading...", image: ""})
     const getRecipe = () => {
         fetch(
-            recipeUrl).then(res => res.json()).then(json => setRecipe(json));
+            recipeUrl,{method: 'GET', headers: myHeaders}).then(res => res.json()).then(json => setRecipe(json));
     }
 
     useEffect(() => {getRecipe()}, [recipe])

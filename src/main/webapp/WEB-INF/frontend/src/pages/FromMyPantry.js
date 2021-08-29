@@ -7,11 +7,12 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Paper
+    Paper, Link
 } from '@material-ui/core';
-import {Link, NavLink} from 'react-router-dom';
-import LaunchIcon from '@material-ui/icons/Launch';
 import React, {useState} from 'react';
+import LaunchIcon from '@material-ui/icons/Launch';
+import {NavLink} from 'react-bootstrap';
+import {hostName} from "../util/constants";
 
 export const FromMyPantry = () => {
 
@@ -32,13 +33,17 @@ export const FromMyPantry = () => {
     let ingredients = "";
 
     const getRecipes = async () => {
+        const myHeaders = new Headers();
+        myHeaders.append('Authorization', localStorage.jwtToken);
+        const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${ingredients}`
+        fetch(
+            searchURL, {method: 'GET', headers: myHeaders}).then(response =>
+            response.json()).then(json =>
+            setRecipes(json)).catch(err => console.log(err.message))
         console.log(recipes)
-        const searchURL = `http://localhost:8080/api/v1/recipe/by-ingredients/${ingredients}`
-        console.log(searchURL)
-        await fetch(
-            searchURL).then(res => res.json()).then((json) => setRecipes(json));
-        console.log(recipes)
-    }
+    };
+
+
 
     const handleAddButtonClick = () => {
         for (let item of items) {
@@ -111,7 +116,7 @@ export const FromMyPantry = () => {
                             {recipes && recipes.map(recipe =>
 
 
-                                <Grid alignContent={"center"} key={recipe.id} style={{textAlign: "center"}} item>
+                                <Grid key={recipe.id} style={{textAlign: "center"}} item>
                                     <h2>{recipe.title}</h2>
                                     <NavLink to={`/recipe/${recipe.id}`}>
                                         <img className="recipeImageBox"
@@ -137,40 +142,7 @@ export const FromMyPantry = () => {
 
                 </Grid>
             </div>
-            <div>
-                <Grid container xs={12} spacing={1}>
-                    <Grid item xs={12}>
-                        <Grid wrap={"wrap"} container direction={"row"} justifyContent={"space-evenly"}
-                              alignItems={"flex-start"} spacing={spacing}>
-                            {recipes && recipes.map(recipe =>
 
-
-                                <Grid alignContent={"center"} key={recipe.id} style={{textAlign: "center"}} item>
-                                    <h2>{recipe.title}</h2>
-                                    <NavLink to={`/recipe/${recipe.id}`}>
-                                        <img className="recipeImageBox"
-                                             src={recipe.image}
-                                             alt="Kép, valami nem jó"/>
-                                    </NavLink>
-                                    <Divider variant="middle"/>
-                                    {/*<p><QueryBuilderRoundedIcon/> 45 minutes </p>*/}
-                                    {/*<p><FontAwesomeIcon icon={faTemperatureHigh}/> 180 °C</p>*/}
-
-                                    <Link style={{textDecoration: 'none'}} to={`/recipe/${recipe.id}`}>
-                                        <Fab variant="extended"
-                                             color={"default"}
-                                             size={"large"}
-
-                                        >Recipe<LaunchIcon/></Fab>
-                                    </Link>
-                                    <Paper/>
-                                </Grid>
-                            )}
-                        </Grid>
-                    </Grid>
-
-                </Grid>
-            </div>
         </div>
     )
 }

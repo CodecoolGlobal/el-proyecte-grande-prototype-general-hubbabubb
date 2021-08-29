@@ -2,6 +2,7 @@ import React, {useContext, useState} from "react";
 import {BoxContainer, ErrorText, FormContainer, HighlightedText, Input, MutedLink, SubmitButton} from "./Common";
 import {AccountContext} from './accountContext';
 import {postFetch} from "../../util/fetchData";
+import {hostName} from "../../util/constants";
 
 export default function RegisterForm(props) {
     const {switchToLogin} = useContext(AccountContext)
@@ -52,7 +53,7 @@ export default function RegisterForm(props) {
                 "email": email,
                 "password": password
             }
-            postFetch('localhost:8080/api/v1/registration', data, extendAndStop, extendAndStop)
+            postFetch(`${hostName}/api/v1/registration`, data, extendAndStop, extendAndStop)
         }
     }
     return <BoxContainer>

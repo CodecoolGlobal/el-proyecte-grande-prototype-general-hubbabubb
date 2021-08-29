@@ -77,6 +77,7 @@ export const Pantry = () => {
         setItems(newList)
     }
 
+    // TODO: collect list methods and remove duplications
     const removeItem = (id) => {
         let newList = items.filter(item => item.id !== id)
         setItems(newList)

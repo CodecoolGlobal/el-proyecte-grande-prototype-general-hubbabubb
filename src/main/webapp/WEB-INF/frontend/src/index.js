@@ -11,9 +11,12 @@ import {Provider} from 'react-cookie/es6/CookiesContext';
 ReactDOM.render(
     <React.StrictMode>
         <FavoritesContextProvider>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
+
+            <Provider value={"auth"}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </Provider>
         </FavoritesContextProvider>
     </React.StrictMode>,
     document.getElementById('root'))
