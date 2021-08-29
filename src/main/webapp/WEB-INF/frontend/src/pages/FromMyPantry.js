@@ -12,6 +12,7 @@ import {
 import React, {useState} from 'react';
 import LaunchIcon from '@material-ui/icons/Launch';
 import {NavLink} from 'react-bootstrap';
+import {hostName} from "../util/constants";
 
 export const FromMyPantry = () => {
 
@@ -34,7 +35,7 @@ export const FromMyPantry = () => {
     const getRecipes = async () => {
         const myHeaders = new Headers();
         myHeaders.append('Authorization', localStorage.jwtToken);
-        const searchURL = `http://localhost:8080/api/v1/recipe/by-ingredients/${ingredients}`
+        const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${ingredients}`
         fetch(
             searchURL, {method: 'GET', headers: myHeaders}).then(response =>
             response.json()).then(json =>

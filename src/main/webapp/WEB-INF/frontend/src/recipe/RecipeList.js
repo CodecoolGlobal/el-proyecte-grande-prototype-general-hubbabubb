@@ -10,6 +10,7 @@ import {
 import {Modal} from "react-bootstrap"
 import axios from 'axios';
 import Recipe from "../components/Recipe";
+import {hostName} from "../util/constants";
 
 
 const RecipeList = () => {
@@ -26,7 +27,7 @@ const RecipeList = () => {
         // myHeaders.append("Access-Control-Allow-Origin", "*")
         // myHeaders.append('Authorization', "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHVzZXIuY29tIiwiaWF0IjoxNjMwMTU1NTA0LCJleHAiOjE2MzAxNTY0MDR9.33OwS-X1OK4LucALwQ1CJxvOCvzbsDZC5OShXJ7nYrY");
         console.log(myHeaders.get('Authorization'))
-        const searchURL = `http://localhost:8080/api/v1/recipe/search/${searchWord}`
+        const searchURL = `${hostName}/api/v1/recipe/search/${searchWord}`
         fetch(
             searchURL, {method: 'GET', headers: myHeaders}).then(response =>
             response.json()).then(json =>

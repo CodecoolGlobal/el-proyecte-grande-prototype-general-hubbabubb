@@ -18,6 +18,7 @@ import {
     faUndo
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {hostName} from "../../util/constants";
 
 // import { authenticateUser } from "../../services/index";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -40,7 +41,7 @@ const LoginFormJwt = () => {
     const authenticateUser = (email, password) => async (dispatch) => {
         dispatch(loginRequest());
         try {
-            const response = await axios.post("http://localhost:8080/api/v1/user/authenticate", {
+            const response = await axios.post(`${hostName}/api/v1/user/authenticate`, {
                 email: email,
                 password: password
             });

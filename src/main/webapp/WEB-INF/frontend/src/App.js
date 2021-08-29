@@ -1,16 +1,15 @@
 import {Route, Switch} from 'react-router-dom';
 
 import Home from "./pages/Home";
-import Register from "./pages/Register";
 import Layout from "./components/layout/Layout";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
 import RecipeList from './recipe/RecipeList';
-import Card from './components/Card';
 
 import {FromMyPantry} from './pages/FromMyPantry';
 import MealPlan from './pages/MealPlan';
 import Login from './Login';
+import LoginRegister from "./pages/LoginRegister";
 
 function App() {
     return (
@@ -23,7 +22,7 @@ function App() {
                     <GroceryList/>
                 </Route>
                 <Route path="/register">
-                    <Register/>
+                    <LoginRegister/>
                 </Route>
                 <Route path="/pantry">
                     <Pantry/>
@@ -39,9 +38,6 @@ function App() {
                 </Route>
                 <Route path="/search-recipe">
                     <RecipeList/>
-                </Route>
-                <Route path="/recipe/:id">
-                    <Card/>
                 </Route>
             </Switch>
         </Layout>
