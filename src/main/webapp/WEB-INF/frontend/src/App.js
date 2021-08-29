@@ -8,18 +8,20 @@ import LoginForm from "./components/login/LoginForm";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
 import RecipeList from './recipe/RecipeList';
-import Card from './components/Card';
+import Recipe from './components/Recipe';
 
 import {FromMyPantry} from './pages/FromMyPantry';
 import MealPlan from './pages/MealPlan';
 import Login from './Login';
 
+
 function App() {
+
     return (
         <Layout>
             <Switch>
                 <Route path='/' exact>
-                    <Home />
+                    <Home/>
                 </Route>
                 <Route path="/grocery-list">
                     <GroceryList/>
@@ -43,7 +45,7 @@ function App() {
                     <RecipeList/>
                 </Route>
                 <Route path="/recipe/:id">
-                    <Card/>
+                    <Recipe/>
                 </Route>
             </Switch>
         </Layout>

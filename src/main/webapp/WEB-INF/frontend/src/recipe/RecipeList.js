@@ -8,8 +8,8 @@ import {
 } from "@material-ui/core";
 
 import {Modal} from "react-bootstrap"
-import Card from "../components/Card";
 import axios from 'axios';
+import Recipe from "../components/Recipe";
 
 
 const RecipeList = () => {
@@ -94,7 +94,8 @@ const RecipeList = () => {
                                             <Modal.Header closeButton>
                                                 <Modal.Title>{recipe.title}</Modal.Title>
                                             </Modal.Header>
-                                            <Modal.Body><Card id={recipe.id}/></Modal.Body>
+
+                                            <Modal.Body><Recipe id={recipe.id} /></Modal.Body>
                                             <Modal.Footer>
                                                 <button onClick={handleClose}>
                                                     Close

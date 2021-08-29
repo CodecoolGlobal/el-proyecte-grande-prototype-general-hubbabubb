@@ -1,10 +1,14 @@
 import RegisterForm from "../components/login/RegisterForm";
 import {Container, Row, Col} from "react-bootstrap";
+import LogoAnimation from "../components/LogoAnimation";
 
 function Register() {
         return <Container>
         <Row className="justify-content-md-center">
-            <Col xs lg="2">
+            <Col>
+                <LogoAnimation />
+            </Col>
+            <Col>
                 <RegisterForm />
             </Col>
         </Row>

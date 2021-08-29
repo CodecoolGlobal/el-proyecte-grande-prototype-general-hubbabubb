@@ -1,6 +1,6 @@
-import {useRef} from 'react';
+import React, {useRef} from 'react';
 import { useHistory } from 'react-router-dom'
-import {Form, Button, Card} from "reactstrap";
+import {Form, Button, Card, Container} from "reactstrap";
 
 
 function RegisterForm() {
@@ -41,8 +41,8 @@ function RegisterForm() {
         });
     }
 
-    return <Card style={{width: '18rem'}}>
-        <Card.Header>Register</Card.Header>
+    return <Container style={{width: '18rem'}}>
+        <h1>Create your pantry!</h1>
         <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="control.name">
                 <Form.Label>Name:</Form.Label>
@@ -63,7 +63,7 @@ function RegisterForm() {
                 Submit
             </Button>
         </Form>
-    </Card>
+    </Container>
 
 }
 
