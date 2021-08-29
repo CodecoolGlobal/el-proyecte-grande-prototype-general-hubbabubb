@@ -1,9 +1,10 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {motion} from 'framer-motion';
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import {AccountContext} from "./accountContext";
+import {HighlightedText} from "./Common";
 
 const BoxContainer = styled.div`
     width: 280px;
@@ -76,13 +77,16 @@ const HeaderText = styled.h2`
 `;
 
 const SmallText = styled.h5`
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
-    color: #fff;
+    color: black;
+    z-index: 10;
+    font-family: 'Oswald';
 `;
 
 const InnerContainer = styled.div`
     width: 100%;
+    margin-top: -30px;
     display: flex;
     flex-direction: column;
     padding: 0 1.8em;
@@ -91,12 +95,17 @@ const InnerContainer = styled.div`
 export default function LoginRegisterForm() {
     const [isExpanded, setExpanded] = useState(false);
     const [active, setActive] = useState("login")
+    const [isSuccessful, setIsSuccessful] = useState()
 
     const playExpandedAnimation = () => {
         setExpanded(true);
         setTimeout(() => {
             setExpanded(false);
         }, expendingTransition.duration * 1000 - 1500)
+    }
+    const extendAndStop = () => {
+        setExpanded(true);
+        setIsSuccessful(true);
     }
 
     const switchToRegister = () => {
@@ -112,7 +121,7 @@ export default function LoginRegisterForm() {
         }, 400);
     };
 
-    const contextValue = { switchToRegister, switchToLogin };
+    const contextValue = { switchToRegister, switchToLogin, extendAndStop };
 
     return (
         <AccountContext.Provider value={contextValue}>
@@ -124,13 +133,17 @@ export default function LoginRegisterForm() {
                         variants={backDropVariants}
                         transition={expendingTransition}
                     />
-                    {active === "login" && <HeaderContainer>
+                    {active === "login" && isSuccessful === null && <HeaderContainer>
                         <HeaderText>Log in </HeaderText>
                         <HeaderText>to your pantry! </HeaderText>
                     </HeaderContainer>}
-                    {active === "register" && <HeaderContainer>
+                    {active === "register" && isSuccessful === null  && <HeaderContainer>
                         <HeaderText>Register </HeaderText>
                         <HeaderText>your pantry! </HeaderText>
+                        </HeaderContainer>}
+                    {isSuccessful === true && <HeaderContainer>
+                        <HeaderText>Thank you!</HeaderText>
+                        <SmallText>We sent you a confirmation email!</SmallText>
                     </HeaderContainer>}
                 </TopContainer>
                 <InnerContainer>

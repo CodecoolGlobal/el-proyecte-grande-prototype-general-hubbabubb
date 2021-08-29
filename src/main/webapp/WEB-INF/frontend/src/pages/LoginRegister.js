@@ -15,7 +15,7 @@ const RegisterLoginContainer = styled.div`
 function LoginRegister() {
         return <Container>
         <Row className="justify-content-md-center">
-            <Col>
+            <Col >
                 <LogoAnimation />
             </Col>
             <Col>
