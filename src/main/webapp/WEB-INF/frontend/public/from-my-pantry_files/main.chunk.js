@@ -202,13 +202,13 @@ if (true) {
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(__react_refresh_utils__, __react_refresh_error_overlay__) {/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/Home */ "./src/pages/Home.js");
-/* harmony import */ var _pages_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Register */ "./src/pages/Register.js");
+/* harmony import */ var _pages_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/LoginRegister */ "./src/pages/Register.js");
 /* harmony import */ var _components_layout_Layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/layout/Layout */ "./src/components/layout/Layout.js");
 /* harmony import */ var _components_login_LoginForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/login/LoginForm */ "./src/components/login/LoginForm.js");
 /* harmony import */ var _pages_GroceryList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/GroceryList */ "./src/pages/GroceryList.js");
 /* harmony import */ var _pages_Pantry__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Pantry */ "./src/pages/Pantry.js");
 /* harmony import */ var _recipe_RecipeList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./recipe/RecipeList */ "./src/recipe/RecipeList.js");
-/* harmony import */ var _components_Card__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Card */ "./src/components/Card.js");
+/* harmony import */ var _components_Card__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Recipe */ "./src/components/Card.js");
 /* harmony import */ var _pages_FromMyPantry__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/FromMyPantry */ "./src/pages/FromMyPantry.js");
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_10__);
@@ -539,7 +539,7 @@ if (true) {
 
 /***/ "./src/components/Card.js":
 /*!********************************!*\
-  !*** ./src/components/Card.js ***!
+  !*** ./src/components/Recipe.js ***!
   \********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -553,7 +553,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/react-refresh/runtime.js */ "./node_modules/react-refresh/runtime.js");
 __webpack_require__.$Refresh$.setup(module.i);
 
-var _jsxFileName = "/Users/hubbabubb/Documents/codecool/04. Java Spring/el-proyecte-grande-prototype-general-hubbabubb/src/main/webapp/WEB-INF/frontend/src/components/Card.js",
+var _jsxFileName = "/Users/hubbabubb/Documents/codecool/04. Java Spring/el-proyecte-grande-prototype-general-hubbabubb/src/main/webapp/WEB-INF/frontend/src/components/Recipe.js",
     _s = __webpack_require__.$Refresh$.signature();
 
 
@@ -3563,7 +3563,7 @@ if (true) {
 
 /***/ "./src/pages/Register.js":
 /*!*******************************!*\
-  !*** ./src/pages/Register.js ***!
+  !*** ./src/pages/LoginRegister.js ***!
   \*******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -3577,7 +3577,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/react-refresh/runtime.js */ "./node_modules/react-refresh/runtime.js");
 __webpack_require__.$Refresh$.setup(module.i);
 
-var _jsxFileName = "/Users/hubbabubb/Documents/codecool/04. Java Spring/el-proyecte-grande-prototype-general-hubbabubb/src/main/webapp/WEB-INF/frontend/src/pages/Register.js";
+var _jsxFileName = "/Users/hubbabubb/Documents/codecool/04. Java Spring/el-proyecte-grande-prototype-general-hubbabubb/src/main/webapp/WEB-INF/frontend/src/pages/LoginRegister.js";
 
 
 
@@ -3712,7 +3712,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_icons_Launch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Launch__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
-/* harmony import */ var _components_Card__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Card */ "./src/components/Card.js");
+/* harmony import */ var _components_Card__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Recipe */ "./src/components/Card.js");
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_6__);
 __webpack_require__.$Refresh$.runtime = __webpack_require__(/*! ./node_modules/react-refresh/runtime.js */ "./node_modules/react-refresh/runtime.js");

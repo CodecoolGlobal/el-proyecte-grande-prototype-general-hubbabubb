@@ -1,10 +1,9 @@
 package com.codecool.pantry.service.appuser.registration;
 
 import com.codecool.pantry.controller.appuser.registration.RegistrationRequest;
-import com.codecool.pantry.entity.appuser.AppUser;
-import com.codecool.pantry.email.EmailValidator;
 import com.codecool.pantry.email.EmailSender;
-import com.codecool.pantry.entity.pantry.Pantry;
+import com.codecool.pantry.email.EmailValidator;
+import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.token.ConfirmationToken;
 import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.token.ConfirmationTokenService;
@@ -18,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RegistrationService {
 
-    private EmailValidator validator;
+    private final EmailValidator validator;
     private final AppUserService service;
     private final ConfirmationTokenService tokenService;
     private final EmailSender sender;

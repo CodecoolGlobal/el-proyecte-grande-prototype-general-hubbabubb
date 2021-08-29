@@ -6,9 +6,10 @@ import {
     Divider, Fab,
     Grid, Paper
 } from "@material-ui/core";
-import {Modal} from "react-bootstrap"
-import Card from "../components/Card";
 
+import {Modal} from "react-bootstrap"
+import axios from 'axios';
+import Recipe from "../components/Recipe";
 
 
 const RecipeList = () => {
@@ -16,7 +17,7 @@ const RecipeList = () => {
     const [searchWord, setSearchWord] = useState("")
     const spacing = 2
 
-    const getRecipes =  () => {
+    const getRecipes = () => {
 
         const myHeaders = new Headers();
 
@@ -93,7 +94,8 @@ const RecipeList = () => {
                                             <Modal.Header closeButton>
                                                 <Modal.Title>{recipe.title}</Modal.Title>
                                             </Modal.Header>
-                                            <Modal.Body><Card id={recipe.id}/></Modal.Body>
+
+                                            <Modal.Body><Recipe id={recipe.id} /></Modal.Body>
                                             <Modal.Footer>
                                                 <button onClick={handleClose}>
                                                     Close
