@@ -3,8 +3,6 @@ import {Route, Switch} from 'react-router-dom';
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Layout from "./components/layout/Layout";
-
-import LoginForm from "./components/login/LoginForm";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
 import RecipeList from './recipe/RecipeList';
@@ -18,8 +16,8 @@ function App() {
     return (
         <Layout>
             <Switch>
-                <Route path='/' exact>
-                    <Home />
+                <Route path="/" exact>
+                    <Home/>
                 </Route>
                 <Route path="/grocery-list">
                     <GroceryList/>
@@ -33,11 +31,11 @@ function App() {
                 <Route path="/from-my-pantry">
                     <FromMyPantry/>
                 </Route>
-                <Route path='/meal-plan'>
+                <Route path="/meal-plan">
                     <MealPlan/>
                 </Route>
                 <Route path="/login">
-                        <Login/>
+                    <Login/>
                 </Route>
                 <Route path="/search-recipe">
                     <RecipeList/>

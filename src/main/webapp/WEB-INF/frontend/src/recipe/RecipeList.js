@@ -6,10 +6,9 @@ import {
     Divider, Fab,
     Grid, Paper
 } from "@material-ui/core";
-
 import {Modal} from "react-bootstrap"
 import Card from "../components/Card";
-import axios from 'axios';
+
 
 
 const RecipeList = () => {
