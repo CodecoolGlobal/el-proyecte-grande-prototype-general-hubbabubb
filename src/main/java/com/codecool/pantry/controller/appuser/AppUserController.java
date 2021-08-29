@@ -1,6 +1,7 @@
 package com.codecool.pantry.controller.appuser;
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.security.config.JwtTokenProvider;
 import com.codecool.pantry.service.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.json.JSONException;
@@ -11,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -42,7 +42,7 @@ public class AppUserController {
         return user;
     }*/
 
-    @CrossOrigin(origins = "http://localhost/")
+
     @GetMapping(path = "/default")
     public AppUser getDefaultUser() {
         AppUser appUser = service.getUserByEmail("user@pantry.hu");
