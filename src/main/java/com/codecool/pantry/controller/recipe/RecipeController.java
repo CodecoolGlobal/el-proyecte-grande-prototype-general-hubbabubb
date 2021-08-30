@@ -4,6 +4,7 @@ package com.codecool.pantry.controller.recipe;
 import lombok.AllArgsConstructor;
 import com.codecool.pantry.entity.recipe.Recipe;
 import com.codecool.pantry.repository.recipe.RecipeRepository;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -19,10 +20,10 @@ public class RecipeController {
 
 //    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
 //    private final String API_KEY1 = "a22052fbcfef4a2fac111f33a93898d8";
-    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
-//    private final String API_KEY2 = "b880826d2c53495f8fb1fa608db88577";
+//    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
+//    private final String API_KEY = "b880826d2c53495f8fb1fa608db88577";
 
-//    private final String API_KEY33 = "099bdb5cd6ad48e28faab2065fdc4467";
+   private final String API_KEY = "099bdb5cd6ad48e28faab2065fdc4467";
 
 
 //    @PostMapping

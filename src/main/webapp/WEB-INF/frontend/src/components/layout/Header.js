@@ -1,46 +1,20 @@
 import React, {useContext, useRef} from "react";
-import FavoritesContext from "../../store/favorites-context";
-import {Row, Col} from "react-bootstrap";
+import {Row, Col, Dropdown} from "react-bootstrap";
 import logo from "../../components/logo.png"
 import './Header.module.css';
-import {NavLink} from 'react-router-dom';
+import {NavLink, withRouter} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
-import LoginForm from "../loginregister/LoginForm";
+import {SearchInput} from "../../store/recipe-search-input";
 
-function Header() {
-    let favoritesContext = useContext(FavoritesContext);
+function Header(props) {
+    const {setSearchField} = useContext(SearchInput);
     const navigation = useRef("navigation");
 
-    const inputs = [{
-        name: "username",
-        placeholder: "username",
-        type: "text"
-    },{
-        name: "password",
-        placeholder: "password",
-        type: "password"
-    },{
-        type: "submit",
-        value: "Submit",
-        className: "btn"
-    }]
-
-    const props = {
-        name: 'loginForm',
-        method: 'POST',
-        action: '/perform_login',
-        inputs: inputs
-    }
-
-    const params = new URLSearchParams(window.location.search)
-
-    function openMenu() {
-        if (navigation.className === "top-navigation") {
-            navigation.className += " responsive";
-        } else {
-            navigation.className = "top-navigation";
+    function handleEnter(e) {
+        if (e.key === 'Enter') {
+            props.history.push("/search-recipe");
         }
     }
 
@@ -50,8 +24,8 @@ function Header() {
                 <div className="header-dropdown">
                     <button className="header-button">Pantry</button>
                     <div className="dropdown-content">
+                        <NavLink to="/pantry">My Pantry</NavLink>
                         <NavLink to="/grocery-list">Grocery List</NavLink>
-                        <NavLink to="/pantry">Pantry Content</NavLink>
                         <NavLink to="/meal-plan">Meal Plan</NavLink>
                     </div>
                 </div>
@@ -60,7 +34,11 @@ function Header() {
                 <div className="header-dropdown">
                     <button className="header-button">Recipes</button>
                     <div className="dropdown-content">
-                        <NavLink to="/search-recipe">Search by name</NavLink>
+                        <input
+                            placeholder={'Search by name'}
+                            onChange={(e) => setSearchField(e.target.value)}
+                            onKeyPress={(e) => handleEnter(e)}
+                        />
                         <NavLink to="/from-my-pantry">From my pantry</NavLink>
                         <NavLink to="#">Favorite recipes</NavLink>
                     </div>
@@ -68,7 +46,7 @@ function Header() {
             </Col>
             <Col className="center-button">
                 <img width={300} src={logo} alt='logo' />
-                <button className="icon" onClick={openMenu}>
+                <button className="icon">
                     <FontAwesomeIcon icon={faEllipsisV} />
                 </button>
             </Col>
@@ -76,7 +54,6 @@ function Header() {
                 <div className="header-dropdown">
                     <button className="header-button">Tools</button>
                     <div className="dropdown-content">
-                        <NavLink to="#">Pantry Settings</NavLink>
                         <NavLink to="#">Ingredient info</NavLink>
                         <NavLink to="#">Unit converter</NavLink>
                     </div>
@@ -86,7 +63,10 @@ function Header() {
                 <div className="header-dropdown">
                     <button className="header-button">Profile</button>
                     <div className="dropdown-content">
-                        <LoginForm {...props} error={params.get('error')} />
+                        <NavLink to="#">Edit profile</NavLink>
+                        <NavLink to="#">Pantry settings</NavLink>
+                        <Dropdown.Divider />
+                        <NavLink to="#">Logout</NavLink>
                     </div>
                 </div>
             </Col>
@@ -100,4 +80,4 @@ function Header() {
     </div>
 }
 
-export default Header;
+export default withRouter(Header);

@@ -1,9 +1,15 @@
-export function getFetch(url, callback) {
-    fetch(url)
-        .then(data => data.json())
-        .then(jsonData => {
+export function getFetch(url, callback, errorHandling) {
+    fetch(url, {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Authorization': localStorage.jwtToken
+        }
+    })
+        .then((data) => data.json())
+        .then((jsonData) => {
             callback(jsonData);
         })
+        .catch(error => errorHandling(error))
 }
 
 export function postFetch(url, data, callback, errorHandling) {
@@ -12,11 +18,9 @@ export function postFetch(url, data, callback, errorHandling) {
         mode: 'no-cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.jwtToken
         },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify(data) // body data type must match "Content-Type" header
     })
         .then(data => data.json())
