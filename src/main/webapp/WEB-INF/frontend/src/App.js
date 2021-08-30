@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Layout from "./components/layout/Layout";
 import {GroceryList} from './pages/GroceryList';
 import {Pantry} from './pages/Pantry';
+
 import RecipeList from './recipe/RecipeList';
 
 import {FromMyPantry} from './pages/FromMyPantry';
@@ -37,6 +38,9 @@ function App() {
                 </Route>
                 <Route path="/from-my-pantry">
                     <FromMyPantry/>
+                </Route>
+                <Route path='/meal-plan'>
+                    <MealPlan/>
                 </Route>
             </Switch>
         </Layout>
