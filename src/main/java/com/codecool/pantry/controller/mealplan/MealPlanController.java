@@ -22,7 +22,7 @@ public class MealPlanController {
 
     @GetMapping(path = "/like/{mealPlanId}/{userId}")
     public String toLikes(@PathVariable("mealPlanId") Long mealPlanId,
-                             @PathVariable("userId") Long userId) {
+                          @PathVariable("userId") Long userId) {
         mealPlanService.like(mealPlanId, userId);
         return "likes route" + mealPlanId + " " + userId;
     }

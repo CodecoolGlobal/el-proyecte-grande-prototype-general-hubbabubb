@@ -8,7 +8,7 @@
 
 .main {
     background-image: linear-gradient(#E4F1EB, #F2F8F5);
-    padding: 0 20px 0 20px;
+    padding: 150px 20px 0 20px;
     height: 100vh;
     position: page;
 }
@@ -90,8 +90,9 @@ p, li, ul {
 
 /* Navbar container */
 .header-navbar {
-
-    position: sticky;
+    position: fixed;
+    top: 0;
+    width: 100%;
     background-color: rgba(228, 241, 235, 0.8);
 }
 
@@ -211,10 +212,12 @@ p, li, ul {
 .grocery-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 20px 0 20px 0;
     border-bottom: 1px #fbc1bb solid;
-
+    font-family: "Oswald", serif;
+    font-size: 16px;
+    color: #171616;
 }
 
 .grocery-list {
@@ -225,11 +228,21 @@ p, li, ul {
     align-items: center;
     border-radius: 5px;
     padding: 20px 20px 30px;
-    box-shadow: 10px 10px 26px 0 rgba(0, 0, 0, 0.35);
+    /*box-shadow: 10px 10px 26px 0 rgba(0, 0, 0, 0.35);*/
+    border: 2px solid #131313;
 }
 
 .grocery-list-container {
     display: flex;
     flex-direction: column;
     align-items:center
+}
+
+.MuiTypography-body2 {
+    font-family: Oswald, serif !important;
+    font-size: 18px !important;
+}
+
+.cart {
+    margin: 30px;
 }
