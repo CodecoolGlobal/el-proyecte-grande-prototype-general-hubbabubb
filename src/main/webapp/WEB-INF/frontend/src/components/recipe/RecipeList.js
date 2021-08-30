@@ -16,7 +16,6 @@ function RecipeList(props) {
     return <RecipeTable>
         {props.recipes.map((recipe) => {
             return <Grid>
-
                 <RecipeListItem title={recipe.title} id={recipe.id} image={recipe.image} />
             </Grid>
         })}
