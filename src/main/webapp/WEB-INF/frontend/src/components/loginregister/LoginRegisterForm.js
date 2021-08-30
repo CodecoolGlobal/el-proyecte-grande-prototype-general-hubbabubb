@@ -95,7 +95,7 @@ const InnerContainer = styled.div`
 export default function LoginRegisterForm(props) {
     const [isExpanded, setExpanded] = useState(false);
     const [active, setActive] = useState(props.active)
-    const [isSuccessful, setIsSuccessful] = useState()
+    const [isSuccessful, setIsSuccessful] = useState(null)
 
     const playExpandedAnimation = () => {
         setExpanded(true);

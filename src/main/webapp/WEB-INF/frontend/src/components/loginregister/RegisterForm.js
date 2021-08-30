@@ -48,12 +48,12 @@ export default function RegisterForm(props) {
 
         if (allInputsValid()) {
             const data = {
-                "first_name": firstName,
-                "last_name": lastName,
+                "firstName": firstName,
+                "lastName": lastName,
                 "email": email,
                 "password": password
             }
-            postFetch(`${hostName}/api/v1/registration`, data, extendAndStop, extendAndStop)
+            postFetch(`/api/v1/registration`, data, extendAndStop, (err) => { console.log(err) })
         }
     }
     return <BoxContainer>

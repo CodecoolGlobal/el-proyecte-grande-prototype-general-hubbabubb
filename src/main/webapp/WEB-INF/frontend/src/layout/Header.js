@@ -1,12 +1,12 @@
 import React, {useContext, useRef} from "react";
 import {Row, Col, Dropdown} from "react-bootstrap";
-import logo from "../../components/logo.png"
+import logo from "../components/logo.png"
 import './Header.module.css';
 import {NavLink, withRouter} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
-import {SearchInput} from "../../store/recipe-search-input";
+import {SearchInput} from "../store/recipe-search-input";
 
 function Header(props) {
     const {setSearchField} = useContext(SearchInput);
