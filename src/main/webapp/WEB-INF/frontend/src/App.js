@@ -8,7 +8,6 @@ import RecipeList from './recipe/RecipeList';
 
 import {FromMyPantry} from './pages/FromMyPantry';
 import MealPlan from './pages/MealPlan';
-import Login from './Login';
 import LoginRegister from "./pages/LoginRegister";
 
 function App() {
@@ -18,26 +17,26 @@ function App() {
                 <Route path="/" exact>
                     <Home/>
                 </Route>
-                <Route path="/grocery-list">
-                    <GroceryList/>
+                <Route path="/login">
+                    <LoginRegister active={"login"}/>
                 </Route>
                 <Route path="/register">
-                    <LoginRegister/>
+                    <LoginRegister active={"register"}/>
                 </Route>
                 <Route path="/pantry">
                     <Pantry/>
                 </Route>
-                <Route path="/from-my-pantry">
-                    <FromMyPantry/>
+                <Route path="/grocery-list">
+                    <GroceryList/>
                 </Route>
                 <Route path="/meal-plan">
                     <MealPlan/>
                 </Route>
-                <Route path="/login">
-                    <Login/>
-                </Route>
                 <Route path="/search-recipe">
                     <RecipeList/>
+                </Route>
+                <Route path="/from-my-pantry">
+                    <FromMyPantry/>
                 </Route>
             </Switch>
         </Layout>
