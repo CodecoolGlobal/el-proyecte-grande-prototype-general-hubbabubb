@@ -8,7 +8,6 @@ import {
 } from "@material-ui/core";
 
 import {Modal} from "react-bootstrap"
-import axios from 'axios';
 import Recipe from "../components/Recipe";
 import {hostName} from "../util/constants";
 
@@ -35,7 +34,7 @@ const RecipeList = () => {
     };
 
 
-    useEffect(() => getRecipes(), [])
+    useEffect(() => getRecipes(), )
 
     const [show, setShow] = useState(false);
 
