@@ -1,6 +1,6 @@
 import {useContext} from "react";
 import FavoritesContext from "../store/favorites-context";
-import RecipeList from '../recipe/RecipeList'
+import RecipeList from '../components/recipe/RecipeList'
 
 // TODO: This stores favorites ONLY in memory!
 function Favorites() {

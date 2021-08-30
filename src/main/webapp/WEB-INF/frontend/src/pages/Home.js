@@ -14,13 +14,10 @@ function Home() {
         }
     };
 
-useEffect(() => {
-
-        console.log(localStorage.jwtToken)
-        authToken(localStorage.jwtToken);
-    }
-
-)
+    useEffect(() => {
+            authToken(localStorage.jwtToken);
+        }
+    )
     // const auth = useSelector((state) => console.log(state));
     return <div className={'App'}>
         <div className={'App-header'}>

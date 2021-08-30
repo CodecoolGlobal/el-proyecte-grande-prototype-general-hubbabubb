@@ -27,6 +27,10 @@ public class Main {
 
     @PostConstruct
     protected void init() {
+        if (userRepository.findByEmail("test@user.com").isPresent()) {
+            return;
+        }
+
         AppUser user = new AppUser();
         user.setEnabled(true);
         user.setLastName("Test");

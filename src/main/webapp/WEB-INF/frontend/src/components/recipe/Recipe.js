@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button} from '@material-ui/core';
-import {hostName} from "../util/constants";
+import {hostName} from "../../util/constants";
 
 function Recipe(props) {
     let id = props.id;
