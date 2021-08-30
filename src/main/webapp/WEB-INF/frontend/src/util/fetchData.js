@@ -10,6 +10,21 @@ export function getFetch(url, callback, errorHandling) {
 }
 
 export function postFetch(url, data, callback, errorHandling) {
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(data => data.json())
+        .then(jsonData => {
+            callback(jsonData);
+        })
+        .catch(error => errorHandling(error))
+}
+
+export function postFetchWithAuth(url, data, callback, errorHandling) {
     const authHeader = new Headers();
     authHeader.append('Authorization', localStorage.jwtToken);
 
