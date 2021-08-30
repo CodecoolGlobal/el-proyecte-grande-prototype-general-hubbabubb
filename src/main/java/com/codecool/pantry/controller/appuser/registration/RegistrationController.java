@@ -4,6 +4,9 @@ import com.codecool.pantry.service.appuser.registration.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @RestController
 @RequestMapping(path = "api/v1/registration")
 @AllArgsConstructor
@@ -17,7 +20,9 @@ public class RegistrationController {
     }
 
     @GetMapping(path = "confirm")
-    public String confirm(@RequestParam("token") String token) {
-        return service.confirmToken(token);
+    public void confirm(@RequestParam("token") String token, HttpServletResponse response) throws IOException {
+        service.confirmToken(token);
+
+        response.sendRedirect("localhost:3000/confirmed");
     }
 }

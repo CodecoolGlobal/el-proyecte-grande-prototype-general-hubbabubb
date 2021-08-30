@@ -1,6 +1,7 @@
 package com.codecool.pantry.entity.appuser;
 
 import com.codecool.pantry.entity.pantry.Pantry;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,9 +57,9 @@ public class AppUser implements UserDetails {
     private boolean locked = false;
     private boolean enabled = false;
 
-    @ManyToOne
-    @JoinColumn(name="pantry_id")
-    private Pantry pantry;
+//    @ManyToOne
+//    @JoinColumn(name="pantry_id")
+//    private Pantry pantry;
 
     public AppUser(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;

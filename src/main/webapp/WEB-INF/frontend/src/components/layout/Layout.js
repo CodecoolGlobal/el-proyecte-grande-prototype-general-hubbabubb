@@ -1,9 +1,9 @@
 import Header from "./Header";
 
 function Layout(props) {
-    return <div className="main">
+    return <div>
         <Header />
-        <main >
+        <main className="main">
             {props.children}
         </main>
     </div>

@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -42,8 +41,7 @@ public class MealPlan {
     public void likesHandler(AppUser appUser) {
         if (likedUsers.contains(appUser)) {
             likedUsers.remove(appUser);
-        }
-        else {
+        } else {
             likedUsers.add(appUser);
         }
     }
@@ -51,10 +49,10 @@ public class MealPlan {
     public void dislikesHandler(AppUser appUser) {
         if (dislikedUsers.contains(appUser)) {
             dislikedUsers.remove(appUser);
-        }
-        else {
+        } else {
             dislikedUsers.add(appUser);
         }
     }
 
 }
+
