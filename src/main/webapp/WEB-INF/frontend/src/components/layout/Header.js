@@ -14,6 +14,7 @@ function Header(props) {
 
     function handleEnter(e) {
         if (e.key === 'Enter') {
+            setSearchField(e.target.value);
             props.history.push("/search-recipe");
         }
     }
@@ -36,7 +37,6 @@ function Header(props) {
                     <div className="dropdown-content">
                         <input
                             placeholder={'Search by name'}
-                            onChange={(e) => setSearchField(e.target.value)}
                             onKeyPress={(e) => handleEnter(e)}
                         />
                         <NavLink to="/from-my-pantry">From my pantry</NavLink>

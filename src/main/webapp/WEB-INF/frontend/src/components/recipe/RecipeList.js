@@ -1,31 +1,26 @@
 import React from "react";
 import styled from 'styled-components';
+import RecipeListItem from "./RecipeListItem";
+import {Grid} from "@material-ui/core";
 
-const RecipesContainer = styled.div`
-    text-align: center;
-`;
-
-const RecipeTable = styled.table`
+const RecipeTable = styled.div`
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 `;
 
 function RecipeList(props) {
-    if (props.recipes === null) {
-        return <RecipesContainer>
-            <h1>No recipes found!</h1>
-        </RecipesContainer>
-    }
 
-    return <RecipesContainer>
-        <RecipeTable>
-            <h1>Search results:</h1>
-            <tr>
-                {props.recipes.map((recipe) => {
-                    return <td><img src={recipe.image}  alt={recipe.title}/> {recipe.title} </td>
-                })}
-            </tr>
-        </RecipeTable>
-    </RecipesContainer>
+    return <RecipeTable>
+        {props.recipes.map((recipe) => {
+            return <Grid>
+
+                <RecipeListItem title={recipe.title} id={recipe.id} image={recipe.image} />
+            </Grid>
+        })}
+    </RecipeTable>
 
 }
 

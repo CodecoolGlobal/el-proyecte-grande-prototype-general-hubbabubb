@@ -4,7 +4,7 @@ import {motion} from 'framer-motion';
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import {AccountContext} from "./accountContext";
-import {HighlightedText} from "./Common";
+import {HighlightedText} from "../Common";
 
 const BoxContainer = styled.div`
     width: 280px;

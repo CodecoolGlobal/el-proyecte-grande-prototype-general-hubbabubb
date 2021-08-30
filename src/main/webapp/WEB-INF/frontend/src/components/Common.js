@@ -90,3 +90,9 @@ export const ErrorText = styled.p`
     font-weight: 50;
 `;
 
+export const LargeHeader = styled.h1`
+    font-size: 56px;
+    font-weight: bold;
+    margin: 20px;
+    margin-bottom: 50px;
+    `;

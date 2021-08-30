@@ -1,12 +1,14 @@
 package com.codecool.pantry.controller.recipe;
 
 
-import lombok.AllArgsConstructor;
 import com.codecool.pantry.entity.recipe.Recipe;
 import com.codecool.pantry.repository.recipe.RecipeRepository;
-import org.apache.coyote.Response;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 
 @RestController
+@RequestMapping(path = "api/v1/recipe")
 @AllArgsConstructor
 public class RecipeController {
     private final RecipeRepository recipeRepository;
@@ -32,7 +35,7 @@ public class RecipeController {
 //    }
 //
 
-    @GetMapping(path = "api/v1/recipe/search/{name}")
+    @GetMapping(path = "/search/{name}")
     public ResponseEntity<String> searchRecipeByName(@PathVariable(value = "name") String name) {
         final String uri = String.format("https://api.spoonacular.com/recipes/complexSearch?query=%s&number=25&apiKey=%s",
                 name, API_KEY);
@@ -42,7 +45,7 @@ public class RecipeController {
     }
 
 
-    @GetMapping("api/v1/recipe/{id}")
+    @GetMapping("/{id}")
     public Optional<Recipe> getRecipeById(@PathVariable(value = "id") Long id) {
         Optional<Recipe> recipe = recipeRepository.findById(id);
 
@@ -61,7 +64,7 @@ public class RecipeController {
     }
 
 
-    @GetMapping("api/v1/recipe/by-ingredients/{ingredients}") //
+    @GetMapping("/by-ingredients/{ingredients}") //
     public ResponseEntity<String> searchRecipeByIngredients(@PathVariable("ingredients") List<String> ingredients) {
         final String uri = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&number=5&apiKey=%s",
                 generateIngredientQuery(ingredients), API_KEY);
