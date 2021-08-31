@@ -1,7 +1,7 @@
 import React, {useContext, useRef} from "react";
-import {Row, Col, Dropdown} from "react-bootstrap";
+import {Row, Col, Dropdown, Navbar, Container, Nav, NavDropdown} from "react-bootstrap";
 import logo from "../components/logo.png"
-import './Header.module.css';
+import './Header.css';
 import {NavLink, withRouter} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -64,7 +64,6 @@ function Header(props) {
                     <button className="header-button">Profile</button>
                     <div className="dropdown-content">
                         <NavLink to="#">Edit profile</NavLink>
-                        <NavLink to="#">Pantry settings</NavLink>
                         <Dropdown.Divider />
                         <NavLink to="#">Logout</NavLink>
                     </div>
