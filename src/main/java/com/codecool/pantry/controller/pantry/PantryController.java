@@ -29,7 +29,6 @@ public class PantryController {
         return pantry.map(Pantry::getPantryList).orElse(null); // TODO: handle no pantry case
     }
 
-
     @GetMapping("api/v1/list-item/delete/{id}")
     public void deleteListItem(@PathVariable(value = "id") Long id) {
         itemService.removeItem(id);
@@ -51,13 +50,10 @@ public class PantryController {
         itemService.updateListItem(updatedItem);
     }
 
-
     @GetMapping(path = "api/v1/pantry/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Pantry getPantryById(@PathVariable(value = "id") Long id) {
         Pantry pantry = pantryService.getPantryById(id).orElseThrow(() -> new IllegalStateException("Can not find pantry !"));
         System.out.println("---PANTRY: " + pantry.getName());
         return pantry;
     }
-
-
 }
