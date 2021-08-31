@@ -1,7 +1,10 @@
 package com.codecool.pantry.controller.pantry;
 
+import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.listitem.ListItem;
+import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
+import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.listItem.ListItemService;
 import com.codecool.pantry.service.pantry.PantryService;
 import lombok.AllArgsConstructor;
@@ -16,6 +19,9 @@ public class PantryController {
 
     private final PantryService pantryService;
     private final ListItemService itemService;
+    private final AppUserService appUserService;
+    private final MealPlan mealPlan;
+
 
     @GetMapping("api/v1/grocery-list/{id}")
     public Set<ListItem> getGroceryList(@PathVariable(value = "id") Long id) {
@@ -42,6 +48,18 @@ public class PantryController {
     @PostMapping("api/v1/pantry-list/add/{id}/{itemName}")
     public void addItemToPantryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName) {
         pantryService.addPantryItemToList(id, itemName);
+    }
+
+    @PostMapping("api/v1/pantry-app-user/add/{id}/{userId}")
+    public void addPantryAppuser(@PathVariable(value = "id") Long id, @PathVariable(value = "userId") Long userId) {
+        AppUser appUser = appUserService.getUserById(userId);
+        pantryService.addPantryAppUser(id, appUser);
+    }
+
+    @PostMapping("api/v1/pantry-app-user/remove/{id}/{userId}")
+    public void removePantryAppuser(@PathVariable(value = "id") Long id, @PathVariable(value = "userId") Long userId) {
+        AppUser appUser = appUserService.getUserById(userId);
+        pantryService.removePantryAppUser(id, appUser);
     }
 
     @GetMapping("api/v1/item-status/{id}")
