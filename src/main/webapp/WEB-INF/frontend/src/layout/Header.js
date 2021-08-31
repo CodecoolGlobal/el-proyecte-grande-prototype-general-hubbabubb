@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {Row, Col, Dropdown, Navbar, Container, Nav, NavDropdown} from "react-bootstrap";
 import logo from "../components/logo.png"
 import './Header.css';
@@ -7,10 +7,22 @@ import {NavLink, withRouter} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
 import {SearchInput} from "../store/recipe-search-input";
+import clsx from "clsx";
 
 function Header(props) {
     const {setSearchField} = useContext(SearchInput);
     const navigation = useRef("navigation");
+
+    const [open, setOpen] = useState(false);
+
+    function toggleNavbar() {
+        setOpen(!open);
+    }
+
+    const menuStyle = clsx({
+        ['header-navbar'] : true, //always applies
+        ['responsive'] : !open //only when open === true
+    })
 
     function handleEnter(e) {
         if (e.key === 'Enter') {
@@ -47,9 +59,10 @@ function Header(props) {
             <Col className="center-button">
                 <img width={300} src={logo} alt='logo' />
                 <button className="icon">
-                    <FontAwesomeIcon icon={faEllipsisV} />
+                    <FontAwesomeIcon icon={faEllipsisV} onClick={toggleNavbar} />
                 </button>
             </Col>
+            <div className={menuStyle}>Halika</div>
             <Col className="center-button">
                 <div className="header-dropdown">
                     <button className="header-button">Tools</button>

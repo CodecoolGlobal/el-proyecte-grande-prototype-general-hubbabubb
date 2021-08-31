@@ -3,9 +3,18 @@
     border-bottom: 2px solid #343a40;
     padding-bottom: 15px;
     position: fixed;
-    width: 37%;
+    width: 32%;
     top: 25px;
     left: 30px;
+}
+
+.decoration-line-right {
+    border-bottom: 2px solid #343a40;
+    padding-bottom: 15px;
+    position: fixed;
+    width: 32%;
+    top: 25px;
+    right: 30px;
 }
 
 .decoration-line-left:after {
@@ -19,14 +28,6 @@
     border-radius: 5px;
 }
 
-.decoration-line-right {
-    border-bottom: 2px solid #343a40;
-    padding-bottom: 15px;
-    position: fixed;
-    width: 37%;
-    top: 25px;
-    right: 30px;
-}
 
 .decoration-line-right:after {
     position: absolute;
@@ -45,7 +46,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: rgba(228, 241, 235, 0.8);
+    background-color: rgba(228, 241, 235, 0.7);
 }
 
 /* Links inside the navbar */
@@ -72,7 +73,7 @@
     text-decoration: none;
     text-align: center;
     padding: 0 20px 10px 20px;
-    transition: background-color 0.1s, color 0.1s;
+    transition: all 0.3s;
     border-radius: 25px 0 25px 0;
     border: none;
     outline: none;
@@ -120,7 +121,7 @@
     display: block;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
     .header-dropdown .header-button, .decoration-line-right, .decoration-line-left {display: none;}
     .icon {
         float: right;
@@ -128,7 +129,7 @@
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
     .header-navbar.responsive {position: relative;}
     .header-navbar.responsive .icon {
         position: absolute;
