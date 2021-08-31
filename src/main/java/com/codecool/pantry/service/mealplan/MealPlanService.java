@@ -6,6 +6,7 @@ import com.codecool.pantry.entity.recipe.Recipe;
 import com.codecool.pantry.repository.appuser.AppUserRepository;
 import com.codecool.pantry.repository.mealplan.MealPlanRepository;
 import com.codecool.pantry.repository.recipe.RecipeRepository;
+import javassist.NotFoundException;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
@@ -22,6 +23,7 @@ public class MealPlanService {
     private final MealPlanRepository mealPlanRepository;
     private final AppUserRepository appUserRepository;
     private final RecipeRepository recipeRepository;
+
 
     public void saveMealPlan(Long recipeId, LocalDateTime date) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);

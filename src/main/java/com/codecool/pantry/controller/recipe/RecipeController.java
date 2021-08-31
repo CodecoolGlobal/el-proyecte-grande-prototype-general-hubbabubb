@@ -22,7 +22,7 @@ public class RecipeController {
     private final RecipeRepository recipeRepository;
 
 //    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
-//    private final String API_KEY1 = "a22052fbcfef4a2fac111f33a93898d8";
+//    private final String API_KEY = "a22052fbcfef4a2fac111f33a93898d8";
 //    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
 //    private final String API_KEY = "b880826d2c53495f8fb1fa608db88577";
 
