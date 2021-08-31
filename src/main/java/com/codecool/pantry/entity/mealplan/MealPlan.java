@@ -1,6 +1,7 @@
 package com.codecool.pantry.entity.mealplan;
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.recipe.Recipe;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,9 @@ public class MealPlan {
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<AppUser> dislikedUsers;
+
+    @ManyToOne
+    private Pantry pantry;
 
     public MealPlan(Recipe recipe, LocalDateTime date) {
         this.recipe = recipe;
