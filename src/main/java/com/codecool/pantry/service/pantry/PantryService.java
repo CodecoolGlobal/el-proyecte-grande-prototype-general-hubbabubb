@@ -95,7 +95,7 @@ public class PantryService {
         pantryRepository.save(pantry);
     }
 
-    public void removeMealPlan(Long id, AppUser appUser) {
+    public void removeMealPlan(Long id, MealPlan mealPlan) {
         if (getPantryById(id).isEmpty()) {
             return;
         }

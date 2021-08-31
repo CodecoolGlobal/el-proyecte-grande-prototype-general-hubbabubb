@@ -6,6 +6,7 @@ import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.listItem.ListItemService;
+import com.codecool.pantry.service.mealplan.MealPlanService;
 import com.codecool.pantry.service.pantry.PantryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -20,7 +21,7 @@ public class PantryController {
     private final PantryService pantryService;
     private final ListItemService itemService;
     private final AppUserService appUserService;
-    private final MealPlan mealPlan;
+    private final MealPlanService mealPlanService;
 
 
     @GetMapping("api/v1/grocery-list/{id}")
@@ -60,6 +61,18 @@ public class PantryController {
     public void removePantryAppuser(@PathVariable(value = "id") Long id, @PathVariable(value = "userId") Long userId) {
         AppUser appUser = appUserService.getUserById(userId);
         pantryService.removePantryAppUser(id, appUser);
+    }
+
+    @PostMapping("api/v1/meal-plan/add/{id}/{mealPlanId}")
+    public void addMealPlan(@PathVariable(value = "id") Long id, @PathVariable(value = "mealPlanId") Long mealPlanId) {
+        MealPlan mealPlan = mealPlanService.getMealPlan(id);
+        pantryService.addMealPlan(id, mealPlan);
+    }
+
+    @PostMapping("api/v1/meal-plan/remove/{id}/{mealPlanId}")
+    public void removeMealPlan(@PathVariable(value = "id") Long id, @PathVariable(value = "mealPlanId") Long mealPlanId) {
+        MealPlan mealPlan = mealPlanService.getMealPlan(id);
+        pantryService.removeMealPlan(id, mealPlan);
     }
 
     @GetMapping("api/v1/item-status/{id}")
