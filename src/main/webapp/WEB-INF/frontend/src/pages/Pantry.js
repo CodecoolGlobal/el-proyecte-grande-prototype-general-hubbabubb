@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import Typeahead from 'react-bootstrap-typeahead/lib/components/AsyncTypeahead';
 import {ClearButton} from 'react-bootstrap-typeahead';
+import {getFetch} from "../util/fetchData";
 
 
 export const Pantry = () => {
@@ -43,15 +44,16 @@ export const Pantry = () => {
     // }
 
     useEffect(() => {
-        fetch('/api/v1/ingredient')
-            .then(response => response.json())
-            .then(data => {
-                let result = [];
-                for (let key in data) {
-                    result.push(key)
-                }
-                setLoadedIngredients(result);
-            });
+        getFetch('/api/v1/ingredient', (data) => {
+            let result = [];
+            for (let key in data) {
+                result.push(key)
+            }
+            setLoadedIngredients(result);
+        }, (error) => {
+            console.log(error.message);
+        })
+        console.log("Yeah")
     }, [])
 
 

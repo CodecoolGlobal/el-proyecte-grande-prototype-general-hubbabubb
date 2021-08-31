@@ -4,7 +4,7 @@ import {motion} from 'framer-motion';
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import {AccountContext} from "./accountContext";
-import {HighlightedText} from "./Common";
+import {HighlightedText} from "../Common";
 
 const BoxContainer = styled.div`
     width: 280px;
@@ -95,7 +95,7 @@ const InnerContainer = styled.div`
 export default function LoginRegisterForm(props) {
     const [isExpanded, setExpanded] = useState(false);
     const [active, setActive] = useState(props.active)
-    const [isSuccessful, setIsSuccessful] = useState()
+    const [isSuccessful, setIsSuccessful] = useState(null)
 
     const playExpandedAnimation = () => {
         setExpanded(true);
