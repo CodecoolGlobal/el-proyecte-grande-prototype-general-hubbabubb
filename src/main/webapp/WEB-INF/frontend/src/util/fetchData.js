@@ -1,26 +1,55 @@
-export function getFetch(url, callback) {
-    fetch(url)
-        .then(data => data.json())
-        .then(jsonData => {
+export function getFetch(url, callback, errorHandling) {
+    fetch(url, {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    })
+        .then((data) => data.json())
+        .then((jsonData) => {
             callback(jsonData);
         })
+        .catch(error => errorHandling(error))
 }
 
 export function postFetch(url, data, callback, errorHandling) {
     fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
+        body: JSON.stringify(data)
     })
         .then(data => data.json())
         .then(jsonData => {
+            callback(jsonData);
+        })
+        .catch(error => errorHandling(error))
+}
+
+export function postFetchWithAuth(url, data, callback, errorHandling) {
+    const authHeader = new Headers();
+    authHeader.append('Authorization', localStorage.jwtToken);
+
+    fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: authHeader,
+        body: data // body data type must match "Content-Type" header
+    })
+        .then(data => data.json())
+        .then(jsonData => {
+            callback(jsonData);
+        })
+        .catch(error => errorHandling(error))
+}
+
+export function getFetchWithAuth(url, callback, errorHandling) {
+    const authHeader = new Headers();
+    authHeader.append('Authorization', localStorage.jwtToken);
+
+    fetch(url, {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: authHeader
+    })
+        .then((data) => data.json())
+        .then((jsonData) => {
             callback(jsonData);
         })
         .catch(error => errorHandling(error))

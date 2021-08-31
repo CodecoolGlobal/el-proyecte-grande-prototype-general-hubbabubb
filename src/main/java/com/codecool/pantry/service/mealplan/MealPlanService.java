@@ -7,7 +7,9 @@ import com.codecool.pantry.repository.appuser.AppUserRepository;
 import com.codecool.pantry.repository.mealplan.MealPlanRepository;
 import com.codecool.pantry.repository.recipe.RecipeRepository;
 import javassist.NotFoundException;
+
 import lombok.AllArgsConstructor;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
