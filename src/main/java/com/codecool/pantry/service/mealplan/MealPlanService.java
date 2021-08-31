@@ -26,7 +26,7 @@ public class MealPlanService {
     public void saveMealPlan(Long recipeId, LocalDateTime date) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         if (recipe.isEmpty()) {
-            throw new IllegalStateException("Recipe not found");
+            throw new IllegalStateException("Recipe_old not found");
         }
         mealPlanRepository.save(new MealPlan(recipe.get(), date));
     }

@@ -30,7 +30,7 @@ public class RecipeController {
 
 
 //    @PostMapping
-//    public void saveRecipe(@RequestBody Recipe recipe) {
+//    public void saveRecipe(@RequestBody Recipe_old recipe) {
 //        recipeRepository.save(recipe);
 //    }
 //
