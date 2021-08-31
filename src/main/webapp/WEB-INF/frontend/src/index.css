@@ -46,17 +46,6 @@ p, li, ul {
     display: flex;
 }
 
-.icon {
-    float: left;
-    padding: 0 20px;
-    border: none;
-    font-size: 50px;
-    background-color: transparent;
-    display: none;
-}
-
-
-
 .center-button {
     display: flex;
     justify-content: center;
