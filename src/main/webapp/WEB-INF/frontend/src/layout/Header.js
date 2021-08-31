@@ -7,7 +7,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
 import {SearchInput} from "../store/recipe-search-input";
-import {Divider} from "@material-ui/core";
+import {Collapse, Divider, Grow} from "@material-ui/core";
 
 function Header(props) {
     const {setSearchField} = useContext(SearchInput);
@@ -18,8 +18,6 @@ function Header(props) {
     function toggleNavbar() {
         setOpen(!open);
     }
-
-    console.log(open)
 
     function handleEnter(e) {
         if (e.key === 'Enter') {
@@ -62,21 +60,23 @@ function Header(props) {
                     </button>
                 </div>
             </Col>
-            {open && <div className='menuContent'>
+            <Grow in={open} timeout="auto" unmountOnExit>
+                <div className='menuContent'>
                     <a className='closeMiniMenu' onClick={toggleNavbar}>X</a>
-                <Row>
+                    <Row>
                         <NavLink className='navLink' to="/pantry">My Pantry</NavLink>
                         <NavLink className='navLink' to="/grocery-list">Grocery List</NavLink>
                         <NavLink className='navLink' to="/meal-plan">Meal Plan</NavLink>
-                        <Divider />
-                    <input
+                        <Divider/>
+                        <input
                             placeholder={'Search by name'}
                             onKeyPress={(e) => handleEnter(e)}
                         />
-                    <NavLink className='navLink' to="/from-my-pantry">From my pantry</NavLink>
-                    <NavLink className='navLink' to="#">Favorite recipes</NavLink>
-                </Row>
-            </div>}
+                        <NavLink className='navLink' to="/from-my-pantry">From my pantry</NavLink>
+                        <NavLink className='navLink' to="#">Favorite recipes</NavLink>
+                    </Row>
+                </div>
+            </Grow>
             <Col className="center-button">
                 <div className="header-dropdown">
                     <button className="header-button">Tools</button>

@@ -5,8 +5,12 @@ import {hostName} from "../util/constants";
 import {getFetch, getFetchWithAuth} from "../util/fetchData";
 import styled from "styled-components";
 import {LargeHeader} from "../components/Common";
+import {faSearch,} from "@fortawesome/free-solid-svg-icons";
+import {faSadCry} from "@fortawesome/free-regular-svg-icons";
 
-const RecipesContainer = styled.div`
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+export const RecipesContainer = styled.div`
     width: 100%;
     text-align: center;
     display: flex;
@@ -29,12 +33,12 @@ export default function RecipesByName(props) {
 
     if (recipes === "" || recipes.results.length === 0) {
         return <RecipesContainer>
-            <LargeHeader>No recipes found!</LargeHeader>
+            <LargeHeader><FontAwesomeIcon icon={faSadCry}/> No recipes found!</LargeHeader>
         </RecipesContainer>
     }
 
     return <RecipesContainer>
-        <LargeHeader>Search results:</LargeHeader>
+        <LargeHeader><FontAwesomeIcon icon={faSearch}/> Search results:</LargeHeader>
         <RecipeList recipes={recipes.results}/>
     </RecipesContainer>
 }

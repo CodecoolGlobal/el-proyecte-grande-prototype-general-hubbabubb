@@ -12,9 +12,11 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {cyan, green, lightBlue, red, teal, yellow} from "@material-ui/core/colors";
 
+import parse from 'html-react-parser';
+
 const useTransitions = makeStyles((theme) => ({
     root: {
-        width: 345,
+        width: 360,
     },
     media: {
         height: 0,
@@ -32,6 +34,14 @@ const useTransitions = makeStyles((theme) => ({
     },
     typography: {
         fontFamily: "Oswald",
+        fontWeight: "bold",
+        fontSize: 18,
+    },
+    smallTypo: {
+        margin: 5,
+        fontFamily: "Oswald",
+        fontWeight: "lighter",
+        fontSize: 14,
     },
     chipContainer: {
         fontFamily: "Oswald",
@@ -108,6 +118,9 @@ export default function Recipe(props) {
                         <Chip className={transitionClasses.healthScore} label={`Health Score: ${props.recipe.healthScore}`} />
                     }
                 </div>
+                <Typography paragraph className={transitionClasses.smallTypo}>
+                    {parse(props.recipe.summary)}
+                </Typography>
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
@@ -129,9 +142,18 @@ export default function Recipe(props) {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph className={transitionClasses.typography}>Method:</Typography>
-                    <Typography paragraph className={transitionClasses.typography}>
-                        {props.recipe.instructions}
+                    <Typography paragraph className={transitionClasses.typography}>Ingredients:</Typography>
+
+                        {props.recipe.extendedIngredients.map((ingredient) => {
+                            return <Typography paragraph className={transitionClasses.smallTypo}>
+                                {ingredient.amount > 0 && ingredient.amount + ' ' + ingredient.unit}
+                                {' ' + ingredient.name}
+                            </Typography>
+                        })}
+
+                    <Typography paragraph className={transitionClasses.typography}>Preparation:</Typography>
+                    <Typography paragraph className={transitionClasses.smallTypo}>
+                        {parse(props.recipe.instructions)}
                     </Typography>
                 </CardContent>
             </Collapse>
