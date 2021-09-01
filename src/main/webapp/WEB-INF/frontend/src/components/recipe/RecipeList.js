@@ -4,6 +4,7 @@ import RecipeListItem from "./RecipeListItem";
 import {Grid} from "@material-ui/core";
 
 export const CardList = styled.div`
+
     width: 100%;
     display: flex;
     flex-wrap: wrap;

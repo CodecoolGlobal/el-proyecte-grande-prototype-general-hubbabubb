@@ -1,16 +1,23 @@
-import React, {useContext, useRef} from "react";
-import {Row, Col, Dropdown} from "react-bootstrap";
+import React, {useContext, useRef, useState} from "react";
+import {Col, Dropdown, Row} from "react-bootstrap";
 import logo from "../components/logo.png"
-import './Header.module.css';
+import './Header.css';
 import {NavLink, withRouter} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
 import {SearchInput} from "../store/recipe-search-input";
+import {Collapse, Divider, Grow} from "@material-ui/core";
 
 function Header(props) {
     const {setSearchField} = useContext(SearchInput);
     const navigation = useRef("navigation");
+
+    const [open, setOpen] = useState(false);
+
+    function toggleNavbar() {
+        setOpen(!open);
+    }
 
     function handleEnter(e) {
         if (e.key === 'Enter') {
@@ -25,9 +32,9 @@ function Header(props) {
                 <div className="header-dropdown">
                     <button className="header-button">Pantry</button>
                     <div className="dropdown-content">
-                        <NavLink to="/pantry">My Pantry</NavLink>
-                        <NavLink to="/grocery-list">Grocery List</NavLink>
-                        <NavLink to="/meal-plan">Meal Plan</NavLink>
+                        <NavLink className='navLink' to="/pantry">My Pantry</NavLink>
+                        <NavLink className='navLink' to="/grocery-list">Grocery List</NavLink>
+                        <NavLink className='navLink' to="/meal-plan">Meal Plan</NavLink>
                     </div>
                 </div>
             </Col>
@@ -39,23 +46,43 @@ function Header(props) {
                             placeholder={'Search by name'}
                             onKeyPress={(e) => handleEnter(e)}
                         />
-                        <NavLink to="/from-my-pantry">From my pantry</NavLink>
-                        <NavLink to="#">Favorite recipes</NavLink>
+                        <NavLink className='navLink' to="/from-my-pantry">From my pantry</NavLink>
+                        <NavLink className='navLink' to="#">Favorite recipes</NavLink>
                     </div>
                 </div>
             </Col>
+
             <Col className="center-button">
-                <img width={300} src={logo} alt='logo' />
-                <button className="icon">
-                    <FontAwesomeIcon icon={faEllipsisV} />
-                </button>
+                <img width={300} src={logo} alt='logo'/>
+                <div className="miniMenu">
+                    <button className="icon" onClick={toggleNavbar}>
+                        <FontAwesomeIcon icon={faEllipsisV}/>
+                    </button>
+                </div>
             </Col>
+            <Grow in={open} timeout="auto" unmountOnExit>
+                <div className='menuContent'>
+                    <a className='closeMiniMenu' onClick={toggleNavbar}>X</a>
+                    <Row>
+                        <NavLink className='navLink' to="/pantry">My Pantry</NavLink>
+                        <NavLink className='navLink' to="/grocery-list">Grocery List</NavLink>
+                        <NavLink className='navLink' to="/meal-plan">Meal Plan</NavLink>
+                        <Divider/>
+                        <input
+                            placeholder={'Search by name'}
+                            onKeyPress={(e) => handleEnter(e)}
+                        />
+                        <NavLink className='navLink' to="/from-my-pantry">From my pantry</NavLink>
+                        <NavLink className='navLink' to="#">Favorite recipes</NavLink>
+                    </Row>
+                </div>
+            </Grow>
             <Col className="center-button">
                 <div className="header-dropdown">
                     <button className="header-button">Tools</button>
                     <div className="dropdown-content">
-                        <NavLink to="#">Ingredient info</NavLink>
-                        <NavLink to="#">Unit converter</NavLink>
+                        <NavLink className='navLink' to="#">Ingredient info</NavLink>
+                        <NavLink className='navLink' to="#">Unit converter</NavLink>
                     </div>
                 </div>
             </Col>
@@ -63,18 +90,17 @@ function Header(props) {
                 <div className="header-dropdown">
                     <button className="header-button">Profile</button>
                     <div className="dropdown-content">
-                        <NavLink to="#">Edit profile</NavLink>
-                        <NavLink to="#">Pantry settings</NavLink>
-                        <Dropdown.Divider />
-                        <NavLink to="#">Logout</NavLink>
+                        <NavLink className='navLink' to="#">Edit profile</NavLink>
+                        <Dropdown.Divider/>
+                        <NavLink className='navLink' to="#">Logout</NavLink>
                     </div>
                 </div>
             </Col>
         </Row>
         <Row>
             <Col>
-                <div className="decoration-line-left" />
-                <div className="decoration-line-right" />
+                <div className="decoration-line-left"/>
+                <div className="decoration-line-right"/>
             </Col>
         </Row>
     </div>
