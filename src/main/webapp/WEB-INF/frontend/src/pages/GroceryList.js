@@ -17,8 +17,7 @@ import {
     ListItemText
 } from "@material-ui/core";
 import Typeahead from 'react-bootstrap-typeahead/lib/components/AsyncTypeahead';
-import {ClearButton} from 'react-bootstrap-typeahead';
-
+import HighlightOffSharpIcon from '@material-ui/icons/HighlightOffSharp';
 
 export const GroceryList = () => {
 
@@ -108,9 +107,10 @@ export const GroceryList = () => {
                     id="ingredients"
                     options={loadedIngredients}
                     placeholder="Choose an ingredient...">
+
                     {({ onClear, selected }) => (
                         <div className="rbt-aux">
-                            {!!selected.length && <ClearButton onClick={onClear} />}
+                            {!!selected.length && <HighlightOffSharpIcon  onClick={onClear} />}
                             {!selected.length && <Spinner animation="fade" size="sm" />}
                         </div>
                     )}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Button,
     Card,
@@ -17,50 +17,76 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import './PantryContent.css'
 import IngredientSelector from "../recipe/IngredientSelector";
 import AddShoppingCartSharpIcon from "@material-ui/icons/AddShoppingCartSharp";
+import {fetchNoResponse, getFetchWithAuth} from '../../util/fetchData';
+import {hostName} from '../../util/constants';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
-            margin: theme.spacing(1),
+            margin: theme.spacing(1)
         },
 
         marginBottom: 15,
         maxWidth: 600,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.palette.background.paper
     },
     typography: {
         fontFamily: "Amatic SC",
         fontWeight: "bold",
-        fontSize: 24,
+        fontSize: 24
     },
     typographySmall: {
         fontFamily: "Oswald",
-        fontSize: 14,
-    },
+        fontSize: 14
+    }
 }));
 
-export default function PantryContent(props) {
-    const [idCounter, setIdCounter] = useState(5);
-    const [inputValue, setInputValue] = useState('');
+export default function PantryContent() {
     const classes = useStyles();
-    const [items, setItems] = useState(props.content)
+    const [items, setItems] = useState()
     const [selectedIngredient, setSelected] = useState('');
+    const [itemAdded, setItemAdded] = useState(false)
+
+
+    const getPantryContent = () => {
+        const groceryLink = `${hostName}/api/v1/pantry-content/1` // flexible ID here TODO
+
+        getFetchWithAuth(groceryLink, (data) => {
+            setItems(data)
+        }, (error) => {
+            console.log(error)
+        })
+    }
+
+    useEffect(() => {
+
+            getPantryContent()
+        }, [itemAdded]
+    )
 
     // TODO: collect list methods and remove duplications
     const removeItem = (id) => {
         let newList = items.filter(item => item.id !== id)
         setItems(newList)
+        fetchNoResponse(`http://localhost:8081/api/v1/list-item/delete/${id}`, "GET")
+
     }
 
     const toggleComplete = (id) => {
         const newItems = [...items];
         newItems.forEach(item => {
             if (item.id === id) {
+                fetchNoResponse(`http://localhost:8081/api/v1/item-status/${item.id}`, "GET")
                 item.checked = !item.checked;
             }
         })
         setItems(newItems);
     };
+
+    // function handleChange(selectedOptions) {
+    //     setInputValue(selectedOptions);
+    // }
+
 
     function removeAllChecked() {
         let newList = items.filter(item => !item.checked)
@@ -68,26 +94,23 @@ export default function PantryContent(props) {
     }
 
     const handleAddButtonClick = () => {
-        const newItem = {
-            ingredientName: selectedIngredient,
-            id: idCounter,
-            checked: false,
-        };
-        setIdCounter(idCounter + 1)
-        const newItems = [...items, newItem];
-
-        setItems(newItems)
-        setSelected("");
+        if (selectedIngredient === "") {
+            return;
+        }
+        let groceryLink = `${hostName}/api/v1/grocery-list/add/1/${selectedIngredient}` // pantry ID should be dynamic
+        fetchNoResponse(groceryLink, "POST")
+        setInputValue("");
+        setItemAdded(!itemAdded)
     };
-
-    const values = {setSelected, handleAddButtonClick}
+    //
+    // const values = {setSelected, handleAddButtonClick}
 
     return (
         <Card className={classes.root}>
             <Typography paragraph className={classes.typography}><FontAwesomeIcon icon={faArchive}/>
                 Pantry Content:
             </Typography>
-            <IngredientSelector setSelect={values} />
+            <IngredientSelector setSelector={setSelected} handler={handleAddButtonClick}/>
             <List>
                 {items && items.map((value) => {
                     const labelId = `checkbox-list-label-${value.id}`;
