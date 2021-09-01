@@ -27,7 +27,7 @@ public class Main {
 
     @PostConstruct
     protected void init() {
-        if (userRepository.findByEmail("test@user.com").isPresent()) {
+        if (userRepository.findByUsername("test@user.com").isPresent()) {
             return;
         }
 
@@ -35,7 +35,7 @@ public class Main {
         user.setEnabled(true);
         user.setLastName("Test");
         user.setFirstName("User");
-        user.setEmail("test@user.com");
+        user.setUsername("test@user.com");
 //        Pantry pantry = new Pantry();
         user.setEnabled(true);
 //        user.setPantry(pantry);

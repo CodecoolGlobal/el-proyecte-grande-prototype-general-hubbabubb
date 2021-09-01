@@ -4,7 +4,7 @@ import {validateEmail} from "./RegisterForm";
 import {AccountContext} from "./accountContext";
 import axios from "axios";
 import {withRouter} from 'react-router-dom';
-import AuthenticationService from "../../util/AuthenticationService";
+import AuthenticationService, {USER_NAME_SESSION_ATTRIBUTE_NAME} from "../../util/AuthenticationService";
 
 function LoginForm(props) {
     const {switchToRegister} = useContext(AccountContext)
@@ -15,16 +15,15 @@ function LoginForm(props) {
         return email.length > 0 && password.length > 0 && validateEmail(email);
     }
 
-    function handleSubmit(event) {
+    function handleSubmit() {
         AuthenticationService
-            .executeJwtAuthenticationService(email, password)
-            .then((response) => {
-                AuthenticationService.registerSuccessfulLoginForJwt(email, response.data.token)
-                console.log("succesfully logged in")
-                console.log(AuthenticationService.isUserLoggedIn())
-                this.props.history.push(`/pantry`)
-            }).catch(() => {
-                console.log("Error logging in")
+            .executeBasicAuthenticationService(email, password)
+            .then(() => {
+                AuthenticationService.registerSuccessfulLogin(email, password)
+                console.log(sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME))
+                props.history.push(`/pantry`);
+            }).catch((err) => {
+                console.log(err);
         })
     }
 
@@ -43,9 +42,9 @@ function LoginForm(props) {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <SubmitButton
-                type={'submit'}
+                type={'button'}
                 onClick={handleSubmit}
-                disable={validateForm()}
+                disable={validateForm}
             >Login
             </SubmitButton>
         </FormContainer>

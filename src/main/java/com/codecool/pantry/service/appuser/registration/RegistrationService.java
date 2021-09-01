@@ -8,16 +8,12 @@ import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.token.ConfirmationToken;
 import com.codecool.pantry.repository.pantry.PantryRepository;
 import com.codecool.pantry.service.appuser.AppUserService;
-import com.codecool.pantry.service.pantry.PantryService;
 import com.codecool.pantry.service.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.expression.Sets;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -70,7 +66,7 @@ public class RegistrationService {
 
         tokenService.setConfirmedAt(token);
         service.enableAppUser(
-                confirmationToken.getUser().getEmail());
+                confirmationToken.getUser().getUsername());
 
         return "confirmed";
     }
