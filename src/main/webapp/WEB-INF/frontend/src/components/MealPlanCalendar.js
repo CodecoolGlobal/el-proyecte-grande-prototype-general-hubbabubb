@@ -5,6 +5,7 @@ export default function MealPlanCalendar(props) {
     const CALENDAR_DAY_COUNT = 7;
     let datesList = [];
     let [mealPlan, setMealPlan] = useState(null);
+    let WEEK_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     useEffect(() => {
         fetch("get meal plan url api")
@@ -42,7 +43,18 @@ export default function MealPlanCalendar(props) {
     function makeHeader() {
         makeCalendar();
         let headerList = [];
+        datesList.map(dateDay => (
+            headerList.push(
+                <td>
+                    {dateDay.day}
+                    {WEEK_DAYS[dateDay.day]}
+                </td>
+            )
+        ))
+    }
 
+    function fillCalendar() {
+        return null;
     }
 
     return (
