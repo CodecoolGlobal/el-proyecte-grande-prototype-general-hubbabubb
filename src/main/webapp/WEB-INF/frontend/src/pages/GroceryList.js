@@ -2,7 +2,7 @@
 import {useEffect, useState} from 'react';
 
 import {hostName} from '../util/constants';
-import {getFetchWithAuth} from '../util/fetchData'
+import {getFetchWithAuth, postFetchWithAuth} from '../util/fetchData'
 import {Spinner} from 'react-bootstrap';
 import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
@@ -23,11 +23,7 @@ import {ClearButton} from 'react-bootstrap-typeahead';
 export const GroceryList = () => {
 
 
-    // const sampleData =
-    //     [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:true}, {itemName: "orange", id:3, checked:false},{itemName: "milk", id:4, checked:false}]
-
-
-    const [loadedIngredients, setLoadedIngredients] = useState([]);
+    const [loadedIngredients, setLoadedIngredients] = useState([]); // USE CONTEXT FOR THIS FETCHING every time is not good for obvious reasons, that list is never change
     const [items, setItems] = useState()
     const [idCounter,setIdCounter] = useState(5);
     const [inputValue, setInputValue] = useState('');
@@ -56,7 +52,7 @@ export const GroceryList = () => {
     useEffect(() => {
         getGroceries().catch(e => console.log(e))
 
-    },[])
+    },[idCounter])
 
 
 
@@ -64,25 +60,30 @@ export const GroceryList = () => {
         if (inputValue === "") {
             return;
         }
-        const newItem = {
-            itemName: inputValue,
-            checked: true,
-            id: idCounter
-        };
-        setIdCounter(idCounter + 1);
-        const newItems = [...items, newItem];
+        // const newItem = {
+        //     itemName: inputValue,
+        //     checked: true,
+        //     id: idCounter
+        // };
+
+        let groceryLink = `${hostName}/api/v1/grocery-list/add/1/${inputValue}`
         // TODO need to add list ID of course later
-        fetch(`${hostName}/api/v1/grocery-list/add/1/${inputValue}`).catch((e) => {
-            console.log(e)
-        });
-        setItems(newItems)
+        postFetchWithAuth(groceryLink,() => {getGroceries().then(() => console.log("Fetch done"))},(e) =>
+            console.log(e.message))
         setInputValue("");
+
+        setIdCounter(idCounter + 1);
     };
 
     const removeItem = (id) => {
         let newList = items.filter(item => item.id !== id)
         setItems(newList)
+        getFetchWithAuth(`http://localhost:8081/api/v1/list-item/delete/${id}`,() => {console.log("all good")},(error) => {
+            console.log(error)})
+
     }
+
+
 
 
     function handleChange(selectedOptions) {
@@ -93,7 +94,8 @@ export const GroceryList = () => {
         const newItems = [...items];
         newItems.forEach(item => {
             if (item.id === id) {
-                fetch(`http://localhost:8081/grocery/toggle/${item.id}`).catch(e => console.log(e))
+                getFetchWithAuth(`http://localhost:8081/api/v1/item-status/${item.id}`,() => {console.log("all good")},(error) => {
+                    console.log(error)})
                 item.checked = !item.checked;
             }
         })
@@ -138,7 +140,7 @@ export const GroceryList = () => {
                             <ListItemIcon>
                                 <Checkbox
                                     edge="start"
-                                    checked={!value.checked}
+                                    checked={value.checked}
                                     color={"default"}
                                     tabIndex={-1}
                                     disableRipple
@@ -146,7 +148,7 @@ export const GroceryList = () => {
                                 />
 
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={value.checked ? value.ingredientName :
+                            <ListItemText id={labelId} primary={!value.checked ? value.ingredientName :
                                 <strike>{value.ingredientName}</strike>}/>
                             <ListItemSecondaryAction>
                                 <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">

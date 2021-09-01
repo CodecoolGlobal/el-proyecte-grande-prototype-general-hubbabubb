@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {SearchInput} from "../store/recipe-search-input";
 import RecipeList from "../components/recipe/RecipeList";
 import {hostName} from "../util/constants";
-import {getFetch, getFetchWithAuth} from "../util/fetchData";
+import {getFetchWithAuth} from "../util/fetchData";
 import styled from "styled-components";
 import {LargeHeader} from "../components/Common";
 import {faSearch,} from "@fortawesome/free-solid-svg-icons";
@@ -18,7 +18,7 @@ export const RecipesContainer = styled.div`
     justify-content: center;
 `;
 
-export default function RecipesByName(props) {
+export default function RecipesByName() {
     const {searchField} = useContext(SearchInput);
     const [recipes, setRecipes] = useState("")
     const searchURL = `${hostName}/api/v1/recipe/search/${searchField}`;
