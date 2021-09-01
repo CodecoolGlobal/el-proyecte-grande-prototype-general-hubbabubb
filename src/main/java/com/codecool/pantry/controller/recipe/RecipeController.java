@@ -76,17 +76,3 @@ public class RecipeController {
         return restTemplate.getForEntity(uri, String.class);
     }
 }
-//      THIS ALREADY DONE BY THE FRONT-END
-//    public String generateIngredientQuery(List<String> ingredients) {
-//        if (ingredients.size() < 1) {
-//            return "throw-error"; // exception + handling
-//        }
-//
-//        StringBuilder searchQuery = new StringBuilder(ingredients.get(0));
-//        for (int i = 1; i < ingredients.size(); i++) {
-//            searchQuery.append(",+");
-//            searchQuery.append(ingredients.get(i));
-//        }
-//        return searchQuery.toString();
-//
-//    }
