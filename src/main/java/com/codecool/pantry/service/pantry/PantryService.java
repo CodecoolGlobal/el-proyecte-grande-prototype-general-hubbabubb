@@ -26,9 +26,16 @@ public class PantryService {
         if (getPantryById(id).isEmpty()) {
             return;
         }
+
+
         Pantry pantry = getPantryById(id).get();
+
         Set<ListItem> newList = pantry.getGroceryList();
-        newList.add(new ListItem(itemName));
+
+        var newItem = new ListItem(itemName);
+        newItem.setPantry(pantry);
+        newList.add(newItem);
+
         pantry.setGroceryList(newList);
         pantryRepository.save(pantry);
     }
@@ -39,7 +46,9 @@ public class PantryService {
         }
         Pantry pantry = getPantryById(id).get();
         Set<ListItem> newList = pantry.getPantryList();
-        newList.add(new ListItem(itemName));
+        var newItem = new ListItem(itemName);
+        newItem.setPantry(pantry);
+        newList.add(newItem);
         pantry.setPantryList(newList);
         pantryRepository.save(pantry);
     }

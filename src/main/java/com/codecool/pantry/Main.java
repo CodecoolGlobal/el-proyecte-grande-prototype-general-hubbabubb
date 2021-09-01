@@ -1,7 +1,9 @@
 package com.codecool.pantry;
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.repository.appuser.AppUserRepository;
+import com.codecool.pantry.repository.pantry.PantryRepository;
 import com.codecool.pantry.security.PasswordEnconder;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +22,8 @@ public class Main {
 
     private AppUserRepository userRepository;
 
+    private PantryRepository pantryRepository;
+
     public static void main(String[] args) throws IOException, URISyntaxException {
         SpringApplication.run(Main.class, args);
     }
@@ -35,11 +39,11 @@ public class Main {
         user.setEnabled(true);
         user.setLastName("Test");
         user.setFirstName("User");
-        user.setUsername("test@user.com");
-//        Pantry pantry = new Pantry();
+        user.setEmail("test@user.com");
+        Pantry pantry = new Pantry();
+        pantryRepository.save(pantry);
         user.setEnabled(true);
-//        user.setPantry(pantry);
-//        user.setRole();
+        user.setPantry(pantry);
         user.setPassword(new BCryptPasswordEncoder().encode("testuser"));
         userRepository.save(user);
 

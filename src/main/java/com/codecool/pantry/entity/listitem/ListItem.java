@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public class ListItem {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(nullable = false)
@@ -25,7 +26,7 @@ public class ListItem {
     private boolean checked;
     private LocalDateTime expirationDate; //How important is it? Maybe in the future?
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pantry_id")
     private Pantry pantry;
 
