@@ -4,14 +4,20 @@ import com.codecool.pantry.controller.appuser.registration.RegistrationRequest;
 import com.codecool.pantry.email.EmailSender;
 import com.codecool.pantry.email.EmailValidator;
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.token.ConfirmationToken;
+import com.codecool.pantry.repository.pantry.PantryRepository;
 import com.codecool.pantry.service.appuser.AppUserService;
+import com.codecool.pantry.service.pantry.PantryService;
 import com.codecool.pantry.service.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.expression.Sets;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -21,19 +27,25 @@ public class RegistrationService {
     private final AppUserService service;
     private final ConfirmationTokenService tokenService;
     private final EmailSender sender;
+    private final PantryRepository pantryRepository;
 
     public String register(RegistrationRequest request) {
         boolean isValidEmail = validator.test(request.getEmail());
         if (!isValidEmail) {
             throw new IllegalStateException(String.format("Not a valid e-mail(%s)", request.getEmail()));
         }
-
-        String token = service.signUpUser(new AppUser(
+        // Creates new pantry for the newly registered user
+        Pantry pantry = new Pantry();
+        AppUser appUser =  new AppUser(
                 request.getFirstName(),
                 request.getLastName(),
                 request.getEmail(),
                 request.getPassword()
-        ));
+        );
+        appUser.setPantry(pantry);
+        pantryRepository.save(pantry);
+        String token = service.signUpUser(appUser);
+
         String link = "http://localhost:8081/api/v1/registration/confirm?token=" + token;
         sender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         return token;
