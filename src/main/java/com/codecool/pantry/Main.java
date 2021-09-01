@@ -31,7 +31,7 @@ public class Main {
 
     @PostConstruct
     protected void init() {
-        if (userRepository.findByEmail("test@user.com").isPresent()) {
+        if (userRepository.findByUsername("test@user.com").isPresent()) {
             return;
         }
 
@@ -44,9 +44,9 @@ public class Main {
         pantryRepository.save(pantry);
         user.setEnabled(true);
         user.setPantry(pantry);
-//        user.setRole();
         user.setPassword(new BCryptPasswordEncoder().encode("testuser"));
         userRepository.save(user);
+
 
     }
 

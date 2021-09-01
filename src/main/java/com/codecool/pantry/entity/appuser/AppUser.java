@@ -2,7 +2,6 @@ package com.codecool.pantry.entity.appuser;
 
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -46,7 +44,7 @@ public class AppUser implements UserDetails {
     @Column(
             nullable = false
     )
-    private String email;
+    private String username;
 
     @Column(
             nullable = false
@@ -63,10 +61,10 @@ public class AppUser implements UserDetails {
     @JoinColumn(name="pantry_id")
     private Pantry pantry;
 
-    public AppUser(String firstName, String lastName, String email, String password) {
+    public AppUser(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.username = username;
         this.password = password;
     }
 
@@ -83,7 +81,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
