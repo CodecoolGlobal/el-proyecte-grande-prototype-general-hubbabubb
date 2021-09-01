@@ -7,7 +7,8 @@ import {NavLink, withRouter} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
 import {SearchInput} from "../store/recipe-search-input";
-import {Collapse, Divider, Grow} from "@material-ui/core";
+import {Divider, Grow} from "@material-ui/core";
+import AuthenticationService from "../util/AuthenticationService";
 
 function Header(props) {
     const {setSearchField} = useContext(SearchInput);
@@ -24,6 +25,11 @@ function Header(props) {
             setSearchField(e.target.value);
             props.history.push("/search-recipe");
         }
+    }
+
+    function handleLogout() {
+        AuthenticationService.logout();
+        props.history.push("/");
     }
 
     return <div ref={navigation} className="header-navbar">
@@ -92,7 +98,7 @@ function Header(props) {
                     <div className="dropdown-content">
                         <NavLink className='navLink' to="#">Edit profile</NavLink>
                         <Dropdown.Divider/>
-                        <NavLink className='navLink' to="#">Logout</NavLink>
+                        <a className='navLink' onClick={handleLogout}>Logout</a>
                     </div>
                 </div>
             </Col>

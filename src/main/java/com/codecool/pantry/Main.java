@@ -43,6 +43,7 @@ public class Main {
         user.setPassword(new BCryptPasswordEncoder().encode("testuser"));
         userRepository.save(user);
 
+
     }
 
 }
