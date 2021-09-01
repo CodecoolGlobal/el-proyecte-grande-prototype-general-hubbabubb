@@ -22,6 +22,6 @@ public class Ingredient {
     private int amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipe_id")
+    @JoinColumn(name = "recipe_id", referencedColumnName = "id",nullable = false)
     private Recipe recipe;
 }

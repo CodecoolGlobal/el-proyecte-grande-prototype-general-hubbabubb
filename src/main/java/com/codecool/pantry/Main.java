@@ -39,7 +39,7 @@ public class Main {
         user.setEnabled(true);
         user.setLastName("Test");
         user.setFirstName("User");
-        user.setEmail("test@user.com");
+        user.setUsername("test@user.com");
         Pantry pantry = new Pantry();
         pantryRepository.save(pantry);
         user.setEnabled(true);
