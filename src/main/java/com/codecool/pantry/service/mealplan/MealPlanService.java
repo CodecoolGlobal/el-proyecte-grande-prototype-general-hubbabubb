@@ -6,7 +6,10 @@ import com.codecool.pantry.entity.recipe.Recipe;
 import com.codecool.pantry.repository.appuser.AppUserRepository;
 import com.codecool.pantry.repository.mealplan.MealPlanRepository;
 import com.codecool.pantry.repository.recipe.RecipeRepository;
+import javassist.NotFoundException;
+
 import lombok.AllArgsConstructor;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,10 +24,11 @@ public class MealPlanService {
     private final AppUserRepository appUserRepository;
     private final RecipeRepository recipeRepository;
 
+
     public void saveMealPlan(Long recipeId, LocalDateTime date) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         if (recipe.isEmpty()) {
-            throw new IllegalStateException("Recipe not found");
+            throw new IllegalStateException("Recipe_old not found");
         }
         mealPlanRepository.save(new MealPlan(recipe.get(), date));
     }

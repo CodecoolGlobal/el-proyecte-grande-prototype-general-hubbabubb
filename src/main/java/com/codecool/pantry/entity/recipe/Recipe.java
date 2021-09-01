@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -16,6 +15,7 @@ import javax.persistence.Id;
 public class Recipe {
 
     @Id
+    @Column(name = "id", unique=true, nullable = false)
     private Long id;
     private String title;
     private String image;
@@ -29,8 +29,11 @@ public class Recipe {
     @Column(length = 2000)
     private String instructions;
 
-    // @ManyToMany
-    // private Set<ListItem> ingredients;
+    @Column(length = 2000)
+    private String summary;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+    private Set<Ingredient> extendedIngredients;
 
     public Recipe(Long id, String title, String image, boolean vegetarian, boolean vegan, boolean glutenFree, boolean cheap, boolean dairyFree, int healthScore, String instructions) {
         this.id = id;

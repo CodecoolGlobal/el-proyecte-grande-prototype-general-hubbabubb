@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 /public/from-my-pantry.html
+
+.package-lock.json
