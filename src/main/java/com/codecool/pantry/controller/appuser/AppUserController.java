@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.*;
 public class AppUserController {
 
     private final AppUserService service;
-    private AuthenticationManager authenticationManager;
-    private JwtTokenProvider tokenProvider;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider tokenProvider;
 //    private UserRepository userRepository;
 
 
@@ -41,7 +41,6 @@ public class AppUserController {
 
         return user;
     }*/
-
 
     @GetMapping(path = "/default")
     public AppUser getDefaultUser() {

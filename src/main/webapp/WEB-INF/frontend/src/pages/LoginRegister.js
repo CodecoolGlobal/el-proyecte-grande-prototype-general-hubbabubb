@@ -2,6 +2,9 @@ import LoginRegisterForm from "../components/loginregister/LoginRegisterForm";
 import {Container, Row, Col} from "react-bootstrap";
 import LogoAnimation from "../components/LogoAnimation";
 import styled from "styled-components";
+import {withRouter} from 'react-router-dom';
+import AuthenticationService from "../util/AuthenticationService";
+
 
 const RegisterLoginContainer = styled.div`
     width: 100%;
@@ -13,7 +16,11 @@ const RegisterLoginContainer = styled.div`
 `;
 
 function LoginRegister(props) {
-        return <Container>
+    if (AuthenticationService.isUserLoggedIn()) {
+        props.history.push("/pantry");
+    }
+
+    return <Container>
         <Row className="justify-content-md-center">
             <Col >
                 <LogoAnimation />
@@ -27,4 +34,4 @@ function LoginRegister(props) {
     </Container>
 }
 
-export default LoginRegister;
+export default withRouter(LoginRegister);
