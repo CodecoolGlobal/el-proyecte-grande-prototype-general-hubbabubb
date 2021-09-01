@@ -5,6 +5,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import StarsIcon from '@material-ui/icons/Stars';
 import {hostName} from "../util/constants";
+import MealPlanList from "../components/mealplan/MealPlanList";
+import {LargeHeader} from "../components/Common";
 
 
 function MealPlan() {
@@ -13,6 +15,7 @@ function MealPlan() {
     const data = [
         {
             id: 1,
+            date: "15.09.2021",
             recipe: {
                 "id": 6589,
                 "title": "Braised Swordfish with Black Olives, Tomatoes and Marjoram",
@@ -69,6 +72,7 @@ function MealPlan() {
         },
         {
             id: 2,
+            date: "02.08.2021",
             recipe: {
 
                 "id": 656329,
@@ -126,71 +130,11 @@ function MealPlan() {
         }
     ];
 
-
-    function listMealPlans() {
-        return (
-            <div>
-                {data.map(plan => {
-                    return (
-                        <div style={{display: 'flex', justifyContent: 'center', fontFamily: 'Amatic SC", serif'}}>
-                            <Grid direction={"column"}
-                                  style={{border: '1px solid grey', padding: "2%"}}>
-                                <Grid direction={"column"}
-                                      justifyContent={"center"}>
-                                    <div style={{display: 'flex', justifyContent: 'center'}}><h1>{plan.recipe.title}</h1></div>
-                                    <div style={{display: 'flex', justifyContent: 'center'}}><img
-                                        src={plan.recipe.image} alt={"Missing"}/></div>
-                                    <div style={{display: 'flex', justifyContent: 'center'}}><h2>Health
-                                        score: {plan.recipe.healthScore}</h2><StarsIcon/></div>
-                                    <h3>Let's eat this on {plan.recipe.date}</h3>
-                                </Grid>
-                                <div style={{display: 'flex', justifyContent: 'center'}}>
-                                    <span>
-                                        <FormControlLabel
-                                            control={<Checkbox icon={<FavoriteBorder/>}
-                                                               checkedIcon={<Favorite/>}
-                                                               onClick={sendLike(plan.id)}
-                                                               name="checkedLike"/>}
-                                            label=""
-                                        />
-                                        <FormControlLabel
-                                            control={<Checkbox icon={<ThumbDownIcon/>}
-                                                               checkedIcon={<DeleteIcon/>}
-                                                               onClick={sendDislike(plan.id)}
-                                                               name="checkedLike"/>}
-                                            label=""
-                                        />
-                                    </span>
-                                </div>
-                                <div>
-                                    {plan.date}
-                                </div>
-                            </Grid>
-
-                        </div>
-                    );
-                })}
-            </div>
-        );
-    }
-
-
-    function sendLike(mealPlanId) {
-        // fetch(`http://localhost:8080/api/v1/meal-plan/dislike/${mealPlanId}/${userId}`)
-        //     .then(() => {console.log("LikeSent")});
-    }
-
-    function sendDislike(mealPlanId) {
-        fetch(`${hostName}/api/v1/meal-plan/dislike/${mealPlanId}/${userId}`)
-            .then(() => {
-                console.log("DislikeSent")
-            });
-
-    }
-
     return (
         <div>
-            {listMealPlans()}
+            <LargeHeader>
+                <MealPlanList plans={data} />
+            </LargeHeader>
         </div>
     );
 

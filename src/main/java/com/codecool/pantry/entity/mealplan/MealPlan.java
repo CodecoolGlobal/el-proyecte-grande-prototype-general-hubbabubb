@@ -28,6 +28,9 @@ public class MealPlan {
 
     private LocalDateTime date;
 
+    @ManyToOne
+    private Pantry pantry;
+
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<AppUser> likedUsers;
 
