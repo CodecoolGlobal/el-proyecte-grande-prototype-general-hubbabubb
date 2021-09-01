@@ -1,7 +1,8 @@
 
 import {useEffect, useState} from 'react';
 
-
+import {hostName} from '../util/constants';
+import {getFetchWithAuth} from '../util/fetchData'
 import {Spinner} from 'react-bootstrap';
 import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
@@ -22,24 +23,23 @@ import {ClearButton} from 'react-bootstrap-typeahead';
 export const GroceryList = () => {
 
 
-    const sampleData =
-        [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:true}, {itemName: "orange", id:3, checked:false},{itemName: "milk", id:4, checked:false}]
+    // const sampleData =
+    //     [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:true}, {itemName: "orange", id:3, checked:false},{itemName: "milk", id:4, checked:false}]
 
 
     const [loadedIngredients, setLoadedIngredients] = useState([]);
-    const [items, setItems] = useState(sampleData)
+    const [items, setItems] = useState()
     const [idCounter,setIdCounter] = useState(5);
     const [inputValue, setInputValue] = useState('');
 
 
-    // const getGroceries = async () => {
-    //     // // TODO: grocery list id here as well
-    //     // const groceryLink = "http://localhost:8000/grocery/list/1"
-    //     // await fetch(groceryLink)
-    //     //     .then(response => response.json()
-    //     //         .then((json) => setItems(json)))
-    //     setItems(sampleData)
-    // }
+    const getGroceries = async () => {
+
+        const groceryLink = `${hostName}/api/v1/grocery-list/1`
+        getFetchWithAuth(groceryLink,(data) => {setItems(data)},(error) => {
+            console.log(error)})
+
+    }
 
     useEffect(() => {
         fetch('/api/v1/ingredient')
@@ -52,6 +52,11 @@ export const GroceryList = () => {
                 setLoadedIngredients(result);
             });
     }, [])
+
+    useEffect(() => {
+        getGroceries().catch(e => console.log(e))
+
+    },[])
 
 
 
@@ -66,10 +71,10 @@ export const GroceryList = () => {
         };
         setIdCounter(idCounter + 1);
         const newItems = [...items, newItem];
-        // // TODO need to add list ID of course later
-        // fetch(`http://localhost:8000/grocery/add/${inputValue}`).catch((e) => {
-        //     console.log(e)
-        // });
+        // TODO need to add list ID of course later
+        fetch(`${hostName}/api/v1/grocery-list/add/1/${inputValue}`).catch((e) => {
+            console.log(e)
+        });
         setItems(newItems)
         setInputValue("");
     };

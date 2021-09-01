@@ -48,12 +48,13 @@ public class Pantry {
     @JsonManagedReference
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
-    @OneToMany(mappedBy = "pantry")
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
     private Set<ListItem> groceryList = new HashSet<>();
 
-    @OneToMany(mappedBy = "pantry")
+
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
     private Set<ListItem> pantryList = new HashSet<>();
 
-    @OneToMany(mappedBy = "pantry")
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
     private Set<MealPlan> mealPlans = new HashSet<>();
 }
