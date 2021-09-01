@@ -17,10 +17,11 @@ import {
 import Typeahead from 'react-bootstrap-typeahead/lib/components/AsyncTypeahead';
 import {ClearButton} from 'react-bootstrap-typeahead';
 import {getFetch} from "../util/fetchData";
+import AuthenticationService from "../util/AuthenticationService";
 
 
 export const Pantry = () => {
-
+    console.log("loggedin: " + AuthenticationService.isUserLoggedIn())
     const sampleData =
         [{itemName: 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked: false}, {
             itemName: "bread",

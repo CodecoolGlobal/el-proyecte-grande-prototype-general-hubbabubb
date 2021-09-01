@@ -24,11 +24,11 @@ public class AppUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return repository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format("Can not find user: %s", email)));
+        return repository.findByUsername(email).orElseThrow(() -> new UsernameNotFoundException(String.format("Can not find user: %s", email)));
     }
 
     public AppUser getUserByEmail(String email) throws UsernameNotFoundException {
-        return repository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format("Can not find user: %s", email)));
+        return repository.findByUsername(email).orElseThrow(() -> new UsernameNotFoundException(String.format("Can not find user: %s", email)));
     }
 
     public AppUser getUserById(Long id) throws UsernameNotFoundException {
@@ -36,7 +36,7 @@ public class AppUserService implements UserDetailsService {
     }
 
     public String signUpUser(AppUser user) {
-        boolean userExists = repository.findByEmail(user.getEmail())
+        boolean userExists = repository.findByUsername(user.getUsername())
                 .isPresent();
         if (userExists) {
             throw new IllegalStateException("This email is already taken!");

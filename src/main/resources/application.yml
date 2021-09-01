@@ -4,12 +4,6 @@ server:
     include-binding-errors: always
   port: 8081
 
-jwt:
-  auth:
-    app: Spring-Security-App
-    secret-key: ???KKK
-    expires_in: 33600
-
 spring:
   h2:
     console:
@@ -52,3 +46,21 @@ spring:
 ingredients:
     list:
       location: "data/ingredient_list.csv"
+
+jwt:
+  signing:
+    key:
+      secret: mySecret
+  get:
+    token:
+      uri: /authenticate
+  refresh:
+    token:
+      uri: /refresh
+  http:
+    request:
+      header: Authorization
+  token:
+    expiration:
+      in:
+        seconds: 604800

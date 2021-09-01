@@ -4,6 +4,7 @@ import {validateEmail} from "./RegisterForm";
 import {AccountContext} from "./accountContext";
 import axios from "axios";
 import {withRouter} from 'react-router-dom';
+import AuthenticationService, {USER_NAME_SESSION_ATTRIBUTE_NAME} from "../../util/AuthenticationService";
 
 function LoginForm(props) {
     const {switchToRegister} = useContext(AccountContext)
@@ -14,21 +15,16 @@ function LoginForm(props) {
         return email.length > 0 && password.length > 0 && validateEmail(email);
     }
 
-    async function handleSubmit(event) {
-        let headers = new Headers();
-        headers.set('Authorization', 'Basic ' + Buffer.from(email + ":" + password).toString('base64'),);
-
-        event.preventDefault();
-        const response = await axios.post(`/api/v1/user/authenticate`, {
-            email: email,
-            password: password
-        });
-        localStorage.setItem("jwtToken", response.data.token);
-        localStorage.setItem("username", response.data.name)
-        console.log(response.data);
-        if (response.data != null) {
-            props.history.push("/pantry");
-        }
+    function handleSubmit() {
+        AuthenticationService
+            .executeBasicAuthenticationService(email, password)
+            .then(() => {
+                AuthenticationService.registerSuccessfulLogin(email, password)
+                console.log(sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME))
+                props.history.push(`/pantry`);
+            }).catch((err) => {
+                console.log(err);
+        })
     }
 
     return <BoxContainer>
@@ -46,9 +42,9 @@ function LoginForm(props) {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <SubmitButton
-                type={'submit'}
+                type={'button'}
                 onClick={handleSubmit}
-                disable={validateForm()}
+                disable={validateForm}
             >Login
             </SubmitButton>
         </FormContainer>
