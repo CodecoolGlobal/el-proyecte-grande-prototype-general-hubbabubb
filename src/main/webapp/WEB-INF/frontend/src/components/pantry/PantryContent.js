@@ -11,7 +11,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import {faArchive, faCheckCircle, faCookieBite, faPlus, faPlusSquare} from "@fortawesome/free-solid-svg-icons";
+import {faArchive, faPlusSquare} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import './PantryContent.css'
