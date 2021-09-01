@@ -2,7 +2,7 @@
 import {useEffect, useState} from 'react';
 
 import {hostName} from '../util/constants';
-import {getFetchWithAuth, postFetchWithAuth} from '../util/fetchData'
+import {fetchNoResponse, getFetchWithAuth} from '../util/fetchData'
 import {Spinner} from 'react-bootstrap';
 import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
@@ -25,7 +25,7 @@ export const GroceryList = () => {
 
     const [loadedIngredients, setLoadedIngredients] = useState([]); // USE CONTEXT FOR THIS FETCHING every time is not good for obvious reasons, that list is never change
     const [items, setItems] = useState()
-    const [idCounter,setIdCounter] = useState(5);
+    const [itemAdded, setItemAdded] = useState(false)
     const [inputValue, setInputValue] = useState('');
 
 
@@ -52,34 +52,24 @@ export const GroceryList = () => {
     useEffect(() => {
         getGroceries().catch(e => console.log(e))
 
-    },[idCounter])
+    },[itemAdded])
 
 
 
-    const handleAddButtonClick = () => {
+    const handleAddButtonClick = async () => {
         if (inputValue === "") {
             return;
         }
-        // const newItem = {
-        //     itemName: inputValue,
-        //     checked: true,
-        //     id: idCounter
-        // };
-
-        let groceryLink = `${hostName}/api/v1/grocery-list/add/1/${inputValue}`
-        // TODO need to add list ID of course later
-        postFetchWithAuth(groceryLink,() => {getGroceries().then(() => console.log("Fetch done"))},(e) =>
-            console.log(e.message))
+        let groceryLink = `${hostName}/api/v1/grocery-list/add/1/${inputValue}` // pantry ID should be dynamic
+        fetchNoResponse(groceryLink, "POST")
         setInputValue("");
-
-        setIdCounter(idCounter + 1);
+        setItemAdded(!itemAdded)
     };
 
     const removeItem = (id) => {
         let newList = items.filter(item => item.id !== id)
         setItems(newList)
-        getFetchWithAuth(`http://localhost:8081/api/v1/list-item/delete/${id}`,() => {console.log("all good")},(error) => {
-            console.log(error)})
+        fetchNoResponse(`http://localhost:8081/api/v1/list-item/delete/${id}`,"GET")
 
     }
 
@@ -94,8 +84,7 @@ export const GroceryList = () => {
         const newItems = [...items];
         newItems.forEach(item => {
             if (item.id === id) {
-                getFetchWithAuth(`http://localhost:8081/api/v1/item-status/${item.id}`,() => {console.log("all good")},(error) => {
-                    console.log(error)})
+                fetchNoResponse(`http://localhost:8081/api/v1/item-status/${item.id}`,"GET")
                 item.checked = !item.checked;
             }
         })

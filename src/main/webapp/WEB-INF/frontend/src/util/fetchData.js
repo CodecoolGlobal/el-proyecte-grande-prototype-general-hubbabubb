@@ -40,6 +40,18 @@ export function postFetchWithAuth(url, data, callback, errorHandling) {
         .catch(error => errorHandling(error))
 }
 
+
+export function fetchNoResponse(url, method) {
+    const authHeader = new Headers();
+    authHeader.append('Authorization', 'Basic test@user.com : testuser');
+
+    fetch(url, {
+        method: method, // *GET, POST, PUT, DELETE, etc.
+        headers: { authorization: 'Basic ' + window.btoa("test@user.com" + ":" + "testuser") },
+    })
+        .catch(error => console.log(error))
+}
+
 export function getFetchWithAuth(url, callback, errorHandling) {
 
     fetch(url, {
