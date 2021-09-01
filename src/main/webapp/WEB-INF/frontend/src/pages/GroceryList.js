@@ -93,7 +93,7 @@ export const GroceryList = () => {
         const newItems = [...items];
         newItems.forEach(item => {
             if (item.id === id) {
-                fetch(`http://localhost:8000/grocery/toggle/${item.id}`).catch(e => console.log(e))
+                fetch(`http://localhost:8081/grocery/toggle/${item.id}`).catch(e => console.log(e))
                 item.checked = !item.checked;
             }
         })
