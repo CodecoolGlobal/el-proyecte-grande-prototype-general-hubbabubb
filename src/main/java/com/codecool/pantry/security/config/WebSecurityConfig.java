@@ -1,33 +1,51 @@
 package com.codecool.pantry.security.config;
 
-import com.codecool.pantry.service.appuser.AppUserService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@AllArgsConstructor
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AppUserService service;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private JwtTokenProvider tokenProvider;
+    @Autowired
+    private JwtUnAuthorizedResponseAuthenticationEntryPoint jwtUnAuthorizedResponseAuthenticationEntryPoint;
+
+    @Autowired
+    private UserDetailsService jwtInMemoryUserDetailsService;
+
+    @Autowired
+    private JwtTokenAuthorizationOncePerRequestFilter jwtAuthenticationTokenFilter;
+
+    @Value("${jwt.get.token.uri}")
+    private String authenticationPath;
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(jwtInMemoryUserDetailsService)
+                .passwordEncoder(passwordEncoderBean());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoderBean() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     @Override
@@ -36,58 +54,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-
-//                .antMatchers(HttpMethod.OPTIONS, "/**")   // <---------- we MAY need this
-                .antMatchers(
-                        "/**/*.{js,html,css,ico}",
-                        "/i18n/**",
-                        "/assets/**");
-
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors();
-        http.csrf().disable().
-                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(jwtUnAuthorizedResponseAuthenticationEntryPoint).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/user/authenticate", "/api/v1/ingredient", "/api/v1/registration/", "/api/v1/registration/confirm").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic();
-        http.apply(new JwtTokenConfigurer(tokenProvider));
+                .anyRequest().authenticated();
+
+        httpSecurity
+                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+        httpSecurity
+                .headers()
+                .frameOptions().sameOrigin()  //H2 Console Needs this setting
+                .cacheControl(); //disable caching
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .authenticationProvider(authProvider());
+    public void configure(WebSecurity webSecurity) throws Exception {
+        webSecurity
+                .ignoring()
+                .antMatchers(
+                        HttpMethod.POST,
+                        authenticationPath
+                )
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .and()
+                .ignoring()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/" //Other Stuff You want to Ignore
+                )
+                .and()
+                .ignoring()
+                .antMatchers("/h2-console/**/**");//Should not be in Production!
     }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-//        configuration.setAllowedMethods(Arrays.asList("GET","POST","OPTIONS"));
-        configuration.setAllowedOrigins(List.of("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-//        configuration.setExposedHeaders(Arrays.asList("x-auth-token","Authorization"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
-    @Bean
-    public DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(service);
-        return provider;
-    }
-
-
 }
