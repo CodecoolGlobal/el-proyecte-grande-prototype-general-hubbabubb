@@ -16,7 +16,7 @@ function RecipeList(props) {
 
     return <CardList>
         {props.recipes.map((recipe) => {
-            return <Grid>
+            return <Grid key={recipe.id}>
                 <RecipeListItem title={recipe.title} id={recipe.id} image={recipe.image} />
             </Grid>
         })}

@@ -121,7 +121,7 @@ export default function PantryContent() {
                                 <Checkbox
                                     edge="start"
                                     checked={value.checked}
-                                    color={"default"}
+                                    color={"primary"}
                                     tabIndex={-1}
                                     disableRipple
                                     inputProps={{'aria-labelledby': labelId}}

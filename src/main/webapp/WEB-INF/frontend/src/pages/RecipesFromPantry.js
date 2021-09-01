@@ -34,9 +34,7 @@ export const RecipesFromPantry = () => {
 
 
         const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${pantryContent}`;
-        console.log(searchURL)
         getFetchWithAuth(searchURL, (jsonData) => {
-            console.log(jsonData);
             setRecipes(jsonData);setLoading(false)
         }, (error) => {
             console.log(error)

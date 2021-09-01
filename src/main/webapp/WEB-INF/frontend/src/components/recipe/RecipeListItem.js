@@ -1,17 +1,13 @@
 import React, {useState} from 'react';
-import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import {Backdrop, CardActions, Collapse, Fade, Grow} from "@material-ui/core";
-import {IconButton, Modal} from "@material-ui/core";
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import CardHeader from "react-bootstrap/CardHeader";
+import {Backdrop, Grow} from "@material-ui/core";
+import {Modal} from "@material-ui/core";
+
 import Recipe from "./Recipe";
 import {getFetchWithAuth} from "../../util/fetchData";
 

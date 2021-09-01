@@ -41,32 +41,32 @@ export default function MealPlanListItem(props) {
 
 
 
-
-    useEffect(() => {
-        getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
-            console.log(data);
-        }, (error) => {console.log(error)})
-        setLiked(!liked)
-    }, [likeClick])
-
-    useEffect(() => {
-        getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
-            console.log(data);
-        }, (error) => {console.log(error)})
-        setDisliked(!disliked)
-    }, [dislikeClick])
-
-    useEffect(() => {
-        getFetchWithAuth(`${hostName}/api/v1/meal-plan/likeChecked/${props.id}/${userId}`, (data) => {
-            setLiked(data)
-        }, (error) => {console.log(error)})
-    }, [liked])
-
-    useEffect(() => {
-        getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislikeChecked/${props.id}/${userId}`, (data) => {
-            setDisliked(data)
-        }, (error) => {console.log(error)})
-    }, [disliked])
+// THIS IS CAUSING INFINITE LOOP we need to recheck it
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
+    //         console.log(data);
+    //     }, (error) => {console.log(error)})
+    //     setLiked(!liked)
+    // }, [likeClick])
+    //
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
+    //         console.log(data);
+    //     }, (error) => {console.log(error)})
+    //     setDisliked(!disliked)
+    // }, [dislikeClick])
+    //
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/likeChecked/${props.id}/${userId}`, (data) => {
+    //         setLiked(data)
+    //     }, (error) => {console.log(error)})
+    // }, [liked])
+    //
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislikeChecked/${props.id}/${userId}`, (data) => {
+    //         setDisliked(data)
+    //     }, (error) => {console.log(error)})
+    // }, [disliked])
 
     // function isLikeChecked(mealPlanId) {
     //     fetch(`${hostName}/api/v1/meal-plan/dislikeChecked/${mealPlanId}/${userId}`)
@@ -106,22 +106,22 @@ export default function MealPlanListItem(props) {
                     </Typography>
                     <div style={{display: 'flex', justifyContent: 'center', }}>
                         <span>
-                            <FormControlLabel
-                                control={<Checkbox checked={liked}
-                                                   icon={<FavoriteBorder/>}
-                                                   checkedIcon={<Favorite/>}
-                                                   onClick={setLikeClick(!likeClick)}
-                                                   name="checkedLike"/>}
-                                label={props.liked}
-                            />
-                            <FormControlLabel
-                                control={<Checkbox checked={disliked}
-                                                   icon={<ThumbDownIcon/>}
-                                                   checkedIcon={<ThumbDownIcon/>}
-                                                   onClick={setDislikeClick(!dislikeClick)}
-                                                   name="checkedDislike"/>}
-                                label={props.disliked}
-                            />
+                            {/*<FormControlLabel*/}
+                            {/*    control={<Checkbox checked={liked}*/}
+                            {/*                       icon={<FavoriteBorder/>}*/}
+                            {/*                       checkedIcon={<Favorite/>}*/}
+                            {/*                       onClick={setLikeClick(!likeClick)}*/}
+                            {/*                       name="checkedLike"/>}*/}
+                            {/*    label={props.liked}*/}
+                            {/*/>*/}
+                            {/*<FormControlLabel*/}
+                            {/*    control={<Checkbox checked={disliked}*/}
+                            {/*                       icon={<ThumbDownIcon/>}*/}
+                            {/*                       checkedIcon={<ThumbDownIcon/>}*/}
+                            {/*                       onClick={setDislikeClick(!dislikeClick)}*/}
+                            {/*                       name="checkedDislike"/>}*/}
+                            {/*    label={props.disliked}*/}
+                            {/*/>*/}
                         </span>
                     </div>
                 </CardContent>

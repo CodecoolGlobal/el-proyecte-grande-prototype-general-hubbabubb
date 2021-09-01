@@ -1,16 +1,8 @@
-import {Checkbox, FormControlLabel, Grid} from "@material-ui/core";
-import {Favorite, FavoriteBorder} from "@material-ui/icons";
-import DeleteIcon from "@material-ui/icons/Delete";
-
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import StarsIcon from '@material-ui/icons/Stars';
-import {hostName} from "../util/constants";
 import MealPlanList from "../components/mealplan/MealPlanList";
 import {LargeHeader} from "../components/Common";
 
 
 function MealPlan() {
-    const userId = 6;
 
     const data = [
         {
