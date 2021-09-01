@@ -27,7 +27,7 @@ public class PantryController {
     @GetMapping("api/v1/grocery-list/{id}")
     public Set<ListItem> getGroceryList(@PathVariable(value = "id") Long id) {
         var pantry = pantryService.getPantryById(id);
-        return pantry.map(Pantry::getGroceryList).orElse(null); // TODO: handle no pantry case
+        return pantry.get().getPantryList(); // TODO: handle no pantry case
     }
 
     @GetMapping("api/v1/pantry-content/{id}")

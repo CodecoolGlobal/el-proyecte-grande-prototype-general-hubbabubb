@@ -146,8 +146,8 @@ export const GroceryList = () => {
                                 />
 
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={value.checked ? value.itemName :
-                                <strike>{value.itemName}</strike>}/>
+                            <ListItemText id={labelId} primary={value.checked ? value.ingredientName :
+                                <strike>{value.ingredientName}</strike>}/>
                             <ListItemSecondaryAction>
                                 <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">
                                     <KitchenIcon color={"default"}/>
