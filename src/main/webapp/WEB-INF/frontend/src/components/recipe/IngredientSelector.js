@@ -13,12 +13,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function IngredientSelector(props) {
+export default function IngredientSelector({setSelector, handler}) {
     const classes = useStyles();
     const [loadedIngredients, setLoadedIngredients] = useState([]);
 
-    const {setSelected} = props.setSelect;
-    const {handleAddButtonClick} = props.setSelect;
+    const setSelected = setSelector;
+    const handleAddButtonClick = handler;
 
     useEffect(() => {
         getFetch('/api/v1/ingredient', (data) => {

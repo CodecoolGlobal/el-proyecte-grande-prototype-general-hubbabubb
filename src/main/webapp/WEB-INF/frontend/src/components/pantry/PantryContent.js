@@ -11,9 +11,9 @@ import {
     makeStyles
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import {faArchive, faPlusSquare} from "@fortawesome/free-solid-svg-icons";
+import {faPlusSquare} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
+import KitchenSharpIcon from '@material-ui/icons/KitchenSharp';
 import './PantryContent.css'
 import IngredientSelector from "../recipe/IngredientSelector";
 import AddShoppingCartSharpIcon from "@material-ui/icons/AddShoppingCartSharp";
@@ -99,7 +99,7 @@ export default function PantryContent() {
         }
         let groceryLink = `${hostName}/api/v1/grocery-list/add/1/${selectedIngredient}` // pantry ID should be dynamic
         fetchNoResponse(groceryLink, "POST")
-        setInputValue("");
+        setSelected("");
         setItemAdded(!itemAdded)
     };
     //
@@ -107,7 +107,7 @@ export default function PantryContent() {
 
     return (
         <Card className={classes.root}>
-            <Typography paragraph className={classes.typography}><FontAwesomeIcon icon={faArchive}/>
+            <Typography paragraph className={classes.typography}><KitchenSharpIcon/>
                 Pantry Content:
             </Typography>
             <IngredientSelector setSelector={setSelected} handler={handleAddButtonClick}/>
