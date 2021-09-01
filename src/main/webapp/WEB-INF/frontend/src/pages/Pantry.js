@@ -20,7 +20,6 @@ import {getFetch} from "../util/fetchData";
 
 
 export const Pantry = () => {
-
     const sampleData =
         [{itemName: 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked: false}, {
             itemName: "bread",
