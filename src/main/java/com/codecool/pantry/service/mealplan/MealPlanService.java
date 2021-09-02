@@ -42,17 +42,18 @@ public class MealPlanService {
         return mealPlanRepository.findById(id).get();
     }
 
-    public void like(Long mealPlanId, Long userId) {
-        Optional<AppUser> appUser = appUserRepository.findById(userId);
+    public void like(Long mealPlanId, String email) {
+        Optional<AppUser> appUser = appUserRepository.findByUsername(email);
         Optional<MealPlan> mealPlan = mealPlanRepository.findById(mealPlanId);
         mealPlan.get().likesHandler(appUser.get());
         mealPlanRepository.save(mealPlan.get());
     }
 
-    public void dislike(Long mealPlanId, Long userId) {
-        Optional<AppUser> appUser = appUserRepository.findById(userId);
+    public void dislike(Long mealPlanId, String email) {
+        Optional<AppUser> appUser = appUserRepository.findByUsername(email);
         Optional<MealPlan> mealPlan = mealPlanRepository.findById(mealPlanId);
         mealPlan.get().dislikesHandler(appUser.get());
         mealPlanRepository.save(mealPlan.get());
     }
+
 }

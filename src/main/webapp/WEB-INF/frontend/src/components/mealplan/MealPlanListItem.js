@@ -12,6 +12,7 @@ import CardHeader from "react-bootstrap/CardHeader";
 import {red} from "@material-ui/core/colors";
 import {hostName} from "../../util/constants";
 import {getFetchWithAuth} from "../../util/fetchData";
+import AuthenticationService from "../../util/AuthenticationService";
 
 const useStyles = makeStyles({
     root: {
@@ -32,55 +33,42 @@ const useStyles = makeStyles({
 });
 
 export default function MealPlanListItem(props) {
-    const userId = 1;
+    const userEmail = AuthenticationService.getLoggedInUserName();
     const classes = useStyles();
+
+
     // let [liked, setLiked] = useState(false);
     // let [disliked, setDisliked] = useState(false);
     // let [likeClick, setLikeClick] = useState(false);
     // let [dislikeClick, setDislikeClick] = useState(false);
 
 
-
-
     // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userEmail}`, (data) => {
     //         console.log(data);
     //     }, (error) => {console.log(error)})
     //     setLiked(!liked)
     // }, [likeClick])
     //
     // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userEmail}`, (data) => {
     //         console.log(data);
     //     }, (error) => {console.log(error)})
     //     setDisliked(!disliked)
     // }, [dislikeClick])
     //
     // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/like-checked/${props.id}/${userId}`, (data) => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/like-checked/${props.id}/${userEmail}`, (data) => {
     //         setLiked(data)
     //     }, (error) => {console.log(error)})
     // }, [liked])
     //
     // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike-checked/${props.id}/${userId}`, (data) => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike-checked/${props.id}/${userEmail}`, (data) => {
     //         setDisliked(data)
     //     }, (error) => {console.log(error)})
     // }, [disliked])
 
-    // function isLikeChecked(mealPlanId) {
-    //     fetch(`${hostName}/api/v1/meal-plan/dislikeChecked/${mealPlanId}/${userId}`)
-    //         .then(isChecked => setLiked(isChecked))
-    //         .catch(error => console.log(error));
-    //     return false;
-    // }
-    //
-    // function isDislikeChecked(mealPlanId) {
-    //     fetch(`${hostName}/api/v1/meal-plan/checked/${mealPlanId}/${userId}`)
-    //         .then(isChecked => {return isChecked})
-    //         .catch(error => console.log(error));
-    //     return false;
-    // }
 
     return (
         <Card className={classes.root}>
@@ -106,22 +94,24 @@ export default function MealPlanListItem(props) {
                     </Typography>
                     <div style={{display: 'flex', justifyContent: 'center', }}>
                         <span>
-                            {/*<FormControlLabel*/}
-                            {/*    control={<Checkbox checked={liked}*/}
-                            {/*                       icon={<FavoriteBorder/>}*/}
-                            {/*                       checkedIcon={<Favorite/>}*/}
-                            {/*                       onClick={setLikeClick(!likeClick)}*/}
-                            {/*                       name="checkedLike"/>}*/}
-                            {/*    label={props.liked}*/}
-                            {/*/>*/}
-                            {/*<FormControlLabel*/}
-                            {/*    control={<Checkbox checked={disliked}*/}
-                            {/*                       icon={<ThumbDownIcon/>}*/}
-                            {/*                       checkedIcon={<ThumbDownIcon/>}*/}
-                            {/*                       onClick={setDislikeClick(!dislikeClick)}*/}
-                            {/*                       name="checkedDislike"/>}*/}
-                            {/*    label={props.disliked}*/}
-                            {/*/>*/}
+                            <FormControlLabel
+                                control={<Checkbox
+                                                   // checked={liked}
+                                                   icon={<FavoriteBorder/>}
+                                                   checkedIcon={<Favorite/>}
+                                                   // onClick={setLikeClick(!likeClick)}
+                                                   name="checkedLike"/>}
+                                label={props.liked}
+                            />
+                            <FormControlLabel
+                                control={<Checkbox
+                                                   // checked={disliked}
+                                                   icon={<ThumbDownIcon/>}
+                                                   checkedIcon={<ThumbDownIcon/>}
+                                                   // onClick={setDislikeClick(!dislikeClick)}
+                                                   name="checkedDislike"/>}
+                                label={props.disliked}
+                            />
 
                         </span>
                     </div>
