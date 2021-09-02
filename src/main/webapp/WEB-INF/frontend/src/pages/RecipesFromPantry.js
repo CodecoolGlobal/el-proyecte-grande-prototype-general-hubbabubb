@@ -1,24 +1,13 @@
 import {
-    Checkbox, Button,
-    Divider,
-    Fab,
-    Grid,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Paper, Link
+     LinearProgress
 } from '@material-ui/core';
 import React, {useContext, useEffect, useState} from 'react';
-import LaunchIcon from '@material-ui/icons/Launch';
-import {NavLink} from 'react-bootstrap';
 import {hostName} from "../util/constants";
-import {SearchInput} from "../store/recipe-search-input";
 import {getFetchWithAuth} from "../util/fetchData";
 import {LargeHeader} from "../components/Common";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSadCry} from "@fortawesome/free-regular-svg-icons";
-import {faCookie, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faCookie} from "@fortawesome/free-solid-svg-icons";
 import RecipeList from "../components/recipe/RecipeList";
 import {RecipesContainer} from "./RecipesByName";
 
@@ -36,6 +25,7 @@ export const RecipesFromPantry = () => {
         }]
 
     const [recipes, setRecipes] = useState([])
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let pantryContent = sampleData.map((item) => {
@@ -44,14 +34,15 @@ export const RecipesFromPantry = () => {
 
 
         const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${pantryContent}`;
-        console.log(searchURL)
         getFetchWithAuth(searchURL, (jsonData) => {
-            console.log(jsonData);
-            setRecipes(jsonData)
+            setRecipes(jsonData);setLoading(false)
         }, (error) => {
             console.log(error)
         })
     }, [])
+
+    if (loading) { return <LinearProgress variant={"query"} color={"primary"} />
+    }
 
     if (recipes.length === 0) {
         return <RecipesContainer>

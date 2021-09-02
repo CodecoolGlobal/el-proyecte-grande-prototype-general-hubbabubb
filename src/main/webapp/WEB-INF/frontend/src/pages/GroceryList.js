@@ -1,7 +1,8 @@
 
 import {useEffect, useState} from 'react';
 
-
+import {hostName} from '../util/constants';
+import {fetchNoResponse, getFetchWithAuth} from '../util/fetchData'
 import {Spinner} from 'react-bootstrap';
 import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
@@ -16,30 +17,24 @@ import {
     ListItemText
 } from "@material-ui/core";
 import Typeahead from 'react-bootstrap-typeahead/lib/components/AsyncTypeahead';
-import {ClearButton} from 'react-bootstrap-typeahead';
-
+import HighlightOffSharpIcon from '@material-ui/icons/HighlightOffSharp';
 
 export const GroceryList = () => {
 
 
-    const sampleData =
-        [{itemName : 'apple', id: 1, checked: false}, {itemName: "potato", id: 2, checked:true}, {itemName: "orange", id:3, checked:false},{itemName: "milk", id:4, checked:false}]
-
-
-    const [loadedIngredients, setLoadedIngredients] = useState([]);
-    const [items, setItems] = useState(sampleData)
-    const [idCounter,setIdCounter] = useState(5);
+    const [loadedIngredients, setLoadedIngredients] = useState([]); // USE CONTEXT FOR THIS FETCHING every time is not good for obvious reasons, that list is never change
+    const [items, setItems] = useState()
+    const [itemAdded, setItemAdded] = useState(false)
     const [inputValue, setInputValue] = useState('');
 
 
-    // const getGroceries = async () => {
-    //     // // TODO: grocery list id here as well
-    //     // const groceryLink = "http://localhost:8000/grocery/list/1"
-    //     // await fetch(groceryLink)
-    //     //     .then(response => response.json()
-    //     //         .then((json) => setItems(json)))
-    //     setItems(sampleData)
-    // }
+    const getGroceries = async () => {
+
+        const groceryLink = `${hostName}/api/v1/grocery-list/1`
+        getFetchWithAuth(groceryLink,(data) => {setItems(data)},(error) => {
+            console.log(error)})
+
+    }
 
     useEffect(() => {
         fetch('/api/v1/ingredient')
@@ -53,31 +48,31 @@ export const GroceryList = () => {
             });
     }, [])
 
+    useEffect(() => {
+        getGroceries().catch(e => console.log(e))
+
+    },[itemAdded])
 
 
-    const handleAddButtonClick = () => {
+
+    const handleAddButtonClick = async () => {
         if (inputValue === "") {
             return;
         }
-        const newItem = {
-            itemName: inputValue,
-            checked: true,
-            id: idCounter
-        };
-        setIdCounter(idCounter + 1);
-        const newItems = [...items, newItem];
-        // // TODO need to add list ID of course later
-        // fetch(`http://localhost:8000/grocery/add/${inputValue}`).catch((e) => {
-        //     console.log(e)
-        // });
-        setItems(newItems)
+        let groceryLink = `${hostName}/api/v1/grocery-list/add/1/${inputValue}` // pantry ID should be dynamic
+        fetchNoResponse(groceryLink, "POST")
         setInputValue("");
+        setItemAdded(!itemAdded)
     };
 
     const removeItem = (id) => {
         let newList = items.filter(item => item.id !== id)
         setItems(newList)
+        fetchNoResponse(`http://localhost:8081/api/v1/list-item/delete/${id}`,"GET")
+
     }
+
+
 
 
     function handleChange(selectedOptions) {
@@ -88,7 +83,7 @@ export const GroceryList = () => {
         const newItems = [...items];
         newItems.forEach(item => {
             if (item.id === id) {
-                fetch(`http://localhost:8000/grocery/toggle/${item.id}`).catch(e => console.log(e))
+                fetchNoResponse(`http://localhost:8081/api/v1/item-status/${item.id}`,"GET")
                 item.checked = !item.checked;
             }
         })
@@ -112,9 +107,10 @@ export const GroceryList = () => {
                     id="ingredients"
                     options={loadedIngredients}
                     placeholder="Choose an ingredient...">
+
                     {({ onClear, selected }) => (
                         <div className="rbt-aux">
-                            {!!selected.length && <ClearButton onClick={onClear} />}
+                            {!!selected.length && <HighlightOffSharpIcon  onClick={onClear} />}
                             {!selected.length && <Spinner animation="fade" size="sm" />}
                         </div>
                     )}
@@ -133,7 +129,7 @@ export const GroceryList = () => {
                             <ListItemIcon>
                                 <Checkbox
                                     edge="start"
-                                    checked={!value.checked}
+                                    checked={value.checked}
                                     color={"default"}
                                     tabIndex={-1}
                                     disableRipple
@@ -141,8 +137,8 @@ export const GroceryList = () => {
                                 />
 
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={value.checked ? value.itemName :
-                                <strike>{value.itemName}</strike>}/>
+                            <ListItemText id={labelId} primary={!value.checked ? value.ingredientName :
+                                <strike>{value.ingredientName}</strike>}/>
                             <ListItemSecondaryAction>
                                 <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">
                                     <KitchenIcon color={"default"}/>

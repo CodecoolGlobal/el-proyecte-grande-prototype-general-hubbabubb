@@ -12,8 +12,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 
+@CrossOrigin
 @AllArgsConstructor
 @RestController
 public class PantryController {
@@ -24,25 +26,36 @@ public class PantryController {
     private final MealPlanService mealPlanService;
 
 
+    @CrossOrigin
     @GetMapping("api/v1/grocery-list/{id}")
-    public Set<ListItem> getGroceryList(@PathVariable(value = "id") Long id) {
+    public Set<ListItem> getGroceryList(@PathVariable(value = "id") Long id, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setStatus(200);
         var pantry = pantryService.getPantryById(id);
-        return pantry.map(Pantry::getGroceryList).orElse(null); // TODO: handle no pantry case
+        return pantry.map(Pantry::getGroceryList).orElse(null);
+
     }
 
     @GetMapping("api/v1/pantry-content/{id}")
-    public Set<ListItem> getPantryContent(@PathVariable(value = "id") Long id) {
+    public Set<ListItem> getPantryContent(@PathVariable(value = "id") Long id, HttpServletResponse response) {
         var pantry = pantryService.getPantryById(id);
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setStatus(200);
         return pantry.map(Pantry::getPantryList).orElse(null); // TODO: handle no pantry case
     }
 
     @GetMapping("api/v1/list-item/delete/{id}")
-    public void deleteListItem(@PathVariable(value = "id") Long id) {
+    public void deleteListItem(@PathVariable(value = "id") Long id,HttpServletResponse response) {
+
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setStatus(200);
         itemService.removeItem(id);
     }
 
     @PostMapping("api/v1/grocery-list/add/{id}/{itemName}")
-    public void addItemToGroceryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName) {
+    public void addItemToGroceryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName,HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setStatus(200);
         pantryService.addGroceryItemToList(id, itemName);
     }
 

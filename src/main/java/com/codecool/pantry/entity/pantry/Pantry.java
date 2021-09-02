@@ -4,6 +4,8 @@ package com.codecool.pantry.entity.pantry;
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,10 +18,48 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity(name = "pantry")
 public class Pantry {
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<AppUser> getPantryAppUsers() {
+        return pantryAppUsers;
+    }
+
+    public void setPantryAppUsers(Set<AppUser> pantryAppUsers) {
+        this.pantryAppUsers = pantryAppUsers;
+    }
+
+    public Set<ListItem> getGroceryList() {
+        return groceryList;
+    }
+
+    public void setGroceryList(Set<ListItem> groceryList) {
+        this.groceryList = groceryList;
+    }
+
+    public Set<ListItem> getPantryList() {
+        return pantryList;
+    }
+
+    public void setPantryList(Set<ListItem> pantryList) {
+        this.pantryList = pantryList;
+    }
+
+    public Set<MealPlan> getMealPlans() {
+        return mealPlans;
+    }
+
+    public void setMealPlans(Set<MealPlan> mealPlans) {
+        this.mealPlans = mealPlans;
+    }
 
     @Id
     @SequenceGenerator(
@@ -44,16 +84,23 @@ public class Pantry {
     )
     private String name = "My Pantry";
 
-    @OneToMany(mappedBy = "pantry")
     @JsonManagedReference
+    @OneToMany(mappedBy = "pantry",cascade = CascadeType.ALL)
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
-    @OneToMany(mappedBy = "pantry")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
     private Set<ListItem> groceryList = new HashSet<>();
 
-    @OneToMany(mappedBy = "pantry")
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
     private Set<ListItem> pantryList = new HashSet<>();
 
-    @OneToMany(mappedBy = "pantry")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
     private Set<MealPlan> mealPlans = new HashSet<>();
 }
+
+
+// ingredient -> pantry -> appuser -> pantry(appuser-> grocerylist-> asdsartfwerzhgojkterfhpgotrgjhoigfjh

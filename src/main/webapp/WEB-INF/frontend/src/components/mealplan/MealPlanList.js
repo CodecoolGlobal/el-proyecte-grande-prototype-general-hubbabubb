@@ -8,7 +8,7 @@ function MealPlanList(props) {
     return (
     <CardList>
         {props.plans.map((plan) => {
-            return <Grid>
+            return  ( <Grid key={plan.id} item>
                 <MealPlanListItem
                     id={plan.id}
                     date={plan.date}
@@ -18,7 +18,7 @@ function MealPlanList(props) {
                     liked={plan.liked.length}
                     disliked={plan.disliked.length}
                 />
-            </Grid>
+                </Grid>)
         })}
     </CardList>
     );

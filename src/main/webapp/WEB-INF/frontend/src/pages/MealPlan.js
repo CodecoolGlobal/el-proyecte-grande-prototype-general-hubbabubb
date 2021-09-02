@@ -1,4 +1,3 @@
-
 import {hostName} from "../util/constants";
 import MealPlanList from "../components/mealplan/MealPlanList";
 import {LargeHeader} from "../components/Common";
@@ -7,6 +6,7 @@ import {getFetchWithAuth} from "../util/fetchData";
 
 
 function MealPlan() {
+
     const userId = 1;
 
     const data = [

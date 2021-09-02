@@ -2,13 +2,14 @@ import React, {useContext, useEffect, useState} from "react";
 import {SearchInput} from "../store/recipe-search-input";
 import RecipeList from "../components/recipe/RecipeList";
 import {hostName} from "../util/constants";
-import {getFetch, getFetchWithAuth} from "../util/fetchData";
+import {getFetchWithAuth} from "../util/fetchData";
 import styled from "styled-components";
 import {LargeHeader} from "../components/Common";
 import {faSearch,} from "@fortawesome/free-solid-svg-icons";
 import {faSadCry} from "@fortawesome/free-regular-svg-icons";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {LinearProgress} from '@material-ui/core';
 
 export const RecipesContainer = styled.div`
     width: 100%;
@@ -18,18 +19,22 @@ export const RecipesContainer = styled.div`
     justify-content: center;
 `;
 
-export default function RecipesByName(props) {
+export default function RecipesByName() {
     const {searchField} = useContext(SearchInput);
     const [recipes, setRecipes] = useState("")
     const searchURL = `${hostName}/api/v1/recipe/search/${searchField}`;
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         getFetchWithAuth(searchURL, (jsonData) => {
-            setRecipes(jsonData)
+            setRecipes(jsonData);setLoading(false)
         }, (error) => {
             console.log(error)
         })
     }, [searchField])
+
+    if (loading) { return <LinearProgress variant={"query"} color={"primary"} />
+    }
 
     if (recipes === "" || recipes.results.length === 0) {
         return <RecipesContainer>

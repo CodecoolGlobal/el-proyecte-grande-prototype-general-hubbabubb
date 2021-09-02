@@ -7,10 +7,7 @@ import com.codecool.pantry.repository.ingredient.IngredientRepository;
 import com.codecool.pantry.repository.recipe.RecipeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
@@ -19,6 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "api/v1/recipe")
 @AllArgsConstructor
+@CrossOrigin(origins={ "http://localhost:3000", "http://localhost:4200" })
 public class RecipeController {
 
     private final RecipeRepository recipeRepository;
@@ -53,20 +51,28 @@ public class RecipeController {
         Optional<Recipe> recipe = recipeRepository.findById(id);
 
         if (recipe.isEmpty()) {
-            final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=%s", id, API_KEY);
-            RestTemplate restTemplate = new RestTemplate();
-
-            recipe = Optional.ofNullable(restTemplate.getForObject(uri, Recipe.class));
+            recipe = getRecipeFromSpoonacular(id);
 
             if (recipe.isPresent()) {
-                for (Ingredient ingredient : recipe.get().getExtendedIngredients()) {
-                    ingredientRepository.save(ingredient);
-                }
-                recipeRepository.save(recipe.get());
+                saveRecipe(recipe);
             }
         }
 
         return recipe;
+    }
+
+    private Optional<Recipe> getRecipeFromSpoonacular(Long id) {
+        Optional<Recipe> recipe;
+        final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=%s", id, API_KEY);
+        RestTemplate restTemplate = new RestTemplate();
+
+        recipe = Optional.ofNullable(restTemplate.getForObject(uri, Recipe.class));
+        return recipe;
+    }
+
+    private void saveRecipe(Optional<Recipe> recipe) {
+        ingredientRepository.saveAll(recipe.get().getExtendedIngredients());
+        recipeRepository.save(recipe.get());
     }
 
     @GetMapping("/by-ingredients/{ingredients}") //
@@ -78,17 +84,3 @@ public class RecipeController {
         return restTemplate.getForEntity(uri, String.class);
     }
 }
-//      THIS ALREADY DONE BY THE FRONT-END
-//    public String generateIngredientQuery(List<String> ingredients) {
-//        if (ingredients.size() < 1) {
-//            return "throw-error"; // exception + handling
-//        }
-//
-//        StringBuilder searchQuery = new StringBuilder(ingredients.get(0));
-//        for (int i = 1; i < ingredients.size(); i++) {
-//            searchQuery.append(",+");
-//            searchQuery.append(ingredients.get(i));
-//        }
-//        return searchQuery.toString();
-//
-//    }

@@ -1,9 +1,8 @@
 import {Route, Switch} from 'react-router-dom';
 
-import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import {GroceryList} from './pages/GroceryList';
-import {Pantry} from './pages/Pantry';
+import Pantry from './pages/Pantry';
 
 import {RecipesFromPantry} from './pages/RecipesFromPantry';
 import MealPlan from './pages/MealPlan';
@@ -13,7 +12,7 @@ import {useState} from "react";
 import {SearchInput} from "./store/recipe-search-input";
 
 
-function App() {
+function App(props) {
     const [searchField, setSearchField] = useState();
 
     const values = {searchField, setSearchField};
@@ -23,16 +22,13 @@ function App() {
             <Layout>
                 <Switch>
                     <Route path="/" exact>
-                        <Home/>
-                    </Route>
-                    <Route path="/login">
                         <LoginRegister active={"login"}/>
-                    </Route>
-                    <Route path="/register">
-                        <LoginRegister active={"register"}/>
                     </Route>
                     <Route path="/pantry">
                         <Pantry/>
+                    </Route>
+                    <Route path="/register">
+                        <LoginRegister active={"register"}/>
                     </Route>
                     <Route path="/grocery-list">
                         <GroceryList/>

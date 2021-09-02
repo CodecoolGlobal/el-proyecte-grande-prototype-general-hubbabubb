@@ -4,12 +4,6 @@ server:
     include-binding-errors: always
   port: 8081
 
-jwt:
-  auth:
-    app: Spring-Security-App
-    secret-key: ???KKK
-    expires_in: 33600
-
 spring:
   h2:
     console:

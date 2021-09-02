@@ -106,21 +106,23 @@ export default function MealPlanListItem(props) {
                     </Typography>
                     <div style={{display: 'flex', justifyContent: 'center', }}>
                         <span>
-                            <FormControlLabel
-                                control={<Checkbox checked={}
-                                                   icon={<FavoriteBorder/>}
-                                                   checkedIcon={<Favorite/>}
-                                                   onClick={}
-                                                   name="checkedLike"/>}
-                                label={props.liked}
-                            />
-                            <FormControlLabel
-                                control={<Checkbox
-                                                   icon={<ThumbDownIcon/>}
-                                                   checkedIcon={<ThumbDownIcon/>}
-                                                   name="checkedDislike"/>}
-                                label={props.disliked}
-                            />
+                            {/*<FormControlLabel*/}
+                            {/*    control={<Checkbox checked={liked}*/}
+                            {/*                       icon={<FavoriteBorder/>}*/}
+                            {/*                       checkedIcon={<Favorite/>}*/}
+                            {/*                       onClick={setLikeClick(!likeClick)}*/}
+                            {/*                       name="checkedLike"/>}*/}
+                            {/*    label={props.liked}*/}
+                            {/*/>*/}
+                            {/*<FormControlLabel*/}
+                            {/*    control={<Checkbox checked={disliked}*/}
+                            {/*                       icon={<ThumbDownIcon/>}*/}
+                            {/*                       checkedIcon={<ThumbDownIcon/>}*/}
+                            {/*                       onClick={setDislikeClick(!dislikeClick)}*/}
+                            {/*                       name="checkedDislike"/>}*/}
+                            {/*    label={props.disliked}*/}
+                            {/*/>*/}
+
                         </span>
                     </div>
                 </CardContent>
