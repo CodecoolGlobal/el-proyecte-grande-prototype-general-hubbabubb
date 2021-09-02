@@ -23,11 +23,11 @@ public class RecipeController {
     private final IngredientRepository ingredientRepository;
 
 //    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
-//    private final String API_KEY = "a22052fbcfef4a2fac111f33a93898d8";
+    private final String API_KEY = "a22052fbcfef4a2fac111f33a93898d8";
 //    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
 //    private final String API_KEY = "b880826d2c53495f8fb1fa608db88577";
 
-    private final String API_KEY = "099bdb5cd6ad48e28faab2065fdc4467";
+//    private final String API_KEY = "099bdb5cd6ad48e28faab2065fdc4467";
 
 
 //    @PostMapping
@@ -53,9 +53,9 @@ public class RecipeController {
         if (recipe.isEmpty()) {
             recipe = getRecipeFromSpoonacular(id);
 
-            if (recipe.isPresent()) {
-                saveRecipe(recipe);
-            }
+//            if (recipe.isPresent()) {
+//                saveRecipe(recipe);
+//            }
         }
 
         return recipe;
