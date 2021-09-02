@@ -1,16 +1,13 @@
-import {Checkbox, FormControlLabel, Grid} from "@material-ui/core";
-import {Favorite, FavoriteBorder} from "@material-ui/icons";
-import DeleteIcon from "@material-ui/icons/Delete";
 
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import StarsIcon from '@material-ui/icons/Stars';
 import {hostName} from "../util/constants";
 import MealPlanList from "../components/mealplan/MealPlanList";
 import {LargeHeader} from "../components/Common";
+import {useEffect, useState} from "react";
+import {getFetchWithAuth} from "../util/fetchData";
 
 
 function MealPlan() {
-    const userId = 6;
+    const userId = 1;
 
     const data = [
         {
@@ -129,6 +126,14 @@ function MealPlan() {
             ]
         }
     ];
+
+    const [mealPlans, setMealPlans] = useState(null);
+
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/get-all`, (data) => {
+    //         setMealPlans(data)
+    //     }, (error) => {console.log(error)})
+    // },[mealPlans])
 
     return (
         <div>

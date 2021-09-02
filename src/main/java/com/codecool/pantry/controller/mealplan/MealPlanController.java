@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -17,6 +18,11 @@ public class MealPlanController {
 
     private MealPlanService mealPlanService;
     private AppUserService appUserService;
+
+    @GetMapping("/get-all")
+    public List<MealPlan> getAll() {
+        return mealPlanService.getAll();
+    }
 
     @PostMapping(path = "/save/{recipeId}/{date}")
     public void saveMealPlan(@PathVariable("recipeId") Long recipeId, @PathVariable("date") LocalDateTime date) {
@@ -42,7 +48,7 @@ public class MealPlanController {
         return mealPlanService.getMealPlan(id);
     }
 
-    @GetMapping(path="/likeChecked/{mealPlanId}/{userId}")
+    @GetMapping(path="/like-checked/{mealPlanId}/{userId}")
     public boolean isLikeChecked(@PathVariable("mealPlanId") Long mealPlanId,
                      @PathVariable("userId") Long userId) {
         MealPlan mealPlan = mealPlanService.getMealPlan(mealPlanId);
@@ -50,7 +56,7 @@ public class MealPlanController {
         return mealPlan.getLikedUsers().contains(appUser);
     }
 
-    @GetMapping(path="/disLikeChecked/{mealPlanId}/{userId}")
+    @GetMapping(path="/disLike-checked/{mealPlanId}/{userId}")
     public boolean isDislikeChecked(@PathVariable("mealPlanId") Long mealPlanId,
                              @PathVariable("userId") Long userId) {
         MealPlan mealPlan = mealPlanService.getMealPlan(mealPlanId);

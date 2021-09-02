@@ -34,39 +34,39 @@ const useStyles = makeStyles({
 export default function MealPlanListItem(props) {
     const userId = 1;
     const classes = useStyles();
-    let [liked, setLiked] = useState(false);
-    let [disliked, setDisliked] = useState(false);
-    let [likeClick, setLikeClick] = useState(false);
-    let [dislikeClick, setDislikeClick] = useState(false);
+    // let [liked, setLiked] = useState(false);
+    // let [disliked, setDisliked] = useState(false);
+    // let [likeClick, setLikeClick] = useState(false);
+    // let [dislikeClick, setDislikeClick] = useState(false);
 
 
 
 
-    useEffect(() => {
-        getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
-            console.log(data);
-        }, (error) => {console.log(error)})
-        setLiked(!liked)
-    }, [likeClick])
-
-    useEffect(() => {
-        getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
-            console.log(data);
-        }, (error) => {console.log(error)})
-        setDisliked(!disliked)
-    }, [dislikeClick])
-
-    useEffect(() => {
-        getFetchWithAuth(`${hostName}/api/v1/meal-plan/likeChecked/${props.id}/${userId}`, (data) => {
-            setLiked(data)
-        }, (error) => {console.log(error)})
-    }, [liked])
-
-    useEffect(() => {
-        getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislikeChecked/${props.id}/${userId}`, (data) => {
-            setDisliked(data)
-        }, (error) => {console.log(error)})
-    }, [disliked])
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
+    //         console.log(data);
+    //     }, (error) => {console.log(error)})
+    //     setLiked(!liked)
+    // }, [likeClick])
+    //
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
+    //         console.log(data);
+    //     }, (error) => {console.log(error)})
+    //     setDisliked(!disliked)
+    // }, [dislikeClick])
+    //
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/like-checked/${props.id}/${userId}`, (data) => {
+    //         setLiked(data)
+    //     }, (error) => {console.log(error)})
+    // }, [liked])
+    //
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike-checked/${props.id}/${userId}`, (data) => {
+    //         setDisliked(data)
+    //     }, (error) => {console.log(error)})
+    // }, [disliked])
 
     // function isLikeChecked(mealPlanId) {
     //     fetch(`${hostName}/api/v1/meal-plan/dislikeChecked/${mealPlanId}/${userId}`)
@@ -107,18 +107,17 @@ export default function MealPlanListItem(props) {
                     <div style={{display: 'flex', justifyContent: 'center', }}>
                         <span>
                             <FormControlLabel
-                                control={<Checkbox checked={liked}
+                                control={<Checkbox checked={}
                                                    icon={<FavoriteBorder/>}
                                                    checkedIcon={<Favorite/>}
-                                                   onClick={setLikeClick(!likeClick)}
+                                                   onClick={}
                                                    name="checkedLike"/>}
                                 label={props.liked}
                             />
                             <FormControlLabel
-                                control={<Checkbox checked={disliked}
+                                control={<Checkbox
                                                    icon={<ThumbDownIcon/>}
                                                    checkedIcon={<ThumbDownIcon/>}
-                                                   onClick={setDislikeClick(!dislikeClick)}
                                                    name="checkedDislike"/>}
                                 label={props.disliked}
                             />

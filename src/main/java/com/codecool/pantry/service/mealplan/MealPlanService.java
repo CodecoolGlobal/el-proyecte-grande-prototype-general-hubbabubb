@@ -13,6 +13,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,6 +25,10 @@ public class MealPlanService {
     private final AppUserRepository appUserRepository;
     private final RecipeRepository recipeRepository;
 
+
+    public List<MealPlan> getAll() {
+        return mealPlanRepository.findAll();
+    }
 
     public void saveMealPlan(Long recipeId, LocalDateTime date) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);

@@ -37,9 +37,6 @@ public class MealPlan {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<AppUser> dislikedUsers;
 
-    @ManyToOne
-    private Pantry pantry;
-
     public MealPlan(Recipe recipe, LocalDateTime date) {
         this.recipe = recipe;
         this.date = date;
