@@ -2,6 +2,7 @@ package com.codecool.pantry.entity.pantry;
 
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -51,7 +52,7 @@ public class Pantry {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
-    private Set<ListItem> groceryList = new HashSet<>();
+    private Set<GroceryItem> groceryList = new HashSet<>();
 
 
     @JsonManagedReference
