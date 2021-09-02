@@ -4,16 +4,22 @@ import com.codecool.pantry.controller.appuser.registration.RegistrationRequest;
 import com.codecool.pantry.email.EmailSender;
 import com.codecool.pantry.email.EmailValidator;
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.mail.Mail;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.token.ConfirmationToken;
 import com.codecool.pantry.repository.pantry.PantryRepository;
 import com.codecool.pantry.service.appuser.AppUserService;
+import com.codecool.pantry.service.email.EmailSenderService;
 import com.codecool.pantry.service.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -24,8 +30,9 @@ public class RegistrationService {
     private final ConfirmationTokenService tokenService;
     private final EmailSender sender;
     private final PantryRepository pantryRepository;
+    private final EmailSenderService emailSenderService;
 
-    public String register(RegistrationRequest request) {
+    public String register(RegistrationRequest request) throws MessagingException, IOException {
         boolean isValidEmail = validator.test(request.getEmail());
         if (!isValidEmail) {
             throw new IllegalStateException(String.format("Not a valid e-mail(%s)", request.getEmail()));
@@ -43,7 +50,17 @@ public class RegistrationService {
         String token = service.signUpUser(appUser);
 
         String link = "http://localhost:8081/api/v1/registration/confirm?token=" + token;
-        sender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
+        //sender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
+        Mail mail = new Mail();
+        mail.setMailFrom("yourmailid@email.com");//replace with your desired email
+        mail.setMailTo(request.getEmail());
+        mail.setSubject("Email with Spring boot and thymeleaf template!");
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("name", "Codecooler!");
+        model.put("location", "Nagymezo street");
+        model.put("sign", "Java Developer");
+        mail.setProps(model);
+        emailSenderService.sendEmail(mail);
         return token;
     }
 
