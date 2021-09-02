@@ -11,7 +11,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import {faPlusSquare} from "@fortawesome/free-solid-svg-icons";
+import {faMinusCircle, faPlusSquare} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import KitchenSharpIcon from '@material-ui/icons/KitchenSharp';
 import './PantryContent.css'
@@ -19,6 +19,7 @@ import IngredientSelector from "../recipe/IngredientSelector";
 import AddShoppingCartSharpIcon from "@material-ui/icons/AddShoppingCartSharp";
 import {fetchNoResponse, getFetchWithAuth} from '../../util/fetchData';
 import {hostName} from '../../util/constants';
+import AuthenticationService from "../../util/AuthenticationService";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,9 +50,9 @@ export default function PantryContent() {
 
 
     const getPantryContent = () => {
-        const groceryLink = `${hostName}/api/v1/pantry-content/1` // flexible ID here TODO
+        const pantryContentLink = `${hostName}/api/v1/pantry-content/${AuthenticationService.getLoggedInUserName()}` // flexible ID here TODO
 
-        getFetchWithAuth(groceryLink, (data) => {
+        getFetchWithAuth(pantryContentLink, (data) => {
             setItems(data)
         }, (error) => {
             console.log(error)
@@ -141,7 +142,7 @@ export default function PantryContent() {
                 })}
             </List>
             <Button variant="outlined" color="secondary" className={classes.typographySmall} onClick={removeAllChecked}>
-                <FontAwesomeIcon icon={faPlusSquare}/> Remove from pantry
+                <FontAwesomeIcon icon={faMinusCircle}/> Remove from pantry
             </Button>
         </Card>
     );

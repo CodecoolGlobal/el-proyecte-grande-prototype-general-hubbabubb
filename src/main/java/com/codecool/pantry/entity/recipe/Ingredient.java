@@ -13,9 +13,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ingredient {
+
     @Id
     @Column(name = "id", unique=true, nullable = false)
-    @GeneratedValue(strategy =GenerationType.SEQUENCE)
+//    @GeneratedValue(strategy =GenerationType.SEQUENCE)
     private Long id;
 
     private String name;
@@ -23,6 +24,6 @@ public class Ingredient {
     private int amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipe_id", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     private Recipe recipe;
 }

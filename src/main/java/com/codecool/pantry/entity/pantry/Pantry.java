@@ -20,6 +20,8 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity(name = "pantry")
+@Getter
+@Setter
 public class Pantry {
 
 

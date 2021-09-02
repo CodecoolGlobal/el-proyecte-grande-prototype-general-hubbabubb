@@ -10,39 +10,32 @@ import {faSadCry} from "@fortawesome/free-regular-svg-icons";
 import {faCookie} from "@fortawesome/free-solid-svg-icons";
 import RecipeList from "../components/recipe/RecipeList";
 import {RecipesContainer} from "./RecipesByName";
+import ContentSelector from "../components/pantry/ContentSelector";
 
 export const RecipesFromPantry = () => {
 
     const sampleData =
-        [{itemName: 'apple', id: 1, checked: false}, {itemName: "potatoes", id: 2, checked: false}, {
-            itemName: "bread",
-            id: 3,
-            checked: false
-        }, {
-            itemName: "beef",
-            id: 4,
-            checked: false
-        }]
+        [{ingredientName: 'apple'}, {ingredientName: "potatoes"}, {ingredientName: "bread"}, {ingredientName: "beef"}]
 
     const [recipes, setRecipes] = useState([])
     const [loading, setLoading] = useState(true);
+    const [content, setContent] = useState(sampleData)
 
     useEffect(() => {
-        let pantryContent = sampleData.map((item) => {
-            return item.itemName;
+        let pantryContent = content.map((item) => {
+            return item.ingredientName;
         }).join("+");
-
 
         const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${pantryContent}`;
         getFetchWithAuth(searchURL, (jsonData) => {
-            setRecipes(jsonData);setLoading(false)
+            setRecipes(jsonData);
+            setLoading(false)
         }, (error) => {
             console.log(error)
         })
-    }, [])
+    }, [content, setContent])
 
-    if (loading) { return <LinearProgress variant={"query"} color={"primary"} />
-    }
+    if (loading) { return <LinearProgress variant={"query"} color={"primary"} />}
 
     if (recipes.length === 0) {
         return <RecipesContainer>
@@ -50,8 +43,12 @@ export const RecipesFromPantry = () => {
         </RecipesContainer>
     }
 
+
+    const methods = {setContent, content};
+
     return <RecipesContainer>
         <LargeHeader><FontAwesomeIcon icon={faCookie}/> Recipes from your pantry content:</LargeHeader>
-        <RecipeList recipes={recipes}/>
+        <ContentSelector methods={methods} />
+        <RecipeList recipes={recipes} />
     </RecipesContainer>
 }

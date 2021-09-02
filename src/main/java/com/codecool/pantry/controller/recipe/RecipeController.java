@@ -16,7 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "api/v1/recipe")
 @AllArgsConstructor
-@CrossOrigin(origins={ "http://localhost:3000", "http://localhost:4200" })
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
 public class RecipeController {
 
     private final RecipeRepository recipeRepository;
@@ -47,14 +47,14 @@ public class RecipeController {
 
 
     @GetMapping("/{id}")
-    public Optional<Recipe> getRecipeById(@PathVariable(value = "id") Long id) {
+    public Optional<Recipe> getAndCacheRecipeById(@PathVariable(value = "id") Long id) {
         Optional<Recipe> recipe = recipeRepository.findById(id);
 
         if (recipe.isEmpty()) {
             recipe = getRecipeFromSpoonacular(id);
 
             if (recipe.isPresent()) {
-                //saveRecipe(recipe);
+//                saveRecipe(recipe);
             }
         }
 
@@ -71,7 +71,10 @@ public class RecipeController {
     }
 
     private void saveRecipe(Optional<Recipe> recipe) {
-        ingredientRepository.saveAll(recipe.get().getExtendedIngredients());
+        System.out.println(recipe.get().getSummary());
+        for (Ingredient ingredient : recipe.get().getExtendedIngredients()) {
+            ingredientRepository.save(ingredient);
+        }
         recipeRepository.save(recipe.get());
     }
 

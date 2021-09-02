@@ -34,11 +34,11 @@ public class PantryController {
         response.setStatus(200);
         var pantry = pantryService.getPantryById(id);
         return pantry.map(Pantry::getGroceryList).orElse(null);
-
     }
 
-    @GetMapping("api/v1/pantry-content/{id}")
-    public Set<ListItem> getPantryContent(@PathVariable(value = "id") Long id, HttpServletResponse response) {
+    @GetMapping("api/v1/pantry-content/{email}")
+    public Set<ListItem> getPantryContent(@PathVariable(value = "email") String email, HttpServletResponse response) {
+        Long id = getPantryIdByUsername(email);
         var pantry = pantryService.getPantryById(id);
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
@@ -100,5 +100,11 @@ public class PantryController {
         Pantry pantry = pantryService.getPantryById(id).orElseThrow(() -> new IllegalStateException("Can not find pantry !"));
         System.out.println("---PANTRY: " + pantry.getName());
         return pantry;
+    }
+
+    private Long getPantryIdByUsername(String username) {
+        AppUser user = appUserService.getUserByEmail(username);
+
+        return user.getPantry().getId();
     }
 }
