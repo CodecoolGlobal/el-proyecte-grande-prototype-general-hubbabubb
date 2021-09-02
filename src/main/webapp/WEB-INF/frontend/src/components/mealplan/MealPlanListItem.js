@@ -42,6 +42,21 @@ export default function MealPlanListItem(props) {
     // let [likeClick, setLikeClick] = useState(false);
     // let [dislikeClick, setDislikeClick] = useState(false);
 
+    // const [likeCount, setLikeCount] = useState(null);
+    // const [dislikeCount, setDislikeCount] = useState(null);
+    //
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/like-count/${props.id}`, (data) => {
+    //                 setLikeCount(data);
+    //             }, (error) => {console.log(error)})
+    // }, [likeCount])
+    //
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike-count/${props.id}}`, (data) => {
+    //         setDislikeCount(data);
+    //     }, (error) => {console.log(error)})
+    // }, [dislikeCount])
+
 
     // useEffect(() => {
     //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userEmail}`, (data) => {
@@ -101,7 +116,7 @@ export default function MealPlanListItem(props) {
                                                    checkedIcon={<Favorite/>}
                                                    // onClick={setLikeClick(!likeClick)}
                                                    name="checkedLike"/>}
-                                label={props.liked}
+                                label={likeCount}
                             />
                             <FormControlLabel
                                 control={<Checkbox
@@ -110,7 +125,7 @@ export default function MealPlanListItem(props) {
                                                    checkedIcon={<ThumbDownIcon/>}
                                                    // onClick={setDislikeClick(!dislikeClick)}
                                                    name="checkedDislike"/>}
-                                label={props.disliked}
+                                label={dislikeCount}
                             />
 
                         </span>

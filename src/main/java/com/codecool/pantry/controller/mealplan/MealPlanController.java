@@ -63,4 +63,15 @@ public class MealPlanController {
         AppUser appUser = appUserService.getUserByEmail(userName);
         return mealPlan.getDislikedUsers().contains(appUser);
     }
+
+    @GetMapping(path="/like-count/{mealPlanId}")
+    public int likeCount(@PathVariable("mealPlanId") Long mealPlanId) {
+        return mealPlanService.getMealPlan(mealPlanId).getLikedUsers().size();
+    }
+
+    @GetMapping(path="/dislike-count/{mealPlanId}")
+    public int dislikeCount(@PathVariable("mealPlanId") Long mealPlanId) {
+        return mealPlanService.getMealPlan(mealPlanId).getDislikedUsers().size();
+    }
+
 }
