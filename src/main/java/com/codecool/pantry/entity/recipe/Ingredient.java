@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class Ingredient {
     @Id
     @Column(name = "id", unique=true, nullable = false)
+    @GeneratedValue(strategy =GenerationType.SEQUENCE)
     private Long id;
 
     private String name;

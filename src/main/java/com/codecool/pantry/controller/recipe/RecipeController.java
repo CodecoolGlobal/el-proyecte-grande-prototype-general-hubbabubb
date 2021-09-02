@@ -51,20 +51,38 @@ public class RecipeController {
         Optional<Recipe> recipe = recipeRepository.findById(id);
 
         if (recipe.isEmpty()) {
-            final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=%s", id, API_KEY);
-            RestTemplate restTemplate = new RestTemplate();
+            recipe = getRecipeFromSpoonacular(id);
 
-            recipe = Optional.ofNullable(restTemplate.getForObject(uri, Recipe.class));
-
+<<<<<<< HEAD
             if (recipe.isPresent()) {
-                for (Ingredient ingredient : recipe.get().getExtendedIngredients()) {
-                        ingredientRepository.save(ingredient);
-                }
-                recipeRepository.save(recipe.get());
+                saveRecipe(recipe);
             }
+=======
+            // TODO: figure out recipe saving, maybe we are good with not saving yet?
+//            if (recipe.isPresent()) {
+//                for (Ingredient ingredient : recipe.get().getExtendedIngredients()) {
+//                        ingredientRepository.save(ingredient);
+//                }
+//                recipeRepository.save(recipe.get());
+//            }
+>>>>>>> b82019c9d81aa7f40f9d28966232a0ac4960d6cb
         }
 
         return recipe;
+    }
+
+    private Optional<Recipe> getRecipeFromSpoonacular(Long id) {
+        Optional<Recipe> recipe;
+        final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=%s", id, API_KEY);
+        RestTemplate restTemplate = new RestTemplate();
+
+        recipe = Optional.ofNullable(restTemplate.getForObject(uri, Recipe.class));
+        return recipe;
+    }
+
+    private void saveRecipe(Optional<Recipe> recipe) {
+        ingredientRepository.saveAll(recipe.get().getExtendedIngredients());
+        recipeRepository.save(recipe.get());
     }
 
     @GetMapping("/by-ingredients/{ingredients}") //
