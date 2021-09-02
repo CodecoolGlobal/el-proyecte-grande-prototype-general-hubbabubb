@@ -27,11 +27,11 @@ public class EmailSenderService {
         MimeMessageHelper helper = new MimeMessageHelper(message,
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                 StandardCharsets.UTF_8.name());
-        helper.addAttachment("template-cover.png", new ClassPathResource("javabydeveloper-email.PNG"));
+        //helper.addAttachment("template-cover.png", new ClassPathResource("javabydeveloper-email.PNG"));
         Context context = new Context();
         context.setVariables(mail.getProps());
 
-        String html = templateEngine.process("newsletter-template", context);
+        String html = templateEngine.process("registration-template", context);
         helper.setTo(mail.getMailTo());
         helper.setText(html, true);
         helper.setSubject(mail.getSubject());

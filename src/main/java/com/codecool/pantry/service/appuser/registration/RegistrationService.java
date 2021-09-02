@@ -49,19 +49,23 @@ public class RegistrationService {
         pantryRepository.save(pantry);
         String token = service.signUpUser(appUser);
 
+        System.out.println("registration test");
         String link = "http://localhost:8081/api/v1/registration/confirm?token=" + token;
-        //sender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
-        Mail mail = new Mail();
+
+        //If the later email sending does not work use this one
+        sender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
+
+        /*Mail mail = new Mail();
         mail.setMailFrom("yourmailid@email.com");//replace with your desired email
         mail.setMailTo(request.getEmail());
-        mail.setSubject("Email with Spring boot and thymeleaf template!");
+        mail.setSubject("Registration confirmation");
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("name", "Codecooler!");
         model.put("location", "Nagymezo street");
         model.put("sign", "Java Developer");
         mail.setProps(model);
         emailSenderService.sendEmail(mail);
-        return token;
+        return token; */
     }
 
     @Transactional
