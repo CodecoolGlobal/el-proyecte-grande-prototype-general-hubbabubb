@@ -1,4 +1,4 @@
-package com.codecool.pantry.entity.mail;
+package com.codecool.pantry.config.mail;
 
 
 import lombok.AllArgsConstructor;

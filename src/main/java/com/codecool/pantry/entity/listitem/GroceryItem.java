@@ -4,12 +4,14 @@ import com.codecool.pantry.entity.pantry.Pantry;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Entity
@@ -26,7 +28,7 @@ public class GroceryItem {
     private LocalDateTime expirationDate; //How important is it? Maybe in the future?
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "pantry_id")
     private Pantry pantry;
 
@@ -34,10 +36,5 @@ public class GroceryItem {
         this.ingredientName = ingredientName;
         this.important = false;
         this.checked = false;
-    }
-
-
-    public GroceryItem() {
-
     }
 }

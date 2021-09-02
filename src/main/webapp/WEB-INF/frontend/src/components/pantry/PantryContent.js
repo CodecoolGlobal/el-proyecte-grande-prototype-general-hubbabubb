@@ -114,6 +114,7 @@ export default function PantryContent() {
             <IngredientSelector setSelector={setSelected} handler={handleAddButtonClick}/>
             <List>
                 {items && items.map((value) => {
+                    let bigStartingLetter = value.ingredientName.charAt(0).toUpperCase() + value.ingredientName.slice(1)
                     const labelId = `checkbox-list-label-${value.id}`;
                     return (
                         <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button
@@ -128,8 +129,8 @@ export default function PantryContent() {
                                     inputProps={{'aria-labelledby': labelId}}
                                 />
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={!value.checked ? value.ingredientName :
-                                <strike>{value.ingredientName}</strike>}/>
+                            <ListItemText id={labelId} primary={!value.checked ? bigStartingLetter :
+                                <strike>{bigStartingLetter}</strike>}/>
                             <ListItemSecondaryAction>
                                 <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">
                                     <AddShoppingCartSharpIcon color={"default"}/>

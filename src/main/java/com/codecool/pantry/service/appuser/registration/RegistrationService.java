@@ -4,7 +4,6 @@ import com.codecool.pantry.controller.appuser.registration.RegistrationRequest;
 import com.codecool.pantry.email.EmailSender;
 import com.codecool.pantry.email.EmailValidator;
 import com.codecool.pantry.entity.appuser.AppUser;
-import com.codecool.pantry.entity.mail.Mail;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.token.ConfirmationToken;
 import com.codecool.pantry.repository.pantry.PantryRepository;
@@ -18,8 +17,6 @@ import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -64,8 +61,8 @@ public class RegistrationService {
         model.put("location", "Nagymezo street");
         model.put("sign", "Java Developer");
         mail.setProps(model);
-        emailSenderService.sendEmail(mail);
-        return token; */
+        emailSenderService.sendEmail(mail); */
+        return token;
     }
 
     @Transactional

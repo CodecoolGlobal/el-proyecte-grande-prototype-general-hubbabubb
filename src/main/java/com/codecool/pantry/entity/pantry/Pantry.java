@@ -20,11 +20,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity(name = "pantry")
-@Getter
-@Setter
 public class Pantry {
-
-
     @Id
     @SequenceGenerator(
             name = "pantry_sequence",
@@ -53,12 +49,12 @@ public class Pantry {
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
     private Set<GroceryItem> groceryList = new HashSet<>();
 
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
     private Set<ListItem> pantryList = new HashSet<>();
 
     @JsonManagedReference

@@ -20,7 +20,15 @@ import java.util.Set;
 public class MealPlan {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(
+            name = "meal_seq",
+            sequenceName = "meal_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "meal_seq"
+    )
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -58,5 +66,12 @@ public class MealPlan {
         }
     }
 
+    public MealPlan(Recipe recipe, LocalDateTime date, Pantry pantry, Set<AppUser> likedUsers, Set<AppUser> dislikedUsers) {
+        this.recipe = recipe;
+        this.date = date;
+        this.pantry = pantry;
+        this.likedUsers = likedUsers;
+        this.dislikedUsers = dislikedUsers;
+    }
 }
 
