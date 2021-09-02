@@ -6,48 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {FavoritesContextProvider} from "./store/favorites-context";
-
-/*fetch("http://localhost:8080/api/v1/user")
-    .then(data => data.json())
-    .then(userData => {
-        /!*        if (userData.pantry != null) {
-                    ReactDOM.render(
-                        <React.StrictMode>
-                            <FavoritesContextProvider>
-                                <BrowserRouter>
-                                    <App/>
-                                </BrowserRouter>
-                            </FavoritesContextProvider>
-                        </React.StrictMode>,
-                        document.getElementById('root')
-                    );
-                } else {
-                    ReactDOM.render(
-                        <React.StrictMode>
-                            <AddPantry />
-                        </React.StrictMode>,
-                        document.getElementById('root')
-                    );
-                }
-            })
-            .catch(e => {
-                    ReactDOM.render(
-                        <React.StrictMode>
-                            <Login/>
-                        </React.StrictMode>,
-                        document.getElementById('root')
-                    );
-                }
-            )*!/
-        console.log(userData);
-    })*/
+import {Provider} from 'react-cookie/es6/CookiesContext';
 
 ReactDOM.render(
     <React.StrictMode>
         <FavoritesContextProvider>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
+
+            <Provider value={"auth"}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </Provider>
         </FavoritesContextProvider>
     </React.StrictMode>,
     document.getElementById('root'))

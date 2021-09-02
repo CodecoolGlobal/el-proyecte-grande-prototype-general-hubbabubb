@@ -2,12 +2,16 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+  port: 8081
 
 spring:
+  h2:
+    console:
+      enabled: true
   datasource:
-    password: Delpiero10
+    password: postgres
     url: jdbc:postgresql://localhost:5432/pantry
-    username: soufiane
+    username: postgres
   jpa:
     hibernate:
       ddl-auto: create-drop

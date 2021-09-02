@@ -1,8 +1,12 @@
 package com.codecool.pantry.service.pantry;
 
+import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
+import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.repository.pantry.PantryRepository;
+import javassist.compiler.ast.Pair;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +27,16 @@ public class PantryService {
         if (getPantryById(id).isEmpty()) {
             return;
         }
+
+
         Pantry pantry = getPantryById(id).get();
-        Set<ListItem> newList = pantry.getGroceryList();
-        newList.add(new ListItem(itemName));
+
+        Set<GroceryItem> newList = pantry.getGroceryList();
+
+        var newItem = new GroceryItem(itemName);
+        newItem.setPantry(pantry);
+        newList.add(newItem);
+
         pantry.setGroceryList(newList);
         pantryRepository.save(pantry);
     }
@@ -36,7 +47,9 @@ public class PantryService {
         }
         Pantry pantry = getPantryById(id).get();
         Set<ListItem> newList = pantry.getPantryList();
-        newList.add(new ListItem(itemName));
+        var newItem = new ListItem(itemName);
+        newItem.setPantry(pantry);
+        newList.add(newItem);
         pantry.setPantryList(newList);
         pantryRepository.save(pantry);
     }
@@ -47,19 +60,59 @@ public class PantryService {
         }
         Pantry pantry = getPantryById(id).get();
 
-        Set<ListItem> groceryList = pantry.getGroceryList();
+        Set<GroceryItem> groceryList = pantry.getGroceryList();
         Set<ListItem> pantryList = pantry.getPantryList();
 
         if (fromGroceryToPantry) {
             pantryList.addAll(changedItems);
             groceryList.removeAll(changedItems);
         } else {
-            groceryList.addAll(changedItems);
+//            groceryList.addAll(changedItems);
             pantryList.removeAll(changedItems);
         }
 
         pantry.setPantryList(pantryList);
         pantry.setGroceryList(groceryList);
+        pantryRepository.save(pantry);
+    }
+
+    public void addPantryAppUser(Long id, AppUser appUser) {
+        if (getPantryById(id).isEmpty()) {
+            return;
+        }
+        Pantry pantry = getPantryById(id).get();
+        Set<AppUser> appUsers = pantry.getPantryAppUsers();
+        appUsers.add(appUser);
+        pantryRepository.save(pantry);
+    }
+
+    public void removePantryAppUser(Long id, AppUser appUser) {
+        if (getPantryById(id).isEmpty()) {
+            return;
+        }
+        Pantry pantry = getPantryById(id).get();
+        Set<AppUser> appUsers = pantry.getPantryAppUsers();
+        appUsers.remove(appUser);
+        pantryRepository.save(pantry);
+    }
+
+    public void addMealPlan(Long id, MealPlan mealPlan) {
+        if (getPantryById(id).isEmpty()) {
+            return;
+        }
+        Pantry pantry = getPantryById(id).get();
+        Set<MealPlan> mealPlans = pantry.getMealPlans();
+        mealPlans.add(mealPlan);
+        pantryRepository.save(pantry);
+    }
+
+    public void removeMealPlan(Long id, MealPlan mealPlan) {
+        if (getPantryById(id).isEmpty()) {
+            return;
+        }
+        Pantry pantry = getPantryById(id).get();
+        Set<MealPlan> mealPlans = pantry.getMealPlans();
+        mealPlans.remove(mealPlans);
         pantryRepository.save(pantry);
     }
 }

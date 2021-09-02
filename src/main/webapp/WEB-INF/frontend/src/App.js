@@ -1,51 +1,50 @@
 import {Route, Switch} from 'react-router-dom';
 
-import Home from "./pages/Home";
-import Register from "./pages/Register";
-import Layout from "./components/layout/Layout";
-
-import LoginForm from "./components/login/LoginForm";
+import Layout from "./layout/Layout";
 import {GroceryList} from './pages/GroceryList';
-import {Pantry} from './pages/Pantry';
-import RecipeList from './recipe/RecipeList';
-import Card from './components/Card';
+import Pantry from './pages/Pantry';
 
-import {FromMyPantry} from './pages/FromMyPantry';
+import {RecipesFromPantry} from './pages/RecipesFromPantry';
 import MealPlan from './pages/MealPlan';
+import LoginRegister from "./pages/LoginRegister";
+import RecipesByName from "./pages/RecipesByName";
+import {useState} from "react";
+import {SearchInput} from "./store/recipe-search-input";
 
-function App() {
+
+function App(props) {
+    const [searchField, setSearchField] = useState();
+
+    const values = {searchField, setSearchField};
+
     return (
-        <Layout>
-            <Switch>
-                <Route path='/' exact>
-                    <Home />
-                </Route>
-                <Route path="/grocery-list">
-                    <GroceryList/>
-                </Route>
-                <Route path="/register">
-                    <Register/>
-                </Route>
-                <Route path="/pantry">
-                    <Pantry/>
-                </Route>
-                <Route path="/from-my-pantry">
-                    <FromMyPantry/>
-                </Route>
-                <Route path='/meal-plan'>
-                    <MealPlan/>
-                </Route>
-                <Route path="/login">
-                    <LoginForm/>
-                </Route>
-                <Route path="/search-recipe">
-                    <RecipeList/>
-                </Route>
-                <Route path="/recipe/:id">
-                    <Card/>
-                </Route>
-            </Switch>
-        </Layout>
+        <SearchInput.Provider value={values}>
+            <Layout>
+                <Switch>
+                    <Route path="/" exact>
+                        <LoginRegister active={"login"}/>
+                    </Route>
+                    <Route path="/pantry">
+                        <Pantry/>
+                    </Route>
+                    <Route path="/register">
+                        <LoginRegister active={"register"}/>
+                    </Route>
+                    <Route path="/grocery-list">
+                        <GroceryList/>
+                    </Route>
+                    <Route path="/meal-plan">
+                        <MealPlan/>
+                    </Route>
+                    <Route path="/search-recipe">
+                        <RecipesByName />
+                    </Route>
+                    <Route path="/from-my-pantry">
+                        <RecipesFromPantry/>
+                    </Route>
+                </Switch>
+            </Layout>
+        </SearchInput.Provider>
     );
 }
 
