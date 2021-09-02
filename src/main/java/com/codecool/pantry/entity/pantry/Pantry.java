@@ -19,6 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "pantry")
+@Getter
+@Setter
 public class Pantry {
 
     public String getName() {
