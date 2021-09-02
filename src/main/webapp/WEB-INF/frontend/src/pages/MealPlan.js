@@ -1,8 +1,13 @@
+import {hostName} from "../util/constants";
 import MealPlanList from "../components/mealplan/MealPlanList";
 import {LargeHeader} from "../components/Common";
+import {useEffect, useState} from "react";
+import {getFetchWithAuth} from "../util/fetchData";
 
 
 function MealPlan() {
+
+    const userId = 1;
 
     const data = [
         {
@@ -121,6 +126,14 @@ function MealPlan() {
             ]
         }
     ];
+
+    const [mealPlans, setMealPlans] = useState(null);
+
+    // useEffect(() => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/get-all`, (data) => {
+    //         setMealPlans(data)
+    //     }, (error) => {console.log(error)})
+    // },[mealPlans])
 
     return (
         <div>

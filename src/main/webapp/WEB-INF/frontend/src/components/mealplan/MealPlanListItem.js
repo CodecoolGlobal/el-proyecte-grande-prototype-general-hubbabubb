@@ -34,14 +34,14 @@ const useStyles = makeStyles({
 export default function MealPlanListItem(props) {
     const userId = 1;
     const classes = useStyles();
-    let [liked, setLiked] = useState(false);
-    let [disliked, setDisliked] = useState(false);
-    let [likeClick, setLikeClick] = useState(false);
-    let [dislikeClick, setDislikeClick] = useState(false);
+    // let [liked, setLiked] = useState(false);
+    // let [disliked, setDisliked] = useState(false);
+    // let [likeClick, setLikeClick] = useState(false);
+    // let [dislikeClick, setDislikeClick] = useState(false);
 
 
 
-// THIS IS CAUSING INFINITE LOOP we need to recheck it
+
     // useEffect(() => {
     //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userId}`, (data) => {
     //         console.log(data);
@@ -57,13 +57,13 @@ export default function MealPlanListItem(props) {
     // }, [dislikeClick])
     //
     // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/likeChecked/${props.id}/${userId}`, (data) => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/like-checked/${props.id}/${userId}`, (data) => {
     //         setLiked(data)
     //     }, (error) => {console.log(error)})
     // }, [liked])
     //
     // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislikeChecked/${props.id}/${userId}`, (data) => {
+    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike-checked/${props.id}/${userId}`, (data) => {
     //         setDisliked(data)
     //     }, (error) => {console.log(error)})
     // }, [disliked])
@@ -122,6 +122,7 @@ export default function MealPlanListItem(props) {
                             {/*                       name="checkedDislike"/>}*/}
                             {/*    label={props.disliked}*/}
                             {/*/>*/}
+
                         </span>
                     </div>
                 </CardContent>
