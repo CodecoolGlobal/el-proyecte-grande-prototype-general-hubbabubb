@@ -19,7 +19,6 @@ function Pantry() {
         username: 'soufika@gmail.com'
     }]
 
-
     return <Container>
         <Row>
             <Col sm="12" md={{size: 6, offset: 3}}>

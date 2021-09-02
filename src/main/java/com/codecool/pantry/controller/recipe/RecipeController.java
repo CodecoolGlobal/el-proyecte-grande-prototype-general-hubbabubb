@@ -54,7 +54,7 @@ public class RecipeController {
             recipe = getRecipeFromSpoonacular(id);
 
             if (recipe.isPresent()) {
-//                saveRecipe(recipe);
+                saveRecipe(recipe);
             }
         }
 

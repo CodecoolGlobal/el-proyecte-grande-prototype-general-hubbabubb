@@ -23,8 +23,8 @@ public class ListItem {
 
     @Column(nullable = false)
     private String ingredientName;
-    private boolean important;
-    private boolean checked;
+    private boolean important = false;
+    private boolean checked = false;
     private LocalDateTime expirationDate; //How important is it? Maybe in the future?
 
     @JsonBackReference

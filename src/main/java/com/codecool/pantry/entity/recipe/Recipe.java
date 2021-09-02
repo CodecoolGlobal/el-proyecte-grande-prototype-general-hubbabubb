@@ -1,6 +1,7 @@
 package com.codecool.pantry.entity.recipe;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Recipe {
 
@@ -34,17 +36,4 @@ public class Recipe {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
     private Set<Ingredient> extendedIngredients;
-
-    public Recipe(Long id, String title, String image, boolean vegetarian, boolean vegan, boolean glutenFree, boolean cheap, boolean dairyFree, int healthScore, String instructions) {
-        this.id = id;
-        this.title = title;
-        this.image = image;
-        this.vegetarian = vegetarian;
-        this.vegan = vegan;
-        this.glutenFree = glutenFree;
-        this.cheap = cheap;
-        this.dairyFree = dairyFree;
-        this.healthScore = healthScore;
-        this.instructions = instructions;
-    }
 }

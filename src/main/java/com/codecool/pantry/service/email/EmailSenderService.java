@@ -1,8 +1,7 @@
 package com.codecool.pantry.service.email;
 
-import com.codecool.pantry.entity.mail.Mail;
+import com.codecool.pantry.config.mail.Mail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;

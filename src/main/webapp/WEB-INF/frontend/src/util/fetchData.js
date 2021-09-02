@@ -26,11 +26,11 @@ export function postFetch(url, data, callback, errorHandling) {
 
 export function postFetchWithAuth(url, data, callback, errorHandling) {
     const authHeader = new Headers();
-    authHeader.append('Authorization', 'Basic test@user.com : testuser');
+    authHeader.append('Authorization', 'Basic code@cooler.com : testuser');
 
     fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        headers: { authorization: 'Basic ' + window.btoa("test@user.com" + ":" + "testuser") },
+        headers: { authorization: 'Basic ' + window.btoa("code@cooler.com" + ":" + "testuser") },
         body: data // body data type must match "Content-Type" header
     })
         .then(data => data.json())
