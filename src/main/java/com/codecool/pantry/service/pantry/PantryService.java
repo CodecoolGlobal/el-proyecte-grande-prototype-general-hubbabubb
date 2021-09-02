@@ -1,6 +1,7 @@
 package com.codecool.pantry.service.pantry;
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
@@ -30,9 +31,9 @@ public class PantryService {
 
         Pantry pantry = getPantryById(id).get();
 
-        Set<ListItem> newList = pantry.getGroceryList();
+        Set<GroceryItem> newList = pantry.getGroceryList();
 
-        var newItem = new ListItem(itemName);
+        var newItem = new GroceryItem(itemName);
         newItem.setPantry(pantry);
         newList.add(newItem);
 
@@ -59,14 +60,14 @@ public class PantryService {
         }
         Pantry pantry = getPantryById(id).get();
 
-        Set<ListItem> groceryList = pantry.getGroceryList();
+        Set<GroceryItem> groceryList = pantry.getGroceryList();
         Set<ListItem> pantryList = pantry.getPantryList();
 
         if (fromGroceryToPantry) {
             pantryList.addAll(changedItems);
             groceryList.removeAll(changedItems);
         } else {
-            groceryList.addAll(changedItems);
+//            groceryList.addAll(changedItems);
             pantryList.removeAll(changedItems);
         }
 

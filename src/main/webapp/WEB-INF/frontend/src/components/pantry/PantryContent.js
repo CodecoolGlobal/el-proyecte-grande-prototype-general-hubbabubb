@@ -98,7 +98,7 @@ export default function PantryContent() {
         if (selectedIngredient === "") {
             return;
         }
-        let groceryLink = `${hostName}/api/v1/grocery-list/add/1/${selectedIngredient}` // pantry ID should be dynamic
+        let groceryLink = `${hostName}/api/v1/pantry-list/add/1/${selectedIngredient}` // pantry ID should be dynamic
         fetchNoResponse(groceryLink, "POST")
         setSelected("");
         setItemAdded(!itemAdded)

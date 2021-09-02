@@ -13,6 +13,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,6 +25,10 @@ public class MealPlanService {
     private final AppUserRepository appUserRepository;
     private final RecipeRepository recipeRepository;
 
+
+    public List<MealPlan> getAll() {
+        return mealPlanRepository.findAll();
+    }
 
     public void saveMealPlan(Long recipeId, LocalDateTime date) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
@@ -37,17 +42,18 @@ public class MealPlanService {
         return mealPlanRepository.findById(id).get();
     }
 
-    public void like(Long mealPlanId, Long userId) {
-        Optional<AppUser> appUser = appUserRepository.findById(userId);
+    public void like(Long mealPlanId, String email) {
+        Optional<AppUser> appUser = appUserRepository.findByUsername(email);
         Optional<MealPlan> mealPlan = mealPlanRepository.findById(mealPlanId);
         mealPlan.get().likesHandler(appUser.get());
         mealPlanRepository.save(mealPlan.get());
     }
 
-    public void dislike(Long mealPlanId, Long userId) {
-        Optional<AppUser> appUser = appUserRepository.findById(userId);
+    public void dislike(Long mealPlanId, String email) {
+        Optional<AppUser> appUser = appUserRepository.findByUsername(email);
         Optional<MealPlan> mealPlan = mealPlanRepository.findById(mealPlanId);
         mealPlan.get().dislikesHandler(appUser.get());
         mealPlanRepository.save(mealPlan.get());
     }
+
 }

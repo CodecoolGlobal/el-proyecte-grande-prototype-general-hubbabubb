@@ -1,6 +1,7 @@
 package com.codecool.pantry.controller.pantry;
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
@@ -28,7 +29,7 @@ public class PantryController {
 
     @CrossOrigin
     @GetMapping("api/v1/grocery-list/{id}")
-    public Set<ListItem> getGroceryList(@PathVariable(value = "id") Long id, HttpServletResponse response) {
+    public Set<GroceryItem> getGroceryList(@PathVariable(value = "id") Long id, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
         var pantry = pantryService.getPantryById(id);
