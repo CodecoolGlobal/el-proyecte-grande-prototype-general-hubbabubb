@@ -56,12 +56,13 @@ public class RecipeController {
 
             recipe = Optional.ofNullable(restTemplate.getForObject(uri, Recipe.class));
 
-            if (recipe.isPresent()) {
-                for (Ingredient ingredient : recipe.get().getExtendedIngredients()) {
-                        ingredientRepository.save(ingredient);
-                }
-                recipeRepository.save(recipe.get());
-            }
+            // TODO: figure out recipe saving, maybe we are good with not saving yet?
+//            if (recipe.isPresent()) {
+//                for (Ingredient ingredient : recipe.get().getExtendedIngredients()) {
+//                        ingredientRepository.save(ingredient);
+//                }
+//                recipeRepository.save(recipe.get());
+//            }
         }
 
         return recipe;
