@@ -53,19 +53,9 @@ public class RecipeController {
         if (recipe.isEmpty()) {
             recipe = getRecipeFromSpoonacular(id);
 
-<<<<<<< HEAD
             if (recipe.isPresent()) {
                 saveRecipe(recipe);
             }
-=======
-            // TODO: figure out recipe saving, maybe we are good with not saving yet?
-//            if (recipe.isPresent()) {
-//                for (Ingredient ingredient : recipe.get().getExtendedIngredients()) {
-//                        ingredientRepository.save(ingredient);
-//                }
-//                recipeRepository.save(recipe.get());
-//            }
->>>>>>> b82019c9d81aa7f40f9d28966232a0ac4960d6cb
         }
 
         return recipe;
