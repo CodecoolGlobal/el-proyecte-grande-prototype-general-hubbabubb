@@ -29,17 +29,17 @@ public class MealPlanController {
         mealPlanService.saveMealPlan(recipeId, date);
     }
 
-    @GetMapping(path = "/like/{mealPlanId}/{userId}")
+    @GetMapping(path = "/like/{mealPlanId}/{userName}")
     public String toLikes(@PathVariable("mealPlanId") Long mealPlanId,
-                          @PathVariable("userId") Long userId) {
-        mealPlanService.like(mealPlanId, userId);
-        return "like route" + mealPlanId + " " + userId;
+                          @PathVariable("userName") String userName) {
+        mealPlanService.like(mealPlanId, userName);
+        return "like route";
     }
 
-    @GetMapping(path = "/dislike/{mealPlanId}/{userId}")
+    @GetMapping(path = "/dislike/{mealPlanId}/{userName}")
     public String toDislikes(@PathVariable("mealPlanId") Long mealPlanId,
-                             @PathVariable("userId") Long userId) {
-        mealPlanService.dislike(mealPlanId, userId);
+                             @PathVariable("userName") String userName) {
+        mealPlanService.dislike(mealPlanId, userName);
         return "dislike route";
     }
 
@@ -56,11 +56,11 @@ public class MealPlanController {
         return mealPlan.getLikedUsers().contains(appUser);
     }
 
-    @GetMapping(path="/disLike-checked/{mealPlanId}/{userId}")
+    @GetMapping(path="/disLike-checked/{mealPlanId}/{userName}")
     public boolean isDislikeChecked(@PathVariable("mealPlanId") Long mealPlanId,
-                             @PathVariable("userId") Long userId) {
+                             @PathVariable("userName") String userName) {
         MealPlan mealPlan = mealPlanService.getMealPlan(mealPlanId);
-        AppUser appUser = appUserService.getUserById(userId);
+        AppUser appUser = appUserService.getUserByEmail(userName);
         return mealPlan.getDislikedUsers().contains(appUser);
     }
 }
