@@ -12,6 +12,11 @@ class AuthenticationService {
             { headers: { authorization: this.createBasicAuthToken(username, password) } })
     }
 
+    registerSuccessfulLogin(username, password) {
+        sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
+        this.setupAxiosInterceptors(this.createBasicAuthToken(username, password))
+    }
+
     executeJwtAuthenticationService(username, password) {
         console.log("executeJwtAuthenticationService")
         return axios.post(`${API_URL}/authenticate`, {
@@ -24,12 +29,6 @@ class AuthenticationService {
         return 'Basic ' + window.btoa(username + ":" + password)
     }
 
-    registerSuccessfulLogin(username, password) {
-        // let basicAuthHeader = 'Basic ' +  window.btoa(username + ":" + password)
-        // console.log('registerSuccessfulLogin')
-        sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
-        this.setupAxiosInterceptors(this.createBasicAuthToken(username, password))
-    }
 
     registerSuccessfulLoginForJwt(username, token) {
         console.log("registerSuccessfulLoginForJwt")
@@ -49,7 +48,6 @@ class AuthenticationService {
     isUserLoggedIn() {
         let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
         return user !== null;
-
     }
 
     getLoggedInUserName() {

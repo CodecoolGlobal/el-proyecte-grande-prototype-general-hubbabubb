@@ -5,6 +5,7 @@ import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,8 +45,8 @@ public class Pantry {
     )
     private String name = "My Pantry";
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "pantry")
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
     @JsonManagedReference

@@ -1,10 +1,9 @@
 package com.codecool.pantry.controller.recipe;
 
 
-import com.codecool.pantry.entity.recipe.Ingredient;
 import com.codecool.pantry.entity.recipe.Recipe;
-import com.codecool.pantry.repository.ingredient.IngredientRepository;
-import com.codecool.pantry.repository.recipe.RecipeRepository;
+import com.codecool.pantry.service.recipe.ExtendedIngredientService;
+import com.codecool.pantry.service.recipe.RecipeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +18,11 @@ import java.util.Optional;
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
 public class RecipeController {
 
-    private final RecipeRepository recipeRepository;
-    private final IngredientRepository ingredientRepository;
+    private final RecipeService recipeService;
+    private final ExtendedIngredientService extendedIngredientService;
 
-//    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
+    // TODO store it in properties!!!!
+//    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";
 //    private final String API_KEY = "a22052fbcfef4a2fac111f33a93898d8";
     private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
 //    private final String API_KEY = "b880826d2c53495f8fb1fa608db88577";
@@ -48,14 +48,10 @@ public class RecipeController {
 
     @GetMapping("/{id}")
     public Optional<Recipe> getAndCacheRecipeById(@PathVariable(value = "id") Long id) {
-        Optional<Recipe> recipe = recipeRepository.findById(id);
+        Optional<Recipe> recipe = recipeService.get(id);
 
         if (recipe.isEmpty()) {
             recipe = getRecipeFromSpoonacular(id);
-
-            if (recipe.isPresent()) {
-                saveRecipe(recipe);
-            }
         }
 
         return recipe;
@@ -67,15 +63,13 @@ public class RecipeController {
         RestTemplate restTemplate = new RestTemplate();
 
         recipe = Optional.ofNullable(restTemplate.getForObject(uri, Recipe.class));
+
+        recipe.ifPresent(this::saveRecipe);
         return recipe;
     }
 
-    private void saveRecipe(Optional<Recipe> recipe) {
-        System.out.println(recipe.get().getSummary());
-        for (Ingredient ingredient : recipe.get().getExtendedIngredients()) {
-            ingredientRepository.save(ingredient);
-        }
-        recipeRepository.save(recipe.get());
+    private void saveRecipe(Recipe recipe) {
+        recipeService.save(recipe);
     }
 
     @GetMapping("/by-ingredients/{ingredients}") //

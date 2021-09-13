@@ -23,7 +23,7 @@ public class Ingredient {
     private String unit;
     private int amount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipe_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="recipe_id", referencedColumnName = "id")
     private Recipe recipe;
 }

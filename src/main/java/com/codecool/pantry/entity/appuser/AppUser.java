@@ -1,7 +1,6 @@
 package com.codecool.pantry.entity.appuser;
 
 import com.codecool.pantry.entity.pantry.Pantry;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,9 +55,8 @@ public class AppUser implements UserDetails {
     private boolean locked = false;
     private boolean enabled = false;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="pantry_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="pantry_id", referencedColumnName = "id")
     private Pantry pantry;
 
     public AppUser(String firstName, String lastName, String username, String password) {
