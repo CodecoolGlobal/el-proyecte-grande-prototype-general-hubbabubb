@@ -37,7 +37,7 @@ export const GroceryList = () => {
     }
 
     useEffect(() => {
-        fetch('/api/v1/ingredient')
+        fetch('/api/v1/extendedIngredient')
             .then(response => response.json())
             .then(data => {
                 let result = [];
@@ -106,7 +106,7 @@ export const GroceryList = () => {
                      onChange={handleChange}
                     id="ingredients"
                     options={loadedIngredients}
-                    placeholder="Choose an ingredient...">
+                    placeholder="Choose an extendedIngredient...">
 
                     {({ onClear, selected }) => (
                         <div className="rbt-aux">

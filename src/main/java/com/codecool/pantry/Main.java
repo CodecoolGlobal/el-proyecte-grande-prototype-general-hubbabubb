@@ -1,6 +1,7 @@
 package com.codecool.pantry;
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.repository.appuser.AppUserRepository;
 import com.codecool.pantry.repository.listItem.GroceryItemRepository;
 import com.codecool.pantry.repository.listItem.ListItemRepository;
@@ -127,13 +128,13 @@ public class Main {
 //        groceryItem3.setIngredientName("mango");
 //        groceryItemRepository.saveAll(Set.of(groceryItem1, groceryItem2, groceryItem3));
 //
-//        Pantry pantry = new Pantry();
-////        pantry.setMealPlans(Set.of(mealPlan1, mealPlan2, mealPlan3, mealPlan4));
+        Pantry pantry = new Pantry();
+//        pantry.setMealPlans(Set.of(mealPlan1, mealPlan2, mealPlan3, mealPlan4));
 //        pantry.setPantryList(Set.of(listItem1, listItem2, listItem3, listItem4, listItem5, listItem6));
 //        pantry.setGroceryList(Set.of(groceryItem1, groceryItem2, groceryItem3));
 //        pantryRepository.save(pantry);
-//
-//        user.setPantry(pantry);
+
+        user.setPantry(pantry);
         userRepository.save(user);
     }
 

@@ -1,8 +1,9 @@
 package com.codecool.pantry.controller.recipe;
 
 
+import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.recipe.Recipe;
-import com.codecool.pantry.service.recipe.ExtendedIngredientService;
+import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.recipe.RecipeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "api/v1/recipe")
 @AllArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class RecipeController {
 
     private final RecipeService recipeService;
-    private final ExtendedIngredientService extendedIngredientService;
+    private final AppUserService appUserService;
 
     // TODO store it in properties!!!!
 //    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";
@@ -69,6 +70,7 @@ public class RecipeController {
     }
 
     private void saveRecipe(Recipe recipe) {
+//        extendedIngredientService.saveAll(recipe.getExtendedExtendedIngredients());
         recipeService.save(recipe);
     }
 
@@ -79,5 +81,21 @@ public class RecipeController {
         RestTemplate restTemplate = new RestTemplate();
         System.out.println(uri);
         return restTemplate.getForEntity(uri, String.class);
+    }
+
+    @PutMapping("{recipeId}/add-to-favorite/{userEmail}")
+    public Recipe addToFavorite(@PathVariable Long recipeId, @PathVariable String userEmail) {
+        Optional<Recipe> recipe = recipeService.get(recipeId);
+        AppUser appUser = appUserService.getUserByEmail(userEmail);
+
+        if (recipe.isEmpty()) {
+            throw new IllegalStateException("recipe not found!");
+        }
+
+        appUser.addRecipeToFavorite(recipe.get());
+
+        appUserService.save(appUser);
+
+        return recipe.get();
     }
 }

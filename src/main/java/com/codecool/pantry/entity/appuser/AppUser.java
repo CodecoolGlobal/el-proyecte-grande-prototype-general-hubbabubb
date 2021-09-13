@@ -1,6 +1,7 @@
 package com.codecool.pantry.entity.appuser;
 
 import com.codecool.pantry.entity.pantry.Pantry;
+import com.codecool.pantry.entity.recipe.Recipe;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 @Getter
 @Setter
@@ -58,6 +58,14 @@ public class AppUser implements UserDetails {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="pantry_id", referencedColumnName = "id")
     private Pantry pantry;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "favorites",
+            joinColumns = @JoinColumn(name = "app_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "recipe_id")
+    )
+    private Set<Recipe> favorites = new HashSet<>();
 
     public AppUser(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
@@ -112,5 +120,9 @@ public class AppUser implements UserDetails {
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public void addRecipeToFavorite(Recipe recipe) {
+        favorites.add(recipe);
     }
 }
