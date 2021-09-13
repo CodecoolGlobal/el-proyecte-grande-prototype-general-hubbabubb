@@ -1,6 +1,6 @@
 export function getFetch(url, callback, errorHandling) {
     fetch(url, {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        method: 'GET',
     })
         .then((data) => data.json())
         .then((jsonData) => {

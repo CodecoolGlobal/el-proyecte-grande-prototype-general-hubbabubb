@@ -44,10 +44,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PantryContent() {
     const classes = useStyles();
-    const [items, setItems] = useState()
+    const [items, setItems] = useState('')
     const [selectedIngredient, setSelected] = useState('');
     const [itemAdded, setItemAdded] = useState(false)
-
 
     const getPantryContent = () => {
         const pantryContentLink = `${hostName}/api/v1/pantry-content/${AuthenticationService.getLoggedInUserName()}` // flexible ID here TODO
@@ -113,7 +112,7 @@ export default function PantryContent() {
             </Typography>
             <IngredientSelector setSelector={setSelected} handler={handleAddButtonClick}/>
             <List>
-                {items && items.map((value) => {
+                {items !== "" && items.map((value) => {
                     let bigStartingLetter = value.ingredientName.charAt(0).toUpperCase() + value.ingredientName.slice(1)
                     const labelId = `checkbox-list-label-${value.id}`;
                     return (

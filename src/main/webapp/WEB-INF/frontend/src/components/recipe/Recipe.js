@@ -13,6 +13,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import {cyan, green, lightBlue, red, teal, yellow} from "@material-ui/core/colors";
 
 import parse from 'html-react-parser';
+import {postFetch} from "../../util/fetchData";
+import AuthenticationService from "../../util/AuthenticationService";
+import {hostName} from "../../util/constants";
 
 const useTransitions = makeStyles((theme) => ({
     root: {
@@ -87,6 +90,15 @@ export default function Recipe(props) {
 
     console.log(props.recipe);
 
+    function addToFavorites() {
+        fetch(`/api/v1/recipe/${props.recipe.id}/add-to-favorite/${AuthenticationService.getLoggedInUserName()}`, {
+            method: 'PUT'
+        })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
     return <Card className={transitionClasses.root}>
             <CardHeader>
                 <Typography className={transitionClasses.typography} gutterBottom variant="h5" component="h2">
@@ -124,7 +136,7 @@ export default function Recipe(props) {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                    <FavoriteIcon onClick={addToFavorites}/>
                 </IconButton>
                 <IconButton aria-label="share">
                     <ShareIcon />

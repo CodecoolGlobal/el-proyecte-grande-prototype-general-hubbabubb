@@ -21,7 +21,7 @@ export default function IngredientSelector({setSelector, handler}) {
     const handleAddButtonClick = handler;
 
     useEffect(() => {
-        getFetch('/api/v1/ingredient', (data) => {
+        getFetch('/api/v1/extendedIngredient', (data) => {
             let result = [];
             for (let key in data) {
                 result.push(key)
@@ -48,7 +48,7 @@ export default function IngredientSelector({setSelector, handler}) {
         onChange={handleChange}
         id="ingredients"
         options={loadedIngredients}
-        placeholder="Choose an ingredient..."
+        placeholder="Choose an extendedIngredient..."
         className="typeahead"
         ref={selector}
     >

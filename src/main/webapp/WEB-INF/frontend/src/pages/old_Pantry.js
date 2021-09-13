@@ -34,7 +34,7 @@ const Pantry = () => {
     const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
-        getFetch('/api/v1/ingredient', (data) => {
+        getFetch('/api/v1/extendedIngredient', (data) => {
             let result = [];
             for (let key in data) {
                 result.push(key)
@@ -98,7 +98,7 @@ const Pantry = () => {
                 onChange={handleChange}
                 id="ingredients"
                 options={loadedIngredients}
-                placeholder="Choose an ingredient...">
+                placeholder="Choose an extendedIngredient...">
                 {({onClear, selected}) => (
                     <div className="rbt-aux">
                         {!!selected.length && <ClearButton onClick={onClear}/>}

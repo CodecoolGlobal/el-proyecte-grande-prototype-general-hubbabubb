@@ -24,10 +24,10 @@ public class IngredientController {
 //    }
 //
 //    @GetMapping("api/v1/pantry/get_ingredient/{id}")
-//        public Ingredient getIngredientFromSpoon(@PathVariable(value="id") Integer id){
+//        public ExtendedIngredient getIngredientFromSpoon(@PathVariable(value="id") Integer id){
 //        RestTemplate restTemplate = new RestTemplate();
-//        Ingredient ingredient =
-//                restTemplate.getForObject("https://api.spoonacular.com/food/ingredients/"+ id +"/information?apiKey=8dc3ef2ffcf54e6781629ee83623d725", Ingredient.class);
+//        ExtendedIngredient ingredient =
+//                restTemplate.getForObject("https://api.spoonacular.com/food/ingredients/"+ id +"/information?apiKey=8dc3ef2ffcf54e6781629ee83623d725", ExtendedIngredient.class);
 //
 //        return ingredient;
 //    }
