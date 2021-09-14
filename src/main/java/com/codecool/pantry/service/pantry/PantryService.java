@@ -77,13 +77,14 @@ public class PantryService {
     }
 
     public void addPantryAppUser(Long id, AppUser appUser) {
-        if (getPantryById(id).isEmpty()) {
+        Optional<Pantry> pantry = getPantryById(id);
+        if (pantry.isEmpty()) {
             return;
         }
-        Pantry pantry = getPantryById(id).get();
-        Set<AppUser> appUsers = pantry.getPantryAppUsers();
+
+        Set<AppUser> appUsers = pantry.get().getPantryAppUsers();
         appUsers.add(appUser);
-        pantryRepository.save(pantry);
+        pantryRepository.save(pantry.get());
     }
 
     public void removePantryAppUser(Long id, AppUser appUser) {

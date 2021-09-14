@@ -32,10 +32,6 @@ public class Pantry {
             strategy = GenerationType.SEQUENCE,
             generator = "pantry_sequence"
     )
-    @Column(
-            name = "id",
-            updatable = false
-    )
     private Long id;
 
     @Column(

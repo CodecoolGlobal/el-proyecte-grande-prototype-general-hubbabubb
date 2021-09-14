@@ -24,6 +24,13 @@ export function postFetch(url, data, callback, errorHandling) {
         .catch(error => errorHandling(error))
 }
 
+export function putFetch(url, errorHandling) {
+    fetch(url, {
+        method: 'PUT'
+    })
+        .catch(error => errorHandling(error))
+}
+
 export function postFetchWithAuth(url, data, callback, errorHandling) {
     const authHeader = new Headers();
     authHeader.append('Authorization', 'Basic code@cooler.com : testuser');
