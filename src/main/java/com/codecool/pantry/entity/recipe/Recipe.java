@@ -7,9 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -43,7 +46,7 @@ public class Recipe {
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "extended_Ingredient_id")
     )
-    private Set<ExtendedIngredient> extendedIngredients = new HashSet<>();
+    private List<ExtendedIngredient> extendedIngredients = new ArrayList<>();
 
     @JsonIgnore
     @ManyToMany(mappedBy = "favorites")
