@@ -132,9 +132,18 @@ public class Main {
 //        pantry.setPantryList(Set.of(listItem1, listItem2, listItem3, listItem4, listItem5, listItem6));
 //        pantry.setGroceryList(Set.of(groceryItem1, groceryItem2, groceryItem3));
 //        pantryRepository.save(pantry);
+        AppUser user2 = new AppUser();
+        user2.setFirstName("Daniel");
+        user2.setLastName("Tokai");
+        user2.setUsername("tokai@dani.hu");
+        user2.setPassword(new BCryptPasswordEncoder().encode("dani"));
+        user2.setEnabled(true);
+        user2.setPantry(pantry);
 
         user.setPantry(pantry);
         userRepository.save(user);
+
+        userRepository.save(user2);
     }
 
 }

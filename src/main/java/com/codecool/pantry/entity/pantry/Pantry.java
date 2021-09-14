@@ -42,7 +42,7 @@ public class Pantry {
     private String name = "My Pantry";
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pantry")
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
     @JsonManagedReference
@@ -55,7 +55,7 @@ public class Pantry {
     private Set<ListItem> pantryList = new HashSet<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
     private Set<MealPlan> mealPlans = new HashSet<>();
 }
 

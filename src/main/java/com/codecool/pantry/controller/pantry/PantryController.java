@@ -1,6 +1,7 @@
 package com.codecool.pantry.controller.pantry;
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.appuser.AppUserDto;
 import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -47,7 +49,7 @@ public class PantryController {
     }
 
     @GetMapping("api/v1/list-item/delete/{id}")
-    public void deleteListItem(@PathVariable(value = "id") Long id,HttpServletResponse response) {
+    public void deleteListItem(@PathVariable(value = "id") Long id, HttpServletResponse response) {
 
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
@@ -55,7 +57,7 @@ public class PantryController {
     }
 
     @PostMapping("api/v1/grocery-list/add/{id}/{itemName}")
-    public void addItemToGroceryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName,HttpServletResponse response) {
+    public void addItemToGroceryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
         pantryService.addGroceryItemToList(id, itemName);
@@ -102,7 +104,7 @@ public class PantryController {
         return user.getPantry().getId();
     }
 
-    @GetMapping(path = "api/v1/acceptPantryInvite/{userEmail}")
+    @PutMapping(path = "api/v1/acceptPantryInvite/{userEmail}")
     public void acceptInvitation(@PathVariable String userEmail) {
         AppUser user = appUserService.getUserByEmail(userEmail);
 
@@ -113,6 +115,14 @@ public class PantryController {
         }
 
         user.setPantry(pantry.get());
+        user.setInvitedPantryId(null);
+        appUserService.save(user);
+    }
+
+    @PutMapping(path = "api/v1/refusePantryInvite/{userEmail}")
+    public void refuseInvitation(@PathVariable String userEmail) {
+        AppUser user = appUserService.getUserByEmail(userEmail);
+        user.setInvitedPantryId(null);
 
         appUserService.save(user);
     }
@@ -128,5 +138,24 @@ public class PantryController {
         toUser.setInvitedPantryId(fromUser.getPantry().getId());
 
         appUserService.save(toUser);
+    }
+
+    @GetMapping(path = "api/v1/pantry/users/{userEmail}")
+    public Set<AppUserDto> getPantryUsers(@PathVariable String userEmail) {
+        Pantry pantry = getPantryByEmail(userEmail);
+
+        Set<AppUserDto> pantryUsers = new HashSet<>();
+
+        for (AppUser user : pantry.getPantryAppUsers()) {
+            if (!user.getUsername().equals(userEmail)) {
+                AppUserDto userDto = new AppUserDto();
+                userDto.setFirstName(user.getFirstName());
+                userDto.setLastName(user.getLastName());
+                userDto.setUserName(user.getUsername());
+                pantryUsers.add(userDto);
+            }
+        }
+
+        return pantryUsers;
     }
 }

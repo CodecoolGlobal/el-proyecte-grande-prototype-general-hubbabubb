@@ -9,12 +9,12 @@ spring:
     console:
       enabled: true
   datasource:
-    password: m7o8u3s9e
+    password: 1977
     url: jdbc:postgresql://localhost:5432/pantry
-    username: daniel
+    username: hubbabubb
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

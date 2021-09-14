@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import {
     Button,
     Card,
-    Checkbox, IconButton,
+    Checkbox,
+    IconButton,
     List,
     ListItem,
     ListItemIcon,
@@ -11,7 +12,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import {faMinusCircle, faPlusSquare} from "@fortawesome/free-solid-svg-icons";
+import {faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import KitchenSharpIcon from '@material-ui/icons/KitchenSharp';
 import './PantryContent.css'
@@ -24,12 +25,16 @@ import AuthenticationService from "../../util/AuthenticationService";
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
-            margin: theme.spacing(1)
+            margin: theme.spacing(1),
         },
-
+        padding: 15,
         marginBottom: 15,
+        width: 'auto',
         maxWidth: 600,
-        backgroundColor: theme.palette.background.paper
+        transition: "transform 0.15s ease-in-out"
+    },
+    cardHovered: {
+        transform: "scale3d(1.05, 1.05, 1)"
     },
     typography: {
         fontFamily: "Amatic SC",
@@ -48,21 +53,15 @@ export default function PantryContent() {
     const [selectedIngredient, setSelected] = useState('');
     const [itemAdded, setItemAdded] = useState(false)
 
-    const getPantryContent = () => {
+    useEffect(() => {
         const pantryContentLink = `${hostName}/api/v1/pantry-content/${AuthenticationService.getLoggedInUserName()}` // flexible ID here TODO
 
         getFetchWithAuth(pantryContentLink, (data) => {
             setItems(data)
         }, (error) => {
-            console.log(error)
+            console.error(error)
         })
-    }
-
-    useEffect(() => {
-
-            getPantryContent()
-        }, [itemAdded]
-    )
+    }, [itemAdded])
 
     // TODO: collect list methods and remove duplications
     const removeItem = (id) => {
@@ -83,11 +82,6 @@ export default function PantryContent() {
         setItems(newItems);
     };
 
-    // function handleChange(selectedOptions) {
-    //     setInputValue(selectedOptions);
-    // }
-
-
     function removeAllChecked() {
         let newList = items.filter(item => !item.checked)
         setItems(newList)
@@ -102,11 +96,18 @@ export default function PantryContent() {
         setSelected("");
         setItemAdded(!itemAdded)
     };
-    //
-    // const values = {setSelected, handleAddButtonClick}
+
+    const [state, setState] = useState({
+        raised: false,
+        shadow: 1,
+    })
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root}
+              classes={{root: state.raised ? classes.cardHovered : ""}}
+              onMouseOver={() => setState({raised: true, shadow: 3})}
+              onMouseOut={() => setState({raised: false, shadow: 1})}
+              raised={state.raised} zdepth={state.shadow}>
             <Typography paragraph className={classes.typography}><KitchenSharpIcon/>
                 Pantry Content:
             </Typography>

@@ -30,7 +30,6 @@ export default function IngredientSelector({setSelector, handler}) {
         }, (error) => {
             console.log(error.message);
         })
-        console.log("Yeah")
     }, [])
 
     function handleChange(selectedOptions) {
