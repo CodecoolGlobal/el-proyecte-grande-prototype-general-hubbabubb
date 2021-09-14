@@ -37,7 +37,7 @@ export const GroceryList = () => {
     }
 
     useEffect(() => {
-        fetch('/api/v1/extende-ingredient')
+        fetch('/api/v1/extended-ingredient')
             .then(response => response.json())
             .then(data => {
                 let result = [];
