@@ -49,6 +49,7 @@ export const RecipesFromPantry = () => {
     return <RecipesContainer>
         <LargeHeader><FontAwesomeIcon icon={faCookie}/> Recipes from your pantry content:</LargeHeader>
         <ContentSelector methods={methods} />
-        <RecipeList recipes={recipes} />
+        { content.length !== 0 &&
+        <RecipeList recipes={recipes} /> }
     </RecipesContainer>
 }
