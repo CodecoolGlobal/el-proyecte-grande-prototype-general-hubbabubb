@@ -13,6 +13,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {cyan, green, lightBlue, red, teal, yellow} from "@material-ui/core/colors";
 
 import parse from 'html-react-parser';
+import MealPlanDate from "./MealPlanDate";
 
 const useTransitions = makeStyles((theme) => ({
     root: {
@@ -80,10 +81,15 @@ const useTransitions = makeStyles((theme) => ({
 export default function Recipe(props) {
     const transitionClasses = useTransitions();
     const [expanded, setExpanded] = React.useState(false);
+    const [showDatePicker, setShowDatePicker] = React.useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    const handleShowDatePicker = () => {
+        setShowDatePicker(!showDatePicker)
+    }
 
     console.log(props.recipe);
 
@@ -122,11 +128,14 @@ export default function Recipe(props) {
                     {parse(props.recipe.summary)}
                 </Typography>
             </CardContent>
+            <div>
+                { showDatePicker ? <MealPlanDate recipeId={props.recipe.id}/> : null }
+            </div>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                 </IconButton>
-                <IconButton aria-label="share">
+                <IconButton aria-label="share" onClick={handleShowDatePicker}>
                     <ShareIcon />
                 </IconButton>
                 <IconButton
