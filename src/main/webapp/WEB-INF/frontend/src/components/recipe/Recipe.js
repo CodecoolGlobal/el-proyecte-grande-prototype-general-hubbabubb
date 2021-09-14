@@ -91,20 +91,26 @@ export default function Recipe(props) {
         setExpanded(!expanded);
     };
 
-    console.log(props.recipe);
-
-    function addToFavorites() {
-        fetch(`/api/v1/recipe/${props.recipe.id}/add-to-favorite/${AuthenticationService.getLoggedInUserName()}`, {
-            method: 'PUT'
-        })
-            .catch(error => {
-                console.error(error);
-            });
-    }
-
     function toggleFavorite() {
+        if (!favorite) {
+            fetch(`/api/v1/recipe/${props.recipe.id}/add-to-favorite/${AuthenticationService.getLoggedInUserName()}`, {
+                method: 'PUT'
+            })
+                .catch(error => {
+                    console.error(error);
+                });
+        } else {
+            fetch(`/api/v1/recipe/${props.recipe.id}/remove-from-favorite/${AuthenticationService.getLoggedInUserName()}`, {
+                method: 'PUT'
+            })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
         setFavorite(!favorite);
     }
+
+    console.log(props.recipe);
 
     return <Card className={transitionClasses.root}>
             <CardHeader>
@@ -146,13 +152,12 @@ export default function Recipe(props) {
                     <FormControlLabel
                         control={<Checkbox
                             checked={favorite}
-                            icon={favorite ? <FavoriteBorder/>:<ThumbDownIcon/>}
+                            icon={!favorite ? <FavoriteBorder/>:<ThumbDownIcon/>}
                             checkedIcon={<Favorite/>}
                             onClick={toggleFavorite}
                             name="checkedLike"/>}
-                        label="Add/remove favorite"
+                        label=""
                     />
-                    <FavoriteIcon onClick={addToFavorites}/>
                 </IconButton>
                 <IconButton aria-label="share">
                     <ShareIcon />
