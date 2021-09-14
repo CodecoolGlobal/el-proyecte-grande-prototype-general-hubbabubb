@@ -11,7 +11,7 @@ public class IngredientController {
 
     private IngredientService service;
 
-    @GetMapping("/api/v1/ingredient")
+    @GetMapping("/api/v1/extended-ingredient")
     public Map<String, Long> getIngredientList() {
         return service.readIngredients();
     }

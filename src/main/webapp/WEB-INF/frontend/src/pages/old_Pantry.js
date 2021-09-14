@@ -34,7 +34,7 @@ const Pantry = () => {
     const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
-        getFetch('/api/v1/extendedIngredient', (data) => {
+        getFetch('/api/v1/extended-ingredient', (data) => {
             let result = [];
             for (let key in data) {
                 result.push(key)

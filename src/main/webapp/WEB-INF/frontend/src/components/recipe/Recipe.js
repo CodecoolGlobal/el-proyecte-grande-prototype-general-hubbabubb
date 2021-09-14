@@ -3,12 +3,12 @@ import CardHeader from "react-bootstrap/CardHeader";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import { CardActions, Chip, Collapse, IconButton} from "@material-ui/core";
+import {CardActions, Checkbox, Chip, Collapse, FormControlLabel, IconButton} from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import clsx from "clsx";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import React from "react";
+import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {cyan, green, lightBlue, red, teal, yellow} from "@material-ui/core/colors";
 
@@ -16,6 +16,8 @@ import parse from 'html-react-parser';
 import {postFetch} from "../../util/fetchData";
 import AuthenticationService from "../../util/AuthenticationService";
 import {hostName} from "../../util/constants";
+import {Favorite, FavoriteBorder} from "@material-ui/icons";
+import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 
 const useTransitions = makeStyles((theme) => ({
     root: {
@@ -81,6 +83,7 @@ const useTransitions = makeStyles((theme) => ({
 }));
 
 export default function Recipe(props) {
+    const [favorite, setFavorite] = useState(false);
     const transitionClasses = useTransitions();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -97,6 +100,10 @@ export default function Recipe(props) {
             .catch(error => {
                 console.error(error);
             });
+    }
+
+    function toggleFavorite() {
+        setFavorite(!favorite);
     }
 
     return <Card className={transitionClasses.root}>
@@ -136,6 +143,15 @@ export default function Recipe(props) {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
+                    <FormControlLabel
+                        control={<Checkbox
+                            checked={favorite}
+                            icon={favorite ? <FavoriteBorder/>:<ThumbDownIcon/>}
+                            checkedIcon={<Favorite/>}
+                            onClick={toggleFavorite}
+                            name="checkedLike"/>}
+                        label="Add/remove favorite"
+                    />
                     <FavoriteIcon onClick={addToFavorites}/>
                 </IconButton>
                 <IconButton aria-label="share">

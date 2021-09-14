@@ -112,7 +112,6 @@ export default function MealPlanListItem(props) {
                                                    name="checkedDislike"/>}
                                 label={props.disliked}
                             />
-
                         </span>
                     </div>
                 </CardContent>

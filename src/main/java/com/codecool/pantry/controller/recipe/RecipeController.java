@@ -98,4 +98,18 @@ public class RecipeController {
 
         return recipe.get();
     }
+
+    @PutMapping("{recipeId}/remove-from-favorite/{userEmail}")
+    public void  removeFromFavorite(@PathVariable Long recipeId, @PathVariable String userEmail) {
+        Optional<Recipe> recipe = recipeService.get(recipeId);
+        AppUser appUser = appUserService.getUserByEmail(userEmail);
+
+        if (recipe.isEmpty()) {
+            throw new IllegalStateException("recipe not found!");
+        }
+
+        appUser.removeFromFavorite(recipe.get());
+
+        appUserService.save(appUser);
+    }
 }

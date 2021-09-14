@@ -21,7 +21,7 @@ export default function IngredientSelector({setSelector, handler}) {
     const handleAddButtonClick = handler;
 
     useEffect(() => {
-        getFetch('/api/v1/extendedIngredient', (data) => {
+        getFetch('/api/v1/extended-ingredient', (data) => {
             let result = [];
             for (let key in data) {
                 result.push(key)
