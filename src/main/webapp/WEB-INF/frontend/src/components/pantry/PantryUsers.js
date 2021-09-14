@@ -1,21 +1,26 @@
-import React, {useState} from "react";
-import {Backdrop, Card, Fade, makeStyles, Modal} from "@material-ui/core";
+import React, {useEffect, useState} from "react";
+import {Backdrop, Card, Fade, Grow, makeStyles, Modal} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import styled from 'styled-components'
 import {faUserCircle} from "@fortawesome/free-regular-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {FormControl, InputGroup, Button} from "react-bootstrap";
+import {Button, FormControl, InputGroup} from "react-bootstrap";
 import AuthenticationService from "../../util/AuthenticationService";
-import {putFetch} from "../../util/fetchData";
+import {getFetch, putFetch} from "../../util/fetchData";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
             margin: theme.spacing(1),
         },
+        padding: 15,
         marginBottom: 15,
         width: 'auto',
         maxWidth: 600,
+        transition: "transform 0.15s ease-in-out"
+    },
+    cardHovered: {
+        transform: "scale3d(1.05, 1.05, 1)"
     },
     modal: {
         display: 'flex',
@@ -34,6 +39,11 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3),
     },
 }));
+const UsersContainer = styled.div`
+    display: flex;
+    alignItems: center;
+    justifyContent: center;
+`;
 
 const Avatar = styled.div`
     display: inline-block;
@@ -54,6 +64,7 @@ const Avatar = styled.div`
 `;
 
 const PlusUser = styled.div`
+    margin-left: 20px;
     display: inline-block;
     width: 50px;
     height: 50px;
@@ -67,14 +78,31 @@ const PlusUser = styled.div`
     
     text-decoration: none;
     cursor: pointer;
-    flex-basis: 100px;
     padding-top: 2px;
 `;
 
+export const Text = styled.p`
+    color: black;
+    text-align:left;
+    font-size: 14px;
+    font-weight: 50;
+`;
+
 export default function PantryUsers(props) {
+    const [users, setUsers] = useState([]);
     const classes = useStyles();
     const [email, setEmail] = useState();
     const [open, setOpen] = React.useState(false);
+
+    useEffect(() => {
+        getFetch(`api/v1/pantry/users/${AuthenticationService.getLoggedInUserName()}`, (json) => {
+            setUsers(json);
+            console.log(users);
+
+        }, (err) => {
+            console.error(err);
+        })
+    }, [])
 
     const handleOpen = () => {
         setOpen(true);
@@ -93,15 +121,30 @@ export default function PantryUsers(props) {
         setOpen(false);
     }
 
+    const [state, setState] = useState({
+        raised:false,
+        shadow:1,
+    })
+
     return (
-        <Card className={classes.root}>
-            <Typography paragraph className={classes.typography}><FontAwesomeIcon icon={faUserCircle}/> Pantry Users:</Typography>
-            {props.users.map((user) => {
-                return <Avatar>
-                    {user.firstName.slice(0, 1) + user.lastName.slice(0, 1)}
-                </Avatar>
-            })}
-            <PlusUser onClick={handleOpen} >+</PlusUser>
+        <Card className={classes.root}
+              classes={{root: state.raised ? classes.cardHovered : ""}}
+              onMouseOver={()=>setState({ raised: true, shadow:3})}
+              onMouseOut={()=>setState({ raised:false, shadow:1 })}
+              raised={state.raised} zdepth={state.shadow}>
+            <Typography paragraph className={classes.typography}><FontAwesomeIcon icon={faUserCircle}/> Pantry
+                Users:</Typography>
+            <UsersContainer>
+                {users !== undefined && users.map((user) => {
+                    return <div>
+                        <Avatar>
+                            {user.firstName.slice(0, 1) + user.lastName.slice(0, 1)}
+                        </Avatar>
+                        <Text>{user.firstName + ' ' + user.lastName}</Text>
+                    </div>
+                })}
+                <PlusUser onClick={handleOpen}>+</PlusUser>
+            </UsersContainer>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -116,7 +159,7 @@ export default function PantryUsers(props) {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
-                        <h1>Add user to Pantry:</h1>
+                        <h1>Invite user to Your pantry:</h1>
                         <InputGroup className="mb-3">
                             <FormControl
                                 onChange={(e) => setEmail(e.target.value)}

@@ -55,13 +55,13 @@ public class AppUser implements UserDetails {
     private boolean locked = false;
     private boolean enabled = false;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="pantry_id", referencedColumnName = "id")
     private Pantry pantry;
 
     private Long invitedPantryId;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "favorites",
             joinColumns = @JoinColumn(name = "app_user_id"),
