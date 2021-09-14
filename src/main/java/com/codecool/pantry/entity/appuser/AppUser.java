@@ -59,6 +59,8 @@ public class AppUser implements UserDetails {
     @JoinColumn(name="pantry_id", referencedColumnName = "id")
     private Pantry pantry;
 
+    private Long invitedPantryId;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "favorites",
