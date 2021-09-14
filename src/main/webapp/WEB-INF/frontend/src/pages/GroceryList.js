@@ -106,7 +106,7 @@ export const GroceryList = () => {
                      onChange={handleChange}
                     id="ingredients"
                     options={loadedIngredients}
-                    placeholder="Choose an extendedIngredient...">
+                    placeholder="Choose an ingredient...">
 
                     {({ onClear, selected }) => (
                         <div className="rbt-aux">

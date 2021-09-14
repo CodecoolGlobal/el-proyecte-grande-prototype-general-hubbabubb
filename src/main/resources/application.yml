@@ -9,9 +9,9 @@ spring:
     console:
       enabled: true
   datasource:
-    password: 1977
+    password: m7o8u3s9e
     url: jdbc:postgresql://localhost:5432/pantry
-    username: hubbabubb
+    username: daniel
   jpa:
     hibernate:
       ddl-auto: create-drop
