@@ -1,6 +1,7 @@
+import React, {useEffect, useState} from "react";
+
 import PantryUsers from "../components/pantry/PantryUsers";
 import {Col, Row, Container} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
 import PantryContent from "../components/pantry/PantryContent";
 import {getFetch, putFetch} from "../util/fetchData";
 import AuthenticationService from "../util/AuthenticationService";
@@ -8,6 +9,9 @@ import AuthenticationService from "../util/AuthenticationService";
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import {Grow} from "@material-ui/core";
+import {LargeHeader} from "../components/Common";
+
+import PantryLogo from "../components/logo.svg";
 
 
 function Pantry() {

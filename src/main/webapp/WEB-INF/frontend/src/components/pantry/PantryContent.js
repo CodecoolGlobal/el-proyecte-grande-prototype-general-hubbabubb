@@ -53,21 +53,15 @@ export default function PantryContent() {
     const [selectedIngredient, setSelected] = useState('');
     const [itemAdded, setItemAdded] = useState(false)
 
-    const getPantryContent = () => {
+    useEffect(() => {
         const pantryContentLink = `${hostName}/api/v1/pantry-content/${AuthenticationService.getLoggedInUserName()}` // flexible ID here TODO
 
         getFetchWithAuth(pantryContentLink, (data) => {
             setItems(data)
         }, (error) => {
-            console.log(error)
+            console.error(error)
         })
-    }
-
-    useEffect(() => {
-
-            getPantryContent()
-        }, [itemAdded]
-    )
+    }, [itemAdded])
 
     // TODO: collect list methods and remove duplications
     const removeItem = (id) => {
@@ -88,11 +82,6 @@ export default function PantryContent() {
         setItems(newItems);
     };
 
-    // function handleChange(selectedOptions) {
-    //     setInputValue(selectedOptions);
-    // }
-
-
     function removeAllChecked() {
         let newList = items.filter(item => !item.checked)
         setItems(newList)
@@ -109,15 +98,15 @@ export default function PantryContent() {
     };
 
     const [state, setState] = useState({
-        raised:false,
-        shadow:1,
+        raised: false,
+        shadow: 1,
     })
 
     return (
         <Card className={classes.root}
               classes={{root: state.raised ? classes.cardHovered : ""}}
-              onMouseOver={()=>setState({ raised: true, shadow:3})}
-              onMouseOut={()=>setState({ raised:false, shadow:1 })}
+              onMouseOver={() => setState({raised: true, shadow: 3})}
+              onMouseOut={() => setState({raised: false, shadow: 1})}
               raised={state.raised} zdepth={state.shadow}>
             <Typography paragraph className={classes.typography}><KitchenSharpIcon/>
                 Pantry Content:
