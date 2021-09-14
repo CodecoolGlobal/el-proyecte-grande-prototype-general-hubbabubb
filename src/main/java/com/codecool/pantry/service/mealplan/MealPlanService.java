@@ -30,12 +30,16 @@ public class MealPlanService {
         return mealPlanRepository.findAll();
     }
 
-    public void saveMealPlan(Long recipeId, LocalDateTime date) {
+    public void saveMealPlan(Long recipeId, LocalDateTime date, String userName) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         if (recipe.isEmpty()) {
             throw new IllegalStateException("Recipe_old not found");
         }
-        mealPlanRepository.save(new MealPlan(recipe.get(), date));
+        Optional<AppUser> user = appUserRepository.findByUsername(userName);
+        if (user.isEmpty()) {
+            throw new IllegalStateException("User not found");
+        }
+        mealPlanRepository.save(new MealPlan(recipe.get(), date, user.get()));
     }
 
     public MealPlan getMealPlan(Long id) {
