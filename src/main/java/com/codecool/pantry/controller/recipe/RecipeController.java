@@ -1,67 +1,116 @@
 package com.codecool.pantry.controller.recipe;
 
-import lombok.AllArgsConstructor;
+
+import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.recipe.Recipe;
-import com.codecool.pantry.repository.recipe.RecipeRepository;
+import com.codecool.pantry.service.appuser.AppUserService;
+import com.codecool.pantry.service.recipe.RecipeService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+import java.util.Optional;
 
 
-@AllArgsConstructor
 @RestController
+@RequestMapping(path = "api/v1/recipe")
+@AllArgsConstructor
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class RecipeController {
-    private final RecipeRepository recipeRepository;
 
-    private final String API_KEY = "8dc3ef2ffcf54e6781629ee83623d725";  // TODO store it in properties!!!!
+    private final RecipeService recipeService;
+    private final AppUserService appUserService;
 
-    @PostMapping
-    public void saveRecipe(@RequestBody Recipe recipe) {
-        recipeRepository.save(recipe);
-    }
+    // TODO store it in properties!!!!
+//    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";
+    private final String API_KEY = "a22052fbcfef4a2fac111f33a93898d8";
+//    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
+//    private final String API_KEY = "b880826d2c53495f8fb1fa608db88577";
+
+//    private final String API_KEY = "099bdb5cd6ad48e28faab2065fdc4467";
 
 
-    @GetMapping("api/v1/recipe/search/{name}")
+//    @PostMapping
+//    public void saveRecipe(@RequestBody Recipe_old recipe) {
+//        recipeRepository.save(recipe);
+//    }
+//
+
+    @GetMapping(path = "/search/{name}")
     public ResponseEntity<String> searchRecipeByName(@PathVariable(value = "name") String name) {
         final String uri = String.format("https://api.spoonacular.com/recipes/complexSearch?query=%s&number=25&apiKey=%s",
                 name, API_KEY);
         RestTemplate restTemplate = new RestTemplate();
+
         return restTemplate.getForEntity(uri, String.class);
     }
 
-    @GetMapping("api/v1/recipe/{id}")
-    public ResponseEntity<String> getRecipeById(@PathVariable(value = "id") Long id) {
+
+    @GetMapping("/{id}")
+    public Optional<Recipe> getAndCacheRecipeById(@PathVariable(value = "id") Long id) {
+        Optional<Recipe> recipe = recipeService.get(id);
+
+        if (recipe.isEmpty()) {
+            recipe = getRecipeFromSpoonacular(id);
+        }
+
+        return recipe;
+    }
+
+    private Optional<Recipe> getRecipeFromSpoonacular(Long id) {
+        Optional<Recipe> recipe;
+        System.out.println("--------recipe id: " + id);
         final String uri = String.format("https://api.spoonacular.com/recipes/%s/information?apiKey=%s", id, API_KEY);
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(uri, String.class);
 
+        recipe = Optional.ofNullable(restTemplate.getForObject(uri, Recipe.class));
+
+        recipe.ifPresent(this::saveRecipe);
+        return recipe;
     }
 
+    private void saveRecipe(Recipe recipe) {
+//        extendedIngredientService.saveAll(recipe.getExtendedExtendedIngredients());
+        recipeService.save(recipe);
+    }
 
-    @GetMapping("api/v1/recipe/by-ingredients/{ingredients}")
-    public ResponseEntity<String> searchRecipeByIngredients(@PathVariable("ingredients") List<String> ingredients) {
-
-        final String uri = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&number=5&apiKey=%s",
-                generateIngredientQuery(ingredients), API_KEY);
+    @GetMapping("/by-ingredients/{ingredients}") //
+    public ResponseEntity<String> searchRecipeByIngredients(@PathVariable("ingredients") String ingredients) {
+        final String uri = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&number=20&sort=max-used-ingredients&apiKey=%s",
+                ingredients, API_KEY);
         RestTemplate restTemplate = new RestTemplate();
+        System.out.println(uri);
         return restTemplate.getForEntity(uri, String.class);
     }
 
-    public String generateIngredientQuery(List<String> ingredients) {
-        if (ingredients.size() < 1) {
-            return "throw-error"; // exception + handling
+    @PutMapping("{recipeId}/add-to-favorite/{userEmail}")
+    public Recipe addToFavorite(@PathVariable Long recipeId, @PathVariable String userEmail) {
+        Optional<Recipe> recipe = recipeService.get(recipeId);
+        AppUser appUser = appUserService.getUserByEmail(userEmail);
+
+        if (recipe.isEmpty()) {
+            throw new IllegalStateException("recipe not found!");
         }
 
-        StringBuilder searchQuery = new StringBuilder(ingredients.get(0));
-        for (int i = 1; i < ingredients.size(); i++) {
-            searchQuery.append(",+");
-            searchQuery.append(ingredients.get(i));
+        appUser.addRecipeToFavorite(recipe.get());
+
+        appUserService.save(appUser);
+
+        return recipe.get();
+    }
+
+    @PutMapping("{recipeId}/remove-from-favorite/{userEmail}")
+    public void  removeFromFavorite(@PathVariable Long recipeId, @PathVariable String userEmail) {
+        Optional<Recipe> recipe = recipeService.get(recipeId);
+        AppUser appUser = appUserService.getUserByEmail(userEmail);
+
+        if (recipe.isEmpty()) {
+            throw new IllegalStateException("recipe not found!");
         }
-        return searchQuery.toString();
 
+        appUser.removeFromFavorite(recipe.get());
+
+        appUserService.save(appUser);
     }
-
-
-    }
+}

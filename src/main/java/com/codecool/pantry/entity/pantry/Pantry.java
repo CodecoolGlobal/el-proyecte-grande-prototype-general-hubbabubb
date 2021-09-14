@@ -2,7 +2,11 @@ package com.codecool.pantry.entity.pantry;
 
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
+import com.codecool.pantry.entity.mealplan.MealPlan;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +18,10 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
+@Getter
 @Entity(name = "pantry")
 public class Pantry {
-
     @Id
     @SequenceGenerator(
             name = "pantry_sequence",
@@ -29,11 +32,7 @@ public class Pantry {
             strategy = GenerationType.SEQUENCE,
             generator = "pantry_sequence"
     )
-    @Column(
-            name = "id",
-            updatable = false
-    )
-    private  Long id;
+    private Long id;
 
     @Column(
             name = "name",
@@ -42,12 +41,21 @@ public class Pantry {
     )
     private String name = "My Pantry";
 
+    @JsonIgnore
     @OneToMany(mappedBy = "pantry")
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
-    @OneToMany(mappedBy = "pantry")
-    private Set<ListItem> groceryList = new HashSet<>();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
+    private Set<GroceryItem> groceryList = new HashSet<>();
 
-    @OneToMany(mappedBy = "pantry")
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
     private Set<ListItem> pantryList = new HashSet<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "pantry", cascade = CascadeType.ALL)
+    private Set<MealPlan> mealPlans = new HashSet<>();
 }
+

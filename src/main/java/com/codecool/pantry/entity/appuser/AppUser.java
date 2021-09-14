@@ -1,6 +1,7 @@
 package com.codecool.pantry.entity.appuser;
 
 import com.codecool.pantry.entity.pantry.Pantry;
+import com.codecool.pantry.entity.recipe.Recipe;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 @Getter
 @Setter
@@ -43,7 +43,7 @@ public class AppUser implements UserDetails {
     @Column(
             nullable = false
     )
-    private String email;
+    private String username;
 
     @Column(
             nullable = false
@@ -55,14 +55,24 @@ public class AppUser implements UserDetails {
     private boolean locked = false;
     private boolean enabled = false;
 
-    @ManyToOne
-    @JoinColumn(name="pantry_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="pantry_id", referencedColumnName = "id")
     private Pantry pantry;
 
-    public AppUser(String firstName, String lastName, String email, String password) {
+    private Long invitedPantryId;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "favorites",
+            joinColumns = @JoinColumn(name = "app_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "recipe_id")
+    )
+    private Set<Recipe> favorites = new HashSet<>();
+
+    public AppUser(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.username = username;
         this.password = password;
     }
 
@@ -79,7 +89,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -112,5 +122,13 @@ public class AppUser implements UserDetails {
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public void addRecipeToFavorite(Recipe recipe) {
+        favorites.add(recipe);
+    }
+
+    public void removeFromFavorite(Recipe recipe) {
+        favorites.remove(recipe);
     }
 }

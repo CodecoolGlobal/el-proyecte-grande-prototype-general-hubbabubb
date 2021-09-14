@@ -1,2 +1,0 @@
-INSERT INTO app_user (id, first_name, last_name, email, password, role,  locked, enabled)
-VALUES (1, 'Pantry', 'User', 'user@pantry.hu', '$2a$10$5WdYp9J1.Y.1qKY1RdPyE.45yggh9X6DPOml978352wZY8GpiYO2i', 'FREE', false, true);

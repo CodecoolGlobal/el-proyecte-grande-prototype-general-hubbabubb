@@ -1,50 +1,32 @@
-import {useState, useEffect} from 'react';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import {Typeahead, ClearButton} from 'react-bootstrap-typeahead';
-import {Spinner} from "react-bootstrap";
-
+import React from 'react';
+import './Home.css';
+import logo from '../components/pantry_art.png';
+import axios from 'axios';
+import {useEffect} from 'react';
 
 function Home() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [loadedIngredients, setLoadedIngredients] = useState([]);
+
+    const authToken = (token) => {
+        if (token) {
+            axios.defaults.headers.common["Authorization"] = `${token}`;
+        } else {
+            delete axios.defaults.headers.common["Authorization"];
+        }
+    };
 
     useEffect(() => {
-        setIsLoading(true);
-        fetch('/api/v1/ingredient')
-            .then(response => response.json())
-            .then(data => {
-                let result = [];
-                for (let key in data) {
-                    result.push(key)
-                }
-                setIsLoading(false);
-                setLoadedIngredients(result);
-                console.log(result);
-            });
-    }, [])
-
-    if (isLoading) {
-        return <section>
-            <p>Loading...</p>
-        </section>
-    }
-
-
-
-    return <section>
-        <h1>All ingredients:</h1>
-        <Typeahead
-            id="ingredients"
-            options={loadedIngredients}
-            placeholder="Choose an ingredient...">
-            {({ onClear, selected }) => (
-                <div className="rbt-aux">
-                    {!!selected.length && <ClearButton onClick={onClear} />}
-                    {!selected.length && <Spinner animation="grow" size="sm" />}
-                </div>
-            )}
-        </Typeahead>
-    </section>
+            authToken(localStorage.jwtToken);
+        }
+    )
+    // const auth = useSelector((state) => console.log(state));
+    return <div className={'App'}>
+        <div className={'App-header'}>
+            <h1>
+                Welcome in your Pantry!
+            </h1>
+            <img src={logo} alt={'logo'} className="App-logo"/>
+        </div>
+    </div>
 }
 
 export default Home;

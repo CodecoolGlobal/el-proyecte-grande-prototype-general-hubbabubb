@@ -1,6 +1,7 @@
 package com.codecool.pantry.entity.listitem;
 
 import com.codecool.pantry.entity.pantry.Pantry;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,16 +18,18 @@ import java.time.LocalDateTime;
 public class ListItem {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(nullable = false)
     private String ingredientName;
-    private boolean important;
-    private boolean checked;
+    private boolean important = false;
+    private boolean checked = false;
     private LocalDateTime expirationDate; //How important is it? Maybe in the future?
 
-    @ManyToOne()
-    @JoinColumn(name="pantry_id")
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pantry_id")
     private Pantry pantry;
 
     public ListItem(String ingredientName) {
