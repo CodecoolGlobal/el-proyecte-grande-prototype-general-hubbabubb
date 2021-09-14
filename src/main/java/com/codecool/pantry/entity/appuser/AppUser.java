@@ -125,4 +125,8 @@ public class AppUser implements UserDetails {
     public void addRecipeToFavorite(Recipe recipe) {
         favorites.add(recipe);
     }
+
+    public void removeFromFavorite(Recipe recipe) {
+        favorites.remove(recipe);
+    }
 }

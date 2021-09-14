@@ -35,7 +35,6 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
-
     @PostConstruct
     protected void init() {
         if (userRepository.findByUsername("test@user.com").isPresent()) {
