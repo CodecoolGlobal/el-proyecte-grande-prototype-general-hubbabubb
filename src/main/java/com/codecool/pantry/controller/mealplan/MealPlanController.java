@@ -5,9 +5,12 @@ import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.mealplan.MealPlanService;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -24,9 +27,14 @@ public class MealPlanController {
         return mealPlanService.getAll();
     }
 
-    @PostMapping(path = "/save/{recipeId}/{date}")
-    public void saveMealPlan(@PathVariable("recipeId") Long recipeId, @PathVariable("date") LocalDateTime date) {
-        mealPlanService.saveMealPlan(recipeId, date);
+    @PostMapping(value = "/save")
+    public String saveMealPlan(@RequestParam(name = "recipeId") Long recipeId,
+                               @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
+                               @RequestParam(name = "userName") String userName) {
+        System.out.println("MEALPLAN CONTROLLER");
+        System.out.println(date);
+//        mealPlanService.saveMealPlan(recipeId, date, userName);
+        return "Meal Plan saved!";
     }
 
     @GetMapping(path = "/like/{mealPlanId}/{userName}")
