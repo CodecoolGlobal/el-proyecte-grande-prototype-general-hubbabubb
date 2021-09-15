@@ -1,7 +1,5 @@
-import {
-     LinearProgress
-} from '@material-ui/core';
-import React, {useContext, useEffect, useState} from 'react';
+import {LinearProgress} from '@material-ui/core';
+import React, {useEffect, useState} from 'react';
 import {hostName} from "../util/constants";
 import {getFetchWithAuth} from "../util/fetchData";
 import {LargeHeader} from "../components/Common";
@@ -11,6 +9,7 @@ import {faCookie} from "@fortawesome/free-solid-svg-icons";
 import RecipeList from "../components/recipe/RecipeList";
 import {RecipesContainer} from "./RecipesByName";
 import ContentSelector from "../components/pantry/ContentSelector";
+import AuthenticationService from "../util/AuthenticationService";
 
 export const RecipesFromPantry = () => {
 
@@ -22,14 +21,12 @@ export const RecipesFromPantry = () => {
     const [content, setContent] = useState(sampleData)
 
     useEffect(() => {
-        let pantryContent = content.map((item) => {
-            return item.ingredientName;
-        }).join("+");
-
-        const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${pantryContent}`;
+        const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${AuthenticationService.getLoggedInUserName()}`;
         getFetchWithAuth(searchURL, (jsonData) => {
-            setRecipes(jsonData);
-            setLoading(false)
+            setRecipes(jsonData.recipes);
+            console.log(jsonData)
+            setContent(jsonData.content);
+            setLoading(false);
         }, (error) => {
             console.log(error)
         })

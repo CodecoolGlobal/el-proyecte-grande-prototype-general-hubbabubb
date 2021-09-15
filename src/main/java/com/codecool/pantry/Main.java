@@ -138,8 +138,9 @@ public class Main {
         user2.setUsername("tokai@dani.hu");
         user2.setPassword(new BCryptPasswordEncoder().encode("dani"));
         user2.setEnabled(true);
-        user2.setPantry(pantry);
 
+        pantryRepository.save(pantry);
+        user2.setPantry(pantry);
         user.setPantry(pantry);
         userRepository.save(user);
 

@@ -2,6 +2,11 @@ package com.codecool.pantry.controller.recipe;
 
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.listitem.ListItem;
+import com.codecool.pantry.entity.pantry.Pantry;
+import com.codecool.pantry.entity.pantry.PantryRecipesDto;
+import com.codecool.pantry.entity.pantry.RecipeListDto;
+import com.codecool.pantry.entity.pantry.RecipeListElemDto;
 import com.codecool.pantry.entity.recipe.Recipe;
 import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.recipe.RecipeService;
@@ -10,7 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -66,13 +74,25 @@ public class RecipeController {
         recipeService.save(recipe);
     }
 
-    @GetMapping("/by-ingredients/{ingredients}") //
-    public ResponseEntity<String> searchRecipeByIngredients(@PathVariable("ingredients") String ingredients) {
+    @GetMapping("/by-ingredients/{userEmail}") //
+    public PantryRecipesDto pantryContent(@PathVariable String userEmail) {
+        AppUser user = appUserService.getUserByEmail(userEmail);
+        Pantry pantry = user.getPantry();
+
+        PantryRecipesDto dto = new PantryRecipesDto();
+        dto.setContent(pantry.getPantryList());
+        dto.setRecipes(getRecipeListByIngredientList(dto.getContent()));
+
+        return dto;
+    }
+
+    private RecipeListElemDto[] getRecipeListByIngredientList(Set<ListItem> ingredientSet) {
+        String ingredients = ingredientSet.stream().map(ListItem::getIngredientName).collect(Collectors.joining("+"));
         final String uri = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&number=20&sort=max-used-ingredients&apiKey=%s",
                 ingredients, API_KEY);
         RestTemplate restTemplate = new RestTemplate();
-        System.out.println(uri);
-        return restTemplate.getForEntity(uri, String.class);
+
+        return restTemplate.getForObject(uri, RecipeListElemDto[].class);
     }
 
     @PutMapping("{recipeId}/add-to-favorite/{userEmail}")
