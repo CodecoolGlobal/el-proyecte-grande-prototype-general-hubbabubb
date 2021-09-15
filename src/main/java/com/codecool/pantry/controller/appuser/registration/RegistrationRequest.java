@@ -1,6 +1,5 @@
 package com.codecool.pantry.controller.appuser.registration;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter

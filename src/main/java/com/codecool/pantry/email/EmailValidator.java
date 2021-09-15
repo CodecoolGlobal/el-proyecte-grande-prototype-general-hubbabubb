@@ -1,11 +1,11 @@
 package com.codecool.pantry.email;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor

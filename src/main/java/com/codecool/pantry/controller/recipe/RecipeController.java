@@ -5,7 +5,6 @@ import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.pantry.PantryRecipesDto;
-import com.codecool.pantry.entity.pantry.RecipeListDto;
 import com.codecool.pantry.entity.pantry.RecipeListElemDto;
 import com.codecool.pantry.entity.recipe.Recipe;
 import com.codecool.pantry.service.appuser.AppUserService;
@@ -15,16 +14,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping(path = "api/v1/recipe")
 @AllArgsConstructor
 @CrossOrigin(origins = {"http://localhost:3000"})
+@RequestMapping(path = "api/v1/recipe")
 public class RecipeController {
 
     private final RecipeService recipeService;
@@ -32,8 +30,8 @@ public class RecipeController {
 
     // TODO store it in properties!!!!
 //    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";
-    private final String API_KEY = "a22052fbcfef4a2fac111f33a93898d8";
-//    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
+//    private final String API_KEY = "a22052fbcfef4a2fac111f33a93898d8";
+    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
 //    private final String API_KEY = "b880826d2c53495f8fb1fa608db88577";
 //    private final String API_KEY = "099bdb5cd6ad48e28faab2065fdc4467";
 
@@ -80,8 +78,11 @@ public class RecipeController {
         Pantry pantry = user.getPantry();
 
         PantryRecipesDto dto = new PantryRecipesDto();
-        dto.setContent(pantry.getPantryList());
+        dto.setContent(pantry.getListItems());
         dto.setRecipes(getRecipeListByIngredientList(dto.getContent()));
+
+        System.out.println("content: " + dto.getContent());
+        System.out.println("recipes: " + dto.getRecipes());
 
         return dto;
     }

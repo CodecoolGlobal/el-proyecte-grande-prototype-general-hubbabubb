@@ -5,8 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import {Backdrop, Grow} from "@material-ui/core";
-import {Modal} from "@material-ui/core";
+import {Backdrop, Grow, Modal} from "@material-ui/core";
 
 import Recipe from "./Recipe";
 import {getFetchWithAuth} from "../../util/fetchData";

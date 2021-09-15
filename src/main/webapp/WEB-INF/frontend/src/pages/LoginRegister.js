@@ -1,5 +1,5 @@
 import LoginRegisterForm from "../components/loginregister/LoginRegisterForm";
-import {Container, Row, Col} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import LogoAnimation from "../components/LogoAnimation";
 import styled from "styled-components";
 import {withRouter} from 'react-router-dom';

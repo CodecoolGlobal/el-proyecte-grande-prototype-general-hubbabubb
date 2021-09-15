@@ -2,7 +2,6 @@ package com.codecool.pantry.entity.pantry;
 
 
 import com.codecool.pantry.entity.appuser.AppUser;
-import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,14 +44,13 @@ public class Pantry {
     @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
     private Set<AppUser> pantryAppUsers = new HashSet<>();
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
-    private Set<GroceryItem> groceryList = new HashSet<>();
-
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
-    private Set<ListItem> pantryList = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "list_items",
+            joinColumns = @JoinColumn(name = "pantry_id"),
+            inverseJoinColumns = @JoinColumn(name = "list_item_id")
+    )
+    private Set<ListItem> listItems = new HashSet<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)

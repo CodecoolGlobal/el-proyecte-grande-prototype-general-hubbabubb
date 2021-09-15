@@ -1,8 +1,7 @@
 import React, {useContext, useState} from "react";
-import {BoxContainer, SubmitButton, FormContainer, Input, MutedLink, HighlightedText} from "../Common";
+import {BoxContainer, FormContainer, HighlightedText, Input, MutedLink, SubmitButton} from "../Common";
 import {validateEmail} from "./RegisterForm";
 import {AccountContext} from "./accountContext";
-import axios from "axios";
 import {withRouter} from 'react-router-dom';
 import AuthenticationService, {USER_NAME_SESSION_ATTRIBUTE_NAME} from "../../util/AuthenticationService";
 

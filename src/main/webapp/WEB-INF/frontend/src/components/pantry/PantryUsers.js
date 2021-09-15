@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Backdrop, Card, Fade, Grow, makeStyles, Modal} from "@material-ui/core";
+import {Backdrop, Card, Fade, makeStyles, Modal} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import styled from 'styled-components'
 import {faUserCircle} from "@fortawesome/free-regular-svg-icons";
@@ -113,7 +113,7 @@ export default function PantryUsers(props) {
     };
 
     function handleInvite() {
-        let url = `api/v1/${AuthenticationService.getLoggedInUserName()}/invite-to-pantry/${email
+        let url = `api/v1/pantry/${AuthenticationService.getLoggedInUserName()}/invite-to-pantry/${email
         }`;
 
         putFetch(url, (err) => console.log(err));

@@ -3,12 +3,10 @@ package com.codecool.pantry;
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.repository.appuser.AppUserRepository;
-import com.codecool.pantry.repository.listItem.GroceryItemRepository;
 import com.codecool.pantry.repository.listItem.ListItemRepository;
 import com.codecool.pantry.repository.mealplan.MealPlanRepository;
 import com.codecool.pantry.repository.pantry.PantryRepository;
 import com.codecool.pantry.repository.recipe.RecipeRepository;
-import com.codecool.pantry.security.PasswordEnconder;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,14 +20,12 @@ import java.net.URISyntaxException;
 @AllArgsConstructor
 public class Main {
 
-    private final PasswordEnconder passwordEnconder;
 
     private final AppUserRepository userRepository;
     private final PantryRepository pantryRepository;
     private final MealPlanRepository mealPlanRepository;
     private final ListItemRepository listItemRepository;
     private final RecipeRepository recipeRepository;
-    private final GroceryItemRepository groceryItemRepository;
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         SpringApplication.run(Main.class, args);

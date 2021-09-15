@@ -1,23 +1,12 @@
 import React from 'react';
 
-import {
-    Button,
-    Card,
-    Checkbox,
-    Collapse,
-    IconButton,
-    List,
-    ListItem,
-    ListItemIcon, ListItemSecondaryAction,
-    ListItemText,
-    makeStyles, Switch
-} from "@material-ui/core";
+import {Card, Collapse, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles} from "@material-ui/core";
 import {red} from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CardContent from "@material-ui/core/CardContent";
 import clsx from "clsx";
 import Typography from "@material-ui/core/Typography";
-import {faClipboardList, faMinusCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faClipboardList, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import IngredientSelector from "../recipe/IngredientSelector";
 

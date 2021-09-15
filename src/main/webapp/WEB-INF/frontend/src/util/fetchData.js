@@ -31,6 +31,21 @@ export function putFetch(url, errorHandling) {
         .catch(error => errorHandling(error))
 }
 
+export function putFetchWithCallback(url, callback, errorHandling) {
+    fetch(url, {
+        method: 'PUT'
+    }).then(data => data.json())
+        .then(json => callback(json))
+        .catch(error => errorHandling(error))
+}
+
+export function deleteFetch(url, errorHandling) {
+    fetch(url, {
+        method: 'DELETE'
+    })
+        .catch(error => errorHandling(error))
+}
+
 export function postFetchWithAuth(url, data, callback, errorHandling) {
     const authHeader = new Headers();
     authHeader.append('Authorization', 'Basic code@cooler.com : testuser');

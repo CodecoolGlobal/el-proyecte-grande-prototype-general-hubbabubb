@@ -2,7 +2,6 @@ import React, {useContext, useState} from "react";
 import {BoxContainer, ErrorText, FormContainer, HighlightedText, Input, MutedLink, SubmitButton} from "../Common";
 import {AccountContext} from './accountContext';
 import {postFetch} from "../../util/fetchData";
-import {hostName} from "../../util/constants";
 
 export default function RegisterForm(props) {
     const {switchToLogin} = useContext(AccountContext)

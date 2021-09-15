@@ -1,15 +1,15 @@
 package com.codecool.pantry.service.pantry;
 
 import com.codecool.pantry.entity.appuser.AppUser;
-import com.codecool.pantry.entity.listitem.GroceryItem;
+import com.codecool.pantry.entity.listitem.ItemType;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.repository.pantry.PantryRepository;
-import javassist.compiler.ast.Pair;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,63 +17,33 @@ import java.util.Set;
 @AllArgsConstructor
 public class PantryService {
 
-    private PantryRepository pantryRepository;
+    private final PantryRepository pantryRepository;
 
     public Optional<Pantry> getPantryById(Long id) {
         return pantryRepository.findById(id);
     }
 
-    public void addGroceryItemToList(Long id, String itemName) {
-        if (getPantryById(id).isEmpty()) {
-            return;
-        }
+    public ListItem addGroceryItemToList(Pantry pantry, String itemName) {
+        ListItem listItem = new ListItem();
+        listItem.setIngredientName(itemName);
+        listItem.setItemType(ItemType.GROCERY_LIST);
+        pantry.getListItems().add(listItem);
 
-
-        Pantry pantry = getPantryById(id).get();
-
-        Set<GroceryItem> newList = pantry.getGroceryList();
-
-        var newItem = new GroceryItem(itemName);
-        newItem.setPantry(pantry);
-        newList.add(newItem);
-
-        pantry.setGroceryList(newList);
         pantryRepository.save(pantry);
+        return listItem;
     }
 
-    public void addPantryItemToList(Long id, String itemName) {
-        if (getPantryById(id).isEmpty()) {
-            return;
-        }
-        Pantry pantry = getPantryById(id).get();
-        Set<ListItem> newList = pantry.getPantryList();
-        var newItem = new ListItem(itemName);
-        newItem.setPantry(pantry);
-        newList.add(newItem);
-        pantry.setPantryList(newList);
+    public void addPantryItemToList(Pantry pantry, String itemName) {
+        ListItem listItem = new ListItem();
+        listItem.setIngredientName(itemName);
+        listItem.setItemType(ItemType.PANTRY_CONTENT);
+        pantry.getListItems().add(listItem);
+
         pantryRepository.save(pantry);
     }
 
     public void moveItemsBetweenGroceryAndPantry(Long id, Set<ListItem> changedItems, boolean fromGroceryToPantry) {
-        if (getPantryById(id).isEmpty()) {
-            return;
-        }
-        Pantry pantry = getPantryById(id).get();
 
-        Set<GroceryItem> groceryList = pantry.getGroceryList();
-        Set<ListItem> pantryList = pantry.getPantryList();
-
-        if (fromGroceryToPantry) {
-            pantryList.addAll(changedItems);
-            groceryList.removeAll(changedItems);
-        } else {
-//            groceryList.addAll(changedItems);
-            pantryList.removeAll(changedItems);
-        }
-
-        pantry.setPantryList(pantryList);
-        pantry.setGroceryList(groceryList);
-        pantryRepository.save(pantry);
     }
 
     public void addPantryAppUser(Long id, AppUser appUser) {
@@ -114,6 +84,30 @@ public class PantryService {
         Pantry pantry = getPantryById(id).get();
         Set<MealPlan> mealPlans = pantry.getMealPlans();
         mealPlans.remove(mealPlans);
+        pantryRepository.save(pantry);
+    }
+
+    public void removePantryItems(Pantry pantry) {
+        Set<ListItem> selectedItems = new HashSet<>();
+        for (ListItem listItem: pantry.getListItems()) {
+            if (listItem.getItemType().equals(ItemType.PANTRY_CONTENT)
+                    && listItem.isChecked()) selectedItems.add(listItem);
+        }
+
+        pantry.getListItems().removeAll(selectedItems);
+
+        pantryRepository.save(pantry);
+    }
+
+    public void changeSelectedToGroceryList(Pantry pantry) {
+        for (ListItem listItem: pantry.getListItems()) {
+            if (listItem.getItemType().equals(ItemType.PANTRY_CONTENT)
+                    && listItem.isChecked()) {
+                listItem.setItemType(ItemType.GROCERY_LIST);
+                listItem.setChecked(false);
+            }
+        }
+
         pantryRepository.save(pantry);
     }
 }

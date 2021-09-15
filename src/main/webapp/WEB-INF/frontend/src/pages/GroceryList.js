@@ -1,8 +1,5 @@
-
 import {useEffect, useState} from 'react';
-
-import {hostName} from '../util/constants';
-import {fetchNoResponse, getFetchWithAuth} from '../util/fetchData'
+import {deleteFetch, fetchNoResponse, getFetchWithAuth, putFetch} from '../util/fetchData'
 import {Spinner} from 'react-bootstrap';
 import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
@@ -10,7 +7,8 @@ import KitchenIcon from '@material-ui/icons/Kitchen';
 import {
     Checkbox,
     Fab,
-    IconButton, List,
+    IconButton,
+    List,
     ListItem,
     ListItemIcon,
     ListItemSecondaryAction,
@@ -18,6 +16,7 @@ import {
 } from "@material-ui/core";
 import Typeahead from 'react-bootstrap-typeahead/lib/components/AsyncTypeahead';
 import HighlightOffSharpIcon from '@material-ui/icons/HighlightOffSharp';
+import AuthenticationService from "../util/AuthenticationService";
 
 export const GroceryList = () => {
 
@@ -30,7 +29,7 @@ export const GroceryList = () => {
 
     const getGroceries = async () => {
 
-        const groceryLink = `${hostName}/api/v1/grocery-list/1`
+        const groceryLink = `/api/v1/pantry/grocery-list/${AuthenticationService.getLoggedInUserName()}`
         getFetchWithAuth(groceryLink,(data) => {setItems(data)},(error) => {
             console.log(error)})
 
@@ -59,7 +58,7 @@ export const GroceryList = () => {
         if (inputValue === "") {
             return;
         }
-        let groceryLink = `${hostName}/api/v1/grocery-list/add/1/${inputValue}` // pantry ID should be dynamic
+        let groceryLink = `/api/v1/pantry/grocery-list/add/${AuthenticationService.getLoggedInUserName()}/${inputValue}` // pantry ID should be dynamic
         fetchNoResponse(groceryLink, "POST")
         setInputValue("");
         setItemAdded(!itemAdded)
@@ -68,7 +67,7 @@ export const GroceryList = () => {
     const removeItem = (id) => {
         let newList = items.filter(item => item.id !== id)
         setItems(newList)
-        fetchNoResponse(`http://localhost:8081/api/v1/list-item/delete/${id}`,"GET")
+        deleteFetch(`/api/v1/pantry/list-item/delete/${id}`,(err) => {console.error(err)})
 
     }
 
@@ -83,7 +82,7 @@ export const GroceryList = () => {
         const newItems = [...items];
         newItems.forEach(item => {
             if (item.id === id) {
-                fetchNoResponse(`http://localhost:8081/api/v1/item-status/${item.id}`,"GET")
+                putFetch(`/api/v1/pantry/toggle-item-status/${item.id}`,(err) =>console.error(err));
                 item.checked = !item.checked;
             }
         })

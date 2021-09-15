@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import PantryUsers from "../components/pantry/PantryUsers";
-import {Col, Row, Container} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import PantryContent from "../components/pantry/PantryContent";
 import {getFetch, putFetch} from "../util/fetchData";
 import AuthenticationService from "../util/AuthenticationService";
@@ -9,9 +9,6 @@ import AuthenticationService from "../util/AuthenticationService";
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import {Grow} from "@material-ui/core";
-import {LargeHeader} from "../components/Common";
-
-import PantryLogo from "../components/logo.svg";
 
 
 function Pantry() {
@@ -26,12 +23,12 @@ function Pantry() {
     }, [isInvited])
 
     function acceptInvitation() {
-        putFetch(`api/v1/acceptPantryInvite/${AuthenticationService.getLoggedInUserName()}`, (err) => console.error(err))
+        putFetch(`api/v1/pantry/acceptPantryInvite/${AuthenticationService.getLoggedInUserName()}`, (err) => console.error(err))
         setIsInvited(false);
     }
 
     function refuseInvitation() {
-        putFetch(`api/v1/refusePantryInvite/${AuthenticationService.getLoggedInUserName()}`, (err) => console.error(err))
+        putFetch(`api/v1/pantry/refusePantryInvite/${AuthenticationService.getLoggedInUserName()}`, (err) => console.error(err))
         setIsInvited(false);
     }
 

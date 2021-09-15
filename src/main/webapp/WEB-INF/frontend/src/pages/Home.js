@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './Home.css';
 import logo from '../components/pantry_art.png';
 import axios from 'axios';
-import {useEffect} from 'react';
 
 function Home() {
 

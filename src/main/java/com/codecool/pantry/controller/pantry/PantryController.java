@@ -2,7 +2,7 @@ package com.codecool.pantry.controller.pantry;
 
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.appuser.AppUserDto;
-import com.codecool.pantry.entity.listitem.GroceryItem;
+import com.codecool.pantry.entity.listitem.ItemType;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
@@ -14,14 +14,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-@CrossOrigin
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000"})
+@RequestMapping(path = "api/v1/pantry")
 public class PantryController {
 
     private final PantryService pantryService;
@@ -29,43 +30,60 @@ public class PantryController {
     private final AppUserService appUserService;
     private final MealPlanService mealPlanService;
 
+    @GetMapping("/grocery-list/{userEmail}")
+    public Set<ListItem> getGroceryList(@PathVariable String userEmail) {
+        Set<ListItem> listItems = getListItems(userEmail);
 
-    @CrossOrigin
-    @GetMapping("api/v1/grocery-list/{id}")
-    public Set<GroceryItem> getGroceryList(@PathVariable(value = "id") Long id, HttpServletResponse response) {
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.setStatus(200);
-        var pantry = pantryService.getPantryById(id);
-        return pantry.map(Pantry::getGroceryList).orElse(null);
+        return listItems
+                .stream()
+                .filter(listItem -> listItem.getItemType().equals(ItemType.GROCERY_LIST))
+                .collect(Collectors.toSet());
     }
 
-    @GetMapping("api/v1/pantry-content/{email}")
-    public Set<ListItem> getPantryContent(@PathVariable(value = "email") String email, HttpServletResponse response) {
-        Long id = getPantryIdByUsername(email);
-        var pantry = pantryService.getPantryById(id);
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.setStatus(200);
-        return pantry.map(Pantry::getPantryList).orElse(null); // TODO: handle no pantry case
+    @GetMapping("/pantry-content/{userEmail}")
+    public Set<ListItem> getPantryContent(@PathVariable String userEmail) {
+        Set<ListItem> listItems = getListItems(userEmail);
+        Set<ListItem> items = listItems
+                .stream()
+                .filter(listItem -> listItem.getItemType().equals(ItemType.PANTRY_CONTENT))
+                .collect(Collectors.toSet());
+        return items;
     }
 
-    @GetMapping("api/v1/list-item/delete/{id}")
-    public void deleteListItem(@PathVariable(value = "id") Long id, HttpServletResponse response) {
+    @DeleteMapping("/pantry-item/delete-selected/{userEmail}")
+    public void deletePantryItems(@PathVariable String userEmail) {
+        Pantry pantry = getPantryByEmail(userEmail);
 
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.setStatus(200);
-        itemService.removeItem(id);
+        pantryService.removePantryItems(pantry);
     }
 
-    @PostMapping("api/v1/grocery-list/add/{id}/{itemName}")
-    public void addItemToGroceryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName, HttpServletResponse response) {
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.setStatus(200);
-        pantryService.addGroceryItemToList(id, itemName);
+    @PutMapping("list-item/add-to-grocery-item/{id}/{userEmail}")
+    public void addPantryItemToGroceryItem(@PathVariable Long id, @PathVariable String userEmail) {
+        ListItem item = itemService.getItemById(id);
+        Pantry pantry = getPantryByEmail(userEmail);
+        pantryService.addGroceryItemToList(pantry, item.getIngredientName());
     }
 
-    @PostMapping("api/v1/pantry-list/add/{id}/{itemName}")
-    public void addItemToPantryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName) {
-        pantryService.addPantryItemToList(id, itemName);
+    @PutMapping("list-item/change-selected-to-grocery-item/{userEmail}")
+    public void changeSelectedListItemToGrocery(@PathVariable String userEmail) {
+        Pantry pantry = getPantryByEmail(userEmail);
+        pantryService.changeSelectedToGroceryList(pantry);
+    }
+
+    @PutMapping("/grocery-list/add/{userEmail}/{itemName}")
+    public ListItem addItemToGroceryList(@PathVariable String userEmail, @PathVariable String itemName) {
+        Pantry pantry = getPantryByEmail(userEmail);
+
+        return pantryService.addGroceryItemToList(pantry, itemName);
+    }
+
+    @PutMapping("/pantry-list/add/{userEmail}/{itemName}")
+    public Set<ListItem> addItemToPantryList(@PathVariable String userEmail, @PathVariable String itemName) {
+        Pantry pantry = getPantryByEmail(userEmail);
+        pantryService.addPantryItemToList(pantry, itemName);
+        return pantry.getListItems().stream()
+                .filter(listItem -> listItem.getItemType().equals(ItemType.PANTRY_CONTENT))
+                .collect(Collectors.toSet());
     }
 
     @PostMapping("api/v1/meal-plan/add/{id}/{mealPlanId}")
@@ -80,31 +98,19 @@ public class PantryController {
         pantryService.removeMealPlan(id, mealPlan);
     }
 
-    @GetMapping("api/v1/item-status/{id}")
+    @PutMapping("/toggle-item-status/{id}")
     public void changeItemCheckedStatus(@PathVariable(value = "id") Long id) {
         ListItem updatedItem = itemService.toggleItemStatus(itemService.getItemById(id));
         itemService.updateListItem(updatedItem);
     }
 
-    @GetMapping(path = "api/v1/pantry/{userEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Pantry getPantryByEmail(@PathVariable(value = "userEmail") String userEmail) {
-        AppUser user = appUserService.getUserByEmail(userEmail);
-        return user.getPantry();
-    }
-
-    @GetMapping(path = "api/v1/pantry/invitation/{userEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/invitation/{userEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Long getPantryInvitationByEmail(@PathVariable(value = "userEmail") String userEmail) {
         AppUser user = appUserService.getUserByEmail(userEmail);
         return user.getInvitedPantryId();
     }
 
-    private Long getPantryIdByUsername(String username) {
-        AppUser user = appUserService.getUserByEmail(username);
-
-        return user.getPantry().getId();
-    }
-
-    @PutMapping(path = "api/v1/acceptPantryInvite/{userEmail}")
+    @PutMapping(path = "acceptPantryInvite/{userEmail}")
     public void acceptInvitation(@PathVariable String userEmail) {
         AppUser user = appUserService.getUserByEmail(userEmail);
 
@@ -119,7 +125,7 @@ public class PantryController {
         appUserService.save(user);
     }
 
-    @PutMapping(path = "api/v1/refusePantryInvite/{userEmail}")
+    @PutMapping(path = "/refusePantryInvite/{userEmail}")
     public void refuseInvitation(@PathVariable String userEmail) {
         AppUser user = appUserService.getUserByEmail(userEmail);
         user.setInvitedPantryId(null);
@@ -127,7 +133,7 @@ public class PantryController {
         appUserService.save(user);
     }
 
-    @PutMapping(path = "api/v1/{fromEmail}/invite-to-pantry/{toEmail}")
+    @PutMapping(path = "/{fromEmail}/invite-to-pantry/{toEmail}")
     public void inviteToPantry(@PathVariable String fromEmail, @PathVariable String toEmail) {
         AppUser toUser = appUserService.getUserByEmail(toEmail);
         AppUser fromUser = appUserService.getUserByEmail(fromEmail);
@@ -140,7 +146,7 @@ public class PantryController {
         appUserService.save(toUser);
     }
 
-    @GetMapping(path = "api/v1/pantry/users/{userEmail}")
+    @GetMapping(path = "/users/{userEmail}")
     public Set<AppUserDto> getPantryUsers(@PathVariable String userEmail) {
         Pantry pantry = getPantryByEmail(userEmail);
 
@@ -157,5 +163,15 @@ public class PantryController {
         }
 
         return pantryUsers;
+    }
+
+    private Set<ListItem> getListItems(String userEmail) {
+        Pantry pantry = getPantryByEmail(userEmail);
+        return pantry.getListItems();
+    }
+
+    public Pantry getPantryByEmail(String userEmail) {
+        AppUser user = appUserService.getUserByEmail(userEmail);
+        return user.getPantry();
     }
 }

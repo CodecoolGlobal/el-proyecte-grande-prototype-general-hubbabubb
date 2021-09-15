@@ -1,8 +1,6 @@
-import {hostName} from "../util/constants";
 import MealPlanList from "../components/mealplan/MealPlanList";
 import {LargeHeader} from "../components/Common";
-import {useEffect, useState} from "react";
-import {getFetchWithAuth} from "../util/fetchData";
+import {useState} from "react";
 
 
 function MealPlan() {

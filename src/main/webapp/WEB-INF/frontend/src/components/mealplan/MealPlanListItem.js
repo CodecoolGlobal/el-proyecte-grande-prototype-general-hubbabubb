@@ -4,14 +4,12 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import React, {useEffect, useState} from "react";
-import {Avatar, Checkbox, FormControlLabel, Grid} from "@material-ui/core";
+import React from "react";
+import {Avatar, Checkbox, FormControlLabel} from "@material-ui/core";
 import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import CardHeader from "react-bootstrap/CardHeader";
 import {red} from "@material-ui/core/colors";
-import {hostName} from "../../util/constants";
-import {getFetchWithAuth} from "../../util/fetchData";
 import AuthenticationService from "../../util/AuthenticationService";
 
 const useStyles = makeStyles({

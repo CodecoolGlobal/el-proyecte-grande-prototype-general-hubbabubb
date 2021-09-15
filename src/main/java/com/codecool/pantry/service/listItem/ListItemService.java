@@ -1,5 +1,6 @@
 package com.codecool.pantry.service.listItem;
 
+import com.codecool.pantry.entity.listitem.ItemType;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.repository.listItem.ListItemRepository;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ListItemService {
 
-    private ListItemRepository listItemRepository;
+    private final ListItemRepository listItemRepository;
 
     public void removeItem(Long id) {
         listItemRepository.deleteById(id);
@@ -30,4 +31,15 @@ public class ListItemService {
         listItemRepository.save(listItem);
     }
 
+    public void addToGrocery(Long id) {
+        ListItem item = getItemById(id);
+
+        ListItem newGroceryItem = new ListItem();
+
+        newGroceryItem.setItemType(ItemType.GROCERY_LIST);
+        newGroceryItem.setIngredientName(item.getIngredientName());
+
+
+        listItemRepository.save(item);
+    }
 }

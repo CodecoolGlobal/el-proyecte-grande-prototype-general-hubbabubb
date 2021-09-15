@@ -2,7 +2,9 @@ package com.codecool.pantry.controller.ingredient;
 
 import com.codecool.pantry.service.ingredient.IngredientService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Map;
 
 @RestController

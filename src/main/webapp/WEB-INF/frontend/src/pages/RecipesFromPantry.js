@@ -30,7 +30,7 @@ export const RecipesFromPantry = () => {
         }, (error) => {
             console.log(error)
         })
-    }, [content, setContent])
+    }, [])
 
     if (loading) { return <LinearProgress variant={"query"} color={"primary"} />}
 

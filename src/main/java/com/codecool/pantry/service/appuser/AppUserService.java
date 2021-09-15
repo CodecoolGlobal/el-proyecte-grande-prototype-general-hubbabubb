@@ -1,8 +1,8 @@
 package com.codecool.pantry.service.appuser;
 
 import com.codecool.pantry.entity.appuser.AppUser;
-import com.codecool.pantry.repository.appuser.AppUserRepository;
 import com.codecool.pantry.entity.token.ConfirmationToken;
+import com.codecool.pantry.repository.appuser.AppUserRepository;
 import com.codecool.pantry.service.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
