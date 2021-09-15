@@ -21,7 +21,7 @@ import KitchenSharpIcon from '@material-ui/icons/KitchenSharp';
 import './PantryContent.css'
 import IngredientSelector from "../recipe/IngredientSelector";
 import AddShoppingCartSharpIcon from "@material-ui/icons/AddShoppingCartSharp";
-import {deleteFetch, fetchNoResponse, getFetchWithAuth, putFetch, putFetchWithCallback} from '../../util/fetchData';
+import {deleteFetch, getFetchWithAuth, putFetch, putFetchWithCallback} from '../../util/fetchData';
 import AuthenticationService from "../../util/AuthenticationService";
 import {ErrorText} from "../Common";
 

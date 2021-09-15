@@ -2,8 +2,6 @@ package com.codecool.pantry.entity.mealplan;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @AllArgsConstructor
