@@ -2,17 +2,22 @@ package com.codecool.pantry.controller.mealplan;
 
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.mealplan.MealPlan;
+import com.codecool.pantry.entity.mealplan.MealPlanDto;
 import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.mealplan.MealPlanService;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins={ "http://localhost:3000"})
 @RequestMapping(path = "api/v1/meal-plan")
 public class MealPlanController {
 
@@ -24,9 +29,12 @@ public class MealPlanController {
         return mealPlanService.getAll();
     }
 
-    @PostMapping(path = "/save/{recipeId}/{date}")
-    public void saveMealPlan(@PathVariable("recipeId") Long recipeId, @PathVariable("date") LocalDateTime date) {
-        mealPlanService.saveMealPlan(recipeId, date);
+    @PostMapping(path = "/save")
+    public String saveMealPlan(@RequestBody MealPlanDto mealPlanDto) {
+        System.out.println("MEALPLAN CONTROLLER");
+        System.out.println(mealPlanDto.getDate());
+        mealPlanService.saveMealPlan(mealPlanDto);
+        return "Meal Plan saved!";
     }
 
     @GetMapping(path = "/like/{mealPlanId}/{userName}")
@@ -63,4 +71,15 @@ public class MealPlanController {
         AppUser appUser = appUserService.getUserByEmail(userName);
         return mealPlan.getDislikedUsers().contains(appUser);
     }
+
+    @GetMapping(path="/like-count/{mealPlanId}")
+    public int likeCount(@PathVariable("mealPlanId") Long mealPlanId) {
+        return mealPlanService.getMealPlan(mealPlanId).getLikedUsers().size();
+    }
+
+    @GetMapping(path="/dislike-count/{mealPlanId}")
+    public int dislikeCount(@PathVariable("mealPlanId") Long mealPlanId) {
+        return mealPlanService.getMealPlan(mealPlanId).getDislikedUsers().size();
+    }
+
 }

@@ -52,8 +52,10 @@ export function postFetchWithAuth(url, data, callback, errorHandling) {
 
     fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        headers: { authorization: 'Basic ' + window.btoa("code@cooler.com" + ":" + "testuser") },
-        body: data // body data type must match "Content-Type" header
+        headers: {
+            authorization: 'Basic ' + window.btoa("test@user.com" + ":" + "testuser"),
+            'Content-Type': 'application/json'},
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
     })
         .then(data => data.json())
         .then(jsonData => {

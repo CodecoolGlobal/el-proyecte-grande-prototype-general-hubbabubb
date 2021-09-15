@@ -2,6 +2,7 @@ package com.codecool.pantry.service.mealplan;
 
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.mealplan.MealPlan;
+import com.codecool.pantry.entity.mealplan.MealPlanDto;
 import com.codecool.pantry.entity.recipe.Recipe;
 import com.codecool.pantry.repository.appuser.AppUserRepository;
 import com.codecool.pantry.repository.mealplan.MealPlanRepository;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,12 +29,19 @@ public class MealPlanService {
         return mealPlanRepository.findAll();
     }
 
-    public void saveMealPlan(Long recipeId, LocalDateTime date) {
-        Optional<Recipe> recipe = recipeRepository.findById(recipeId);
+    public void saveMealPlan(MealPlanDto mealPlanDto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(mealPlanDto.getDate(), formatter);
+
+        Optional<Recipe> recipe = recipeRepository.findById(mealPlanDto.getRecipeId());
         if (recipe.isEmpty()) {
             throw new IllegalStateException("Recipe_old not found");
         }
-        mealPlanRepository.save(new MealPlan(recipe.get(), date));
+        Optional<AppUser> user = appUserRepository.findByUsername(mealPlanDto.getUserName());
+        if (user.isEmpty()) {
+            throw new IllegalStateException("User not found");
+        }
+        mealPlanRepository.save(new MealPlan(recipe.get(), dateTime, user.get()));
     }
 
     public MealPlan getMealPlan(Long id) {
