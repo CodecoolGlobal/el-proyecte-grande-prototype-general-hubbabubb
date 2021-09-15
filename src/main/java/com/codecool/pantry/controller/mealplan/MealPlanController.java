@@ -2,6 +2,7 @@ package com.codecool.pantry.controller.mealplan;
 
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.mealplan.MealPlan;
+import com.codecool.pantry.entity.mealplan.MealPlanDto;
 import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.mealplan.MealPlanService;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins={ "http://localhost:3000"})
 @RequestMapping(path = "api/v1/meal-plan")
 public class MealPlanController {
 
@@ -27,13 +29,11 @@ public class MealPlanController {
         return mealPlanService.getAll();
     }
 
-    @PostMapping(value = "/save")
-    public String saveMealPlan(@RequestParam(name = "recipeId") Long recipeId,
-                               @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
-                               @RequestParam(name = "userName") String userName) {
+    @PostMapping(path = "/save")
+    public String saveMealPlan(@RequestBody MealPlanDto mealPlanDto) {
         System.out.println("MEALPLAN CONTROLLER");
-        System.out.println(date);
-//        mealPlanService.saveMealPlan(recipeId, date, userName);
+        System.out.println(mealPlanDto.getDate());
+        mealPlanService.saveMealPlan(mealPlanDto);
         return "Meal Plan saved!";
     }
 

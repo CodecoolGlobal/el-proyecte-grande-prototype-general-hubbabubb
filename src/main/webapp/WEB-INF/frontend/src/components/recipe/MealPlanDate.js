@@ -1,21 +1,30 @@
-import {MuiPickersUtilsProvider, DatePicker} from "@material-ui/pickers";
+import {MuiPickersUtilsProvider, DateTimePicker} from "@material-ui/pickers";
 import {useState} from "react";
-import {postFetch, postFetchWithAuth} from "../../util/fetchData";
+import {postFetchWithAuth} from "../../util/fetchData";
 import AuthenticationService from "../../util/AuthenticationService";
 import DateFnsUtils from "@date-io/date-fns";
 import {hostName} from "../../util/constants";
 
 function MealPlanDate(props) {
-
+    const WEEK_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const [pickedDate, setPickedDate] = useState(new Date());
     const [saved, setSaved] = useState(false);
-    let dateFormat;
+    const [dateFormat, setDateFormat] = useState(null);
+
+    function timeFormat(time) {
+        return time < 10 ? "0"+time : time;
+    }
 
     const saveMealPlan = () => {
-        dateFormat = "" + pickedDate.getFullYear() +"-"+ (pickedDate.getMonth()+1) +"-"+ pickedDate.getDate();
+        let minute = timeFormat(pickedDate.getMinutes());
+        let hour = timeFormat(pickedDate.getHours());
+        let day = timeFormat(pickedDate.getDate());
+        let month = timeFormat(pickedDate.getMonth()+1);
+        let date = "" + pickedDate.getFullYear() +"-"+ month +"-"+ day + " " + hour + ":" + minute;
+        setDateFormat(date);
         const body = {
             "recipeId": props.recipeId,
-            "date": dateFormat,
+            "date": date,
             "userName": AuthenticationService.getLoggedInUserName()
         }
         console.log(body);
@@ -29,10 +38,10 @@ function MealPlanDate(props) {
 
     return (
             <div>
-                { saved ? dateFormat :
+                { saved ? <p>Saved for {dateFormat} - {WEEK_DAYS[pickedDate.getDay()]}</p> :
                 <div>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <DatePicker value={pickedDate} onChange={(date) => setPickedDate(date)} />
+                        <DateTimePicker value={pickedDate} onChange={(date) => setPickedDate(date)} />
                     </MuiPickersUtilsProvider>
                     <button onClick={saveMealPlan}>Add to Meal Plan</button>
                 </div>}
