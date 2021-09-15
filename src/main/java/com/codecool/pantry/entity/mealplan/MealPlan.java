@@ -37,6 +37,9 @@ public class MealPlan {
     private LocalDateTime date;
 
     @ManyToOne
+    private AppUser sharedBy;
+
+    @ManyToOne
     private Pantry pantry;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -45,9 +48,10 @@ public class MealPlan {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<AppUser> dislikedUsers;
 
-    public MealPlan(Recipe recipe, LocalDateTime date) {
+    public MealPlan(Recipe recipe, LocalDateTime date, AppUser sharedBy) {
         this.recipe = recipe;
         this.date = date;
+        this.sharedBy = sharedBy;
     }
 
     public void likesHandler(AppUser appUser) {

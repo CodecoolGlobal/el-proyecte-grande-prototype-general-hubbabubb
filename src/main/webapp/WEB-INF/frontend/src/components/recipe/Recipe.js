@@ -12,9 +12,13 @@ import {makeStyles} from "@material-ui/core/styles";
 import {cyan, green, lightBlue, red, teal, yellow} from "@material-ui/core/colors";
 
 import parse from 'html-react-parser';
+
 import AuthenticationService from "../../util/AuthenticationService";
 import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
+
+import MealPlanDate from "./MealPlanDate";
+
 
 const useTransitions = makeStyles((theme) => ({
     root: {
@@ -83,6 +87,7 @@ export default function Recipe(props) {
     const [favorite, setFavorite] = useState(false);
     const transitionClasses = useTransitions();
     const [expanded, setExpanded] = React.useState(false);
+    const [showDatePicker, setShowDatePicker] = React.useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -106,6 +111,10 @@ export default function Recipe(props) {
         }
         setFavorite(!favorite);
     }
+
+    const handleShowDatePicker = () => {
+        setShowDatePicker(!showDatePicker)
+    };
 
     console.log(props.recipe);
 
@@ -144,6 +153,9 @@ export default function Recipe(props) {
                     {parse(props.recipe.summary)}
                 </Typography>
             </CardContent>
+            <div>
+                { showDatePicker ? <MealPlanDate recipeId={props.recipe.id}/> : null }
+            </div>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                     <FormControlLabel
@@ -156,7 +168,7 @@ export default function Recipe(props) {
                         label=""
                     />
                 </IconButton>
-                <IconButton aria-label="share">
+                <IconButton aria-label="share" onClick={handleShowDatePicker}>
                     <ShareIcon />
                 </IconButton>
                 <IconButton

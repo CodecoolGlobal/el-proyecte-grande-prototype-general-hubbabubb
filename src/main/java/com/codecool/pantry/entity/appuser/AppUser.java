@@ -1,5 +1,6 @@
 package com.codecool.pantry.entity.appuser;
 
+import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.recipe.Recipe;
 import lombok.EqualsAndHashCode;
@@ -49,6 +50,9 @@ public class AppUser implements UserDetails {
             nullable = false
     )
     private String password;
+
+    @OneToMany
+    private Set<MealPlan> sharedMealPlans;
 
     @Enumerated(EnumType.STRING)
     private AppUserRole role = AppUserRole.FREE;
