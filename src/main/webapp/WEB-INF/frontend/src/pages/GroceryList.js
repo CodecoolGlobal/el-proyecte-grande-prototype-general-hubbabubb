@@ -37,7 +37,7 @@ export const GroceryList = () => {
     }
 
     useEffect(() => {
-        fetch('/api/v1/ingredient')
+        fetch('/api/v1/extended-ingredient')
             .then(response => response.json())
             .then(data => {
                 let result = [];
@@ -123,6 +123,8 @@ export const GroceryList = () => {
             <div className={"grocery-list"}>
             <List >
                 {items && items.map((value) => {
+                    let bigStartingLetter = value.ingredientName.charAt(0).toUpperCase() + value.ingredientName.slice(1)
+
                     const labelId = `checkbox-list-label-${value.id}`;
                     return (
                         <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button onClick={() => toggleComplete(value.id)}>
@@ -137,8 +139,8 @@ export const GroceryList = () => {
                                 />
 
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={!value.checked ? value.ingredientName :
-                                <strike>{value.ingredientName}</strike>}/>
+                            <ListItemText id={labelId} primary={!value.checked ? bigStartingLetter :
+                                <strike>{bigStartingLetter}</strike>}/>
                             <ListItemSecondaryAction>
                                 <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">
                                     <KitchenIcon color={"default"}/>

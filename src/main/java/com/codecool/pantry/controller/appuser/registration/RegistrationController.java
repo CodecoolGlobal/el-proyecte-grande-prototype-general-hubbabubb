@@ -4,6 +4,7 @@ import com.codecool.pantry.service.appuser.registration.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -15,7 +16,7 @@ public class RegistrationController {
     private final RegistrationService service;
 
     @PostMapping
-    public String register(@RequestBody RegistrationRequest request) {
+    public String register(@RequestBody RegistrationRequest request) throws MessagingException, IOException {
 
         return service.register(request);
     }

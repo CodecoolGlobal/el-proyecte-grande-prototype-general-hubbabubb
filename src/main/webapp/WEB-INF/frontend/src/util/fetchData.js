@@ -1,6 +1,6 @@
 export function getFetch(url, callback, errorHandling) {
     fetch(url, {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        method: 'GET',
     })
         .then((data) => data.json())
         .then((jsonData) => {
@@ -24,9 +24,16 @@ export function postFetch(url, data, callback, errorHandling) {
         .catch(error => errorHandling(error))
 }
 
+export function putFetch(url, errorHandling) {
+    fetch(url, {
+        method: 'PUT'
+    })
+        .catch(error => errorHandling(error))
+}
+
 export function postFetchWithAuth(url, data, callback, errorHandling) {
     const authHeader = new Headers();
-    authHeader.append('Authorization', 'Basic test@user.com : testuser');
+    authHeader.append('Authorization', 'Basic code@cooler.com : testuser');
 
     fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.

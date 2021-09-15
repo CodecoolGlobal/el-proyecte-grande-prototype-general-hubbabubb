@@ -1,6 +1,8 @@
 package com.codecool.pantry.controller.pantry;
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.appuser.AppUserDto;
+import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
@@ -13,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @CrossOrigin
@@ -28,16 +32,16 @@ public class PantryController {
 
     @CrossOrigin
     @GetMapping("api/v1/grocery-list/{id}")
-    public Set<ListItem> getGroceryList(@PathVariable(value = "id") Long id, HttpServletResponse response) {
+    public Set<GroceryItem> getGroceryList(@PathVariable(value = "id") Long id, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
         var pantry = pantryService.getPantryById(id);
         return pantry.map(Pantry::getGroceryList).orElse(null);
-
     }
 
-    @GetMapping("api/v1/pantry-content/{id}")
-    public Set<ListItem> getPantryContent(@PathVariable(value = "id") Long id, HttpServletResponse response) {
+    @GetMapping("api/v1/pantry-content/{email}")
+    public Set<ListItem> getPantryContent(@PathVariable(value = "email") String email, HttpServletResponse response) {
+        Long id = getPantryIdByUsername(email);
         var pantry = pantryService.getPantryById(id);
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
@@ -45,7 +49,7 @@ public class PantryController {
     }
 
     @GetMapping("api/v1/list-item/delete/{id}")
-    public void deleteListItem(@PathVariable(value = "id") Long id,HttpServletResponse response) {
+    public void deleteListItem(@PathVariable(value = "id") Long id, HttpServletResponse response) {
 
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
@@ -53,7 +57,7 @@ public class PantryController {
     }
 
     @PostMapping("api/v1/grocery-list/add/{id}/{itemName}")
-    public void addItemToGroceryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName,HttpServletResponse response) {
+    public void addItemToGroceryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
         pantryService.addGroceryItemToList(id, itemName);
@@ -62,18 +66,6 @@ public class PantryController {
     @PostMapping("api/v1/pantry-list/add/{id}/{itemName}")
     public void addItemToPantryList(@PathVariable(value = "id") Long id, @PathVariable(value = "itemName") String itemName) {
         pantryService.addPantryItemToList(id, itemName);
-    }
-
-    @PostMapping("api/v1/pantry-app-user/add/{id}/{userId}")
-    public void addPantryAppuser(@PathVariable(value = "id") Long id, @PathVariable(value = "userId") Long userId) {
-        AppUser appUser = appUserService.getUserById(userId);
-        pantryService.addPantryAppUser(id, appUser);
-    }
-
-    @PostMapping("api/v1/pantry-app-user/remove/{id}/{userId}")
-    public void removePantryAppuser(@PathVariable(value = "id") Long id, @PathVariable(value = "userId") Long userId) {
-        AppUser appUser = appUserService.getUserById(userId);
-        pantryService.removePantryAppUser(id, appUser);
     }
 
     @PostMapping("api/v1/meal-plan/add/{id}/{mealPlanId}")
@@ -94,10 +86,76 @@ public class PantryController {
         itemService.updateListItem(updatedItem);
     }
 
-    @GetMapping(path = "api/v1/pantry/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Pantry getPantryById(@PathVariable(value = "id") Long id) {
-        Pantry pantry = pantryService.getPantryById(id).orElseThrow(() -> new IllegalStateException("Can not find pantry !"));
-        System.out.println("---PANTRY: " + pantry.getName());
-        return pantry;
+    @GetMapping(path = "api/v1/pantry/{userEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Pantry getPantryByEmail(@PathVariable(value = "userEmail") String userEmail) {
+        AppUser user = appUserService.getUserByEmail(userEmail);
+        return user.getPantry();
+    }
+
+    @GetMapping(path = "api/v1/pantry/invitation/{userEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Long getPantryInvitationByEmail(@PathVariable(value = "userEmail") String userEmail) {
+        AppUser user = appUserService.getUserByEmail(userEmail);
+        return user.getInvitedPantryId();
+    }
+
+    private Long getPantryIdByUsername(String username) {
+        AppUser user = appUserService.getUserByEmail(username);
+
+        return user.getPantry().getId();
+    }
+
+    @PutMapping(path = "api/v1/acceptPantryInvite/{userEmail}")
+    public void acceptInvitation(@PathVariable String userEmail) {
+        AppUser user = appUserService.getUserByEmail(userEmail);
+
+        Optional<Pantry> pantry = pantryService.getPantryById(user.getInvitedPantryId());
+
+        if (pantry.isEmpty()) {
+            throw new IllegalStateException("no pantry found with this ID");
+        }
+
+        user.setPantry(pantry.get());
+        user.setInvitedPantryId(null);
+        appUserService.save(user);
+    }
+
+    @PutMapping(path = "api/v1/refusePantryInvite/{userEmail}")
+    public void refuseInvitation(@PathVariable String userEmail) {
+        AppUser user = appUserService.getUserByEmail(userEmail);
+        user.setInvitedPantryId(null);
+
+        appUserService.save(user);
+    }
+
+    @PutMapping(path = "api/v1/{fromEmail}/invite-to-pantry/{toEmail}")
+    public void inviteToPantry(@PathVariable String fromEmail, @PathVariable String toEmail) {
+        AppUser toUser = appUserService.getUserByEmail(toEmail);
+        AppUser fromUser = appUserService.getUserByEmail(fromEmail);
+        if (toUser == null) {
+            throw new IllegalStateException("No user found with this email!");
+        }
+
+        toUser.setInvitedPantryId(fromUser.getPantry().getId());
+
+        appUserService.save(toUser);
+    }
+
+    @GetMapping(path = "api/v1/pantry/users/{userEmail}")
+    public Set<AppUserDto> getPantryUsers(@PathVariable String userEmail) {
+        Pantry pantry = getPantryByEmail(userEmail);
+
+        Set<AppUserDto> pantryUsers = new HashSet<>();
+
+        for (AppUser user : pantry.getPantryAppUsers()) {
+            if (!user.getUsername().equals(userEmail)) {
+                AppUserDto userDto = new AppUserDto();
+                userDto.setFirstName(user.getFirstName());
+                userDto.setLastName(user.getLastName());
+                userDto.setUserName(user.getUsername());
+                pantryUsers.add(userDto);
+            }
+        }
+
+        return pantryUsers;
     }
 }

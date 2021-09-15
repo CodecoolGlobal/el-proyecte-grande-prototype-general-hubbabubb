@@ -21,11 +21,11 @@ export const RecipesContainer = styled.div`
 
 export default function RecipesByName() {
     const {searchField} = useContext(SearchInput);
-    const [recipes, setRecipes] = useState("")
-    const searchURL = `${hostName}/api/v1/recipe/search/${searchField}`;
     const [loading, setLoading] = useState(true)
+    const [recipes, setRecipes] = useState("")
 
     useEffect(() => {
+        const searchURL = `${hostName}/api/v1/recipe/search/${searchField}`;
         getFetchWithAuth(searchURL, (jsonData) => {
             setRecipes(jsonData);setLoading(false)
         }, (error) => {

@@ -1,7 +1,5 @@
-import {
-     LinearProgress
-} from '@material-ui/core';
-import React, {useContext, useEffect, useState} from 'react';
+import {LinearProgress} from '@material-ui/core';
+import React, {useEffect, useState} from 'react';
 import {hostName} from "../util/constants";
 import {getFetchWithAuth} from "../util/fetchData";
 import {LargeHeader} from "../components/Common";
@@ -10,39 +8,31 @@ import {faSadCry} from "@fortawesome/free-regular-svg-icons";
 import {faCookie} from "@fortawesome/free-solid-svg-icons";
 import RecipeList from "../components/recipe/RecipeList";
 import {RecipesContainer} from "./RecipesByName";
+import ContentSelector from "../components/pantry/ContentSelector";
+import AuthenticationService from "../util/AuthenticationService";
 
 export const RecipesFromPantry = () => {
 
     const sampleData =
-        [{itemName: 'apple', id: 1, checked: false}, {itemName: "potatoes", id: 2, checked: false}, {
-            itemName: "bread",
-            id: 3,
-            checked: false
-        }, {
-            itemName: "beef",
-            id: 4,
-            checked: false
-        }]
+        [{ingredientName: 'apple'}, {ingredientName: "potatoes"}, {ingredientName: "bread"}, {ingredientName: "beef"}]
 
     const [recipes, setRecipes] = useState([])
     const [loading, setLoading] = useState(true);
+    const [content, setContent] = useState(sampleData)
 
     useEffect(() => {
-        let pantryContent = sampleData.map((item) => {
-            return item.itemName;
-        }).join("+");
-
-
-        const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${pantryContent}`;
+        const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${AuthenticationService.getLoggedInUserName()}`;
         getFetchWithAuth(searchURL, (jsonData) => {
-            setRecipes(jsonData);setLoading(false)
+            setRecipes(jsonData.recipes);
+            console.log(jsonData)
+            setContent(jsonData.content);
+            setLoading(false);
         }, (error) => {
             console.log(error)
         })
-    }, [])
+    }, [content, setContent])
 
-    if (loading) { return <LinearProgress variant={"query"} color={"primary"} />
-    }
+    if (loading) { return <LinearProgress variant={"query"} color={"primary"} />}
 
     if (recipes.length === 0) {
         return <RecipesContainer>
@@ -50,8 +40,13 @@ export const RecipesFromPantry = () => {
         </RecipesContainer>
     }
 
+
+    const methods = {setContent, content};
+
     return <RecipesContainer>
         <LargeHeader><FontAwesomeIcon icon={faCookie}/> Recipes from your pantry content:</LargeHeader>
-        <RecipeList recipes={recipes}/>
+        <ContentSelector methods={methods} />
+        { content.length !== 0 &&
+        <RecipeList recipes={recipes} /> }
     </RecipesContainer>
 }

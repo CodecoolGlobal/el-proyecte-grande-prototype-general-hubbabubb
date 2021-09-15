@@ -11,11 +11,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@NoArgsConstructor
-public class ListItem {
+public class GroceryItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -23,16 +23,16 @@ public class ListItem {
 
     @Column(nullable = false)
     private String ingredientName;
-    private boolean important = false;
-    private boolean checked = false;
+    private boolean important;
+    private boolean checked;
     private LocalDateTime expirationDate; //How important is it? Maybe in the future?
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "pantry_id")
     private Pantry pantry;
 
-    public ListItem(String ingredientName) {
+    public GroceryItem(String ingredientName) {
         this.ingredientName = ingredientName;
         this.important = false;
         this.checked = false;

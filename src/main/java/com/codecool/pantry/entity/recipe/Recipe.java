@@ -1,16 +1,23 @@
 package com.codecool.pantry.entity.recipe;
 
 
+import com.codecool.pantry.entity.appuser.AppUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Recipe {
 
@@ -32,19 +39,15 @@ public class Recipe {
     @Column(length = 2000)
     private String summary;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
-    private Set<Ingredient> extendedIngredients;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "extended_ingredients",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "extended_Ingredient_id")
+    )
+    private List<ExtendedIngredient> extendedIngredients = new ArrayList<>();
 
-    public Recipe(Long id, String title, String image, boolean vegetarian, boolean vegan, boolean glutenFree, boolean cheap, boolean dairyFree, int healthScore, String instructions) {
-        this.id = id;
-        this.title = title;
-        this.image = image;
-        this.vegetarian = vegetarian;
-        this.vegan = vegan;
-        this.glutenFree = glutenFree;
-        this.cheap = cheap;
-        this.dairyFree = dairyFree;
-        this.healthScore = healthScore;
-        this.instructions = instructions;
-    }
+    @JsonIgnore
+    @ManyToMany(mappedBy = "favorites")
+    private Set<AppUser> appUsers = new HashSet<>();
 }

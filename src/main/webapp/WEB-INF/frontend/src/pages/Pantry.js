@@ -1,29 +1,44 @@
+import React, {useEffect, useState} from "react";
+
 import PantryUsers from "../components/pantry/PantryUsers";
 import {Col, Row, Container} from "react-bootstrap";
-import React from "react";
 import PantryContent from "../components/pantry/PantryContent";
+import {getFetch, putFetch} from "../util/fetchData";
+import AuthenticationService from "../util/AuthenticationService";
+
+import Alert from '@material-ui/lab/Alert';
+import Button from '@material-ui/core/Button';
+import {Grow} from "@material-ui/core";
+import {LargeHeader} from "../components/Common";
+
+import PantryLogo from "../components/logo.svg";
 
 
 function Pantry() {
-    const users = [{
-        firstName: 'József',
-        lastName: 'Kiss',
-        username: 'kissjozsi@gmail.com'
-    }, {
-        firstName: 'Balázs',
-        lastName: 'Horváth',
-        username: 'bazsika@gmail.com'
-    }, {
-        firstName: 'Soufiane',
-        lastName: 'Nagy',
-        username: 'soufika@gmail.com'
-    }]
+    const [isInvited, setIsInvited] = useState(false);
 
+    useEffect(() => {
+        getFetch(`api/v1/pantry/invitation/${AuthenticationService.getLoggedInUserName()}`, (json) => {
+            setIsInvited(true);
+        }, (err) => {
+            console.error(err);
+        })
+    }, [isInvited])
+
+    function acceptInvitation() {
+        putFetch(`api/v1/acceptPantryInvite/${AuthenticationService.getLoggedInUserName()}`, (err) => console.error(err))
+        setIsInvited(false);
+    }
+
+    function refuseInvitation() {
+        putFetch(`api/v1/refusePantryInvite/${AuthenticationService.getLoggedInUserName()}`, (err) => console.error(err))
+        setIsInvited(false);
+    }
 
     return <Container>
         <Row>
             <Col sm="12" md={{size: 6, offset: 3}}>
-                <PantryUsers users={users}/>
+                <PantryUsers/>
             </Col>
         </Row>
         <Row>
@@ -31,6 +46,22 @@ function Pantry() {
                 <PantryContent/>
             </Col>
         </Row>
+
+        <Grow in={isInvited} timeout="auto" unmountOnExit>
+            <Alert
+            severity="warning"
+            action={<div>
+                <Button color="primary" size="small" onClick={acceptInvitation}>
+                    ACCEPT INVITATION
+                </Button>
+                <Button color="inherit" size="small" onClick={refuseInvitation}>
+                    REFUSE INVITATION
+                </Button></div>
+            }
+        >
+            You have an invitation to a Pantry!
+        </Alert>
+        </Grow>
     </Container>
 }
 
