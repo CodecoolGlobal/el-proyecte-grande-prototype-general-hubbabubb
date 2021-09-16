@@ -82,6 +82,7 @@ const PlusUser = styled.div`
 `;
 
 export const Text = styled.p`
+    padding: 5px;
     color: black;
     text-align:left;
     font-size: 14px;

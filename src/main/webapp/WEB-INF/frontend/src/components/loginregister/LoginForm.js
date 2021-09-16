@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useState} from "react";
 import {BoxContainer, FormContainer, HighlightedText, Input, MutedLink, SubmitButton} from "../Common";
 import {validateEmail} from "./RegisterForm";
 import {AccountContext} from "./accountContext";

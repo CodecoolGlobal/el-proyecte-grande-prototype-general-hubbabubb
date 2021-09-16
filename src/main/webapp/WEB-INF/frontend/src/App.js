@@ -1,5 +1,4 @@
-import {Route, Switch} from 'react-router-dom';
-import {withRouter} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 
 import Layout from "./layout/Layout";
 import {GroceryList} from './pages/GroceryList';

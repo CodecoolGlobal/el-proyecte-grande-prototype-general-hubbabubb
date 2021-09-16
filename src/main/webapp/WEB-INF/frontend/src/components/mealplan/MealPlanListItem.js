@@ -10,7 +10,6 @@ import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import CardHeader from "react-bootstrap/CardHeader";
 import {red} from "@material-ui/core/colors";
-import AuthenticationService from "../../util/AuthenticationService";
 
 const useStyles = makeStyles({
     root: {

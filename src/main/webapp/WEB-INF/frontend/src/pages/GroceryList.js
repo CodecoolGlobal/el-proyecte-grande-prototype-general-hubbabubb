@@ -3,17 +3,7 @@ import {deleteFetch, fetchNoResponse, getFetchWithAuth, putFetch} from '../util/
 import {Spinner} from 'react-bootstrap';
 import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
-import KitchenIcon from '@material-ui/icons/Kitchen';
-import {
-    Checkbox,
-    Fab,
-    IconButton,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemSecondaryAction,
-    ListItemText
-} from "@material-ui/core";
+import {Fab, List, ListItem, ListItemText} from "@material-ui/core";
 import Typeahead from 'react-bootstrap-typeahead/lib/components/AsyncTypeahead';
 import HighlightOffSharpIcon from '@material-ui/icons/HighlightOffSharp';
 import AuthenticationService from "../util/AuthenticationService";

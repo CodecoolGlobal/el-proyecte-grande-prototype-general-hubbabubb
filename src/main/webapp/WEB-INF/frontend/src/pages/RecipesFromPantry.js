@@ -36,7 +36,6 @@ export const RecipesFromPantry = () => {
         </RecipesContainer>
     }
 
-
     const methods = {setContent, content};
 
     return <RecipesContainer>

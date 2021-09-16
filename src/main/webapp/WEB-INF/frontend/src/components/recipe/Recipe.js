@@ -88,24 +88,25 @@ const useTransitions = makeStyles((theme) => ({
 export default function Recipe(props) {
     const {userData, setUserData} = useContext(UserContext);
 
-    const [favorite, setFavorite] = useState(false);
     const transitionClasses = useTransitions();
     const [expanded, setExpanded] = React.useState(false);
     const [showDatePicker, setShowDatePicker] = React.useState(false);
 
+    const [isFavorite, setIsFavorite] = useState(false);
+
     useEffect(() => {
         getFetch(`api/v1/appuser/is-favorite/${props.recipe.id}/${AuthenticationService.getLoggedInUserName()}`,
             (jsonData) => {
-            setFavorite(jsonData);
+            setIsFavorite(jsonData);
             }, (err) => console.error(err))
-    }, [props.recipe.id])
+    }, [isFavorite])
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     function toggleFavorite() {
-        if (!favorite) {
+        if (!isFavorite) {
             putFetchWithCallback(`/api/v1/recipe/${props.recipe.id}/add-to-favorite/${AuthenticationService.getLoggedInUserName()}`,
             (jsonData) => {
                 setUserData({
@@ -124,7 +125,7 @@ export default function Recipe(props) {
                     })
                 }, (err) => console.error(err))
         }
-        setFavorite(!favorite);
+        setIsFavorite(!isFavorite);
     }
 
     const handleShowDatePicker = () => {
@@ -175,8 +176,8 @@ export default function Recipe(props) {
                 <IconButton aria-label="add to favorites">
                     <FormControlLabel
                         control={<Checkbox
-                            checked={favorite}
-                            icon={!favorite ? <FavoriteBorder/>:<ThumbDownIcon/>}
+                            checked={isFavorite}
+                            icon={!isFavorite ? <FavoriteBorder/>:<ThumbDownIcon/>}
                             checkedIcon={<Favorite/>}
                             onClick={toggleFavorite}
                             name="checkedLike"/>}

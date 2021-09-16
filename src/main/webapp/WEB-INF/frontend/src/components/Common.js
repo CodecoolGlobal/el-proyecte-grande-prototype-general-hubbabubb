@@ -90,6 +90,12 @@ export const ErrorText = styled.p`
     font-weight: 50;
 `;
 
+export const ModalText = styled.p`
+    color: black;
+    font-size: 24px;
+    font-weight: 50;
+`;
+
 export const LargeHeader = styled.h1`
     font-size: 56px;
     font-weight: bold;

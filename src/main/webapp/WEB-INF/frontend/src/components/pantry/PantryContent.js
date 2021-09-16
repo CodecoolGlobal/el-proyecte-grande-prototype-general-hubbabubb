@@ -23,7 +23,7 @@ import IngredientSelector from "../recipe/IngredientSelector";
 import AddShoppingCartSharpIcon from "@material-ui/icons/AddShoppingCartSharp";
 import {deleteFetch, getFetchWithAuth, putFetch, putFetchWithCallback} from '../../util/fetchData';
 import AuthenticationService from "../../util/AuthenticationService";
-import {ErrorText} from "../Common";
+import {ModalText} from "../Common";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -179,7 +179,7 @@ export default function PantryContent() {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
-                        <ErrorText>Do you want to move items to grocery list?</ErrorText>
+                        <ModalText>Do you want to move items to grocery list?</ModalText>
                         <Button variant="outlined" color="secondary" onClick={changeAllToGroceryList}>
                             Yes
                         </Button>

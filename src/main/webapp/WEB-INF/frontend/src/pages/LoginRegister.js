@@ -5,7 +5,6 @@ import styled from "styled-components";
 import {withRouter} from 'react-router-dom';
 import AuthenticationService from "../util/AuthenticationService";
 import {useState} from "react";
-import {Grow} from "@material-ui/core";
 import ColoredLogo from "../components/ColoredLogo";
 
 

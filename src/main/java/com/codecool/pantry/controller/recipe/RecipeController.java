@@ -2,6 +2,7 @@ package com.codecool.pantry.controller.recipe;
 
 
 import com.codecool.pantry.entity.appuser.AppUser;
+import com.codecool.pantry.entity.listitem.ItemType;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.pantry.PantryRecipesDto;
@@ -81,17 +82,20 @@ public class RecipeController {
         Pantry pantry = user.getPantry();
 
         PantryRecipesDto dto = new PantryRecipesDto();
-        dto.setContent(pantry.getListItems());
+        dto.setContent(pantry.getListItems()
+                .stream()
+                .filter(item -> item.getItemType().equals(ItemType.PANTRY_CONTENT))
+                .collect(Collectors.toSet()));
         dto.setRecipes(getRecipeListByIngredientList(dto.getContent()));
-
-        System.out.println("content: " + dto.getContent());
-        System.out.println("recipes: " + dto.getRecipes());
 
         return dto;
     }
 
     private RecipeListElemDto[] getRecipeListByIngredientList(Set<ListItem> ingredientSet) {
-        String ingredients = ingredientSet.stream().map(ListItem::getIngredientName).collect(Collectors.joining("+"));
+        String ingredients = ingredientSet
+                .stream()
+                .map(ListItem::getIngredientName)
+                .collect(Collectors.joining("+"));
         final String uri = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&number=20&sort=max-used-ingredients&apiKey=%s",
                 ingredients, API_KEY);
         RestTemplate restTemplate = new RestTemplate();
