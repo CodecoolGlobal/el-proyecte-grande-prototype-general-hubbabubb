@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {deleteFetch, fetchNoResponse, getFetchWithAuth, putFetch} from '../util/fetchData'
 import {Spinner} from 'react-bootstrap';
 import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
@@ -17,23 +17,31 @@ import {
 import Typeahead from 'react-bootstrap-typeahead/lib/components/AsyncTypeahead';
 import HighlightOffSharpIcon from '@material-ui/icons/HighlightOffSharp';
 import AuthenticationService from "../util/AuthenticationService";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faClipboardList} from "@fortawesome/free-solid-svg-icons";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    listItemText: {
+        width: '100%',
+        fontFamily: 'Amatic SC',
+        fontWeight: "bold",
+        fontSize: 42,
+    },
+    header: {
+        textAlign: 'center',
+        width: '100%',
+        borderBottomStyle: 'double',
+        borderBottomWidth: 5
+    }
+});
 
 export const GroceryList = () => {
-
-
+    const classes = useStyles();
     const [loadedIngredients, setLoadedIngredients] = useState([]); // USE CONTEXT FOR THIS FETCHING every time is not good for obvious reasons, that list is never change
     const [items, setItems] = useState()
     const [itemAdded, setItemAdded] = useState(false)
     const [inputValue, setInputValue] = useState('');
-
-
-    const getGroceries = async () => {
-
-        const groceryLink = `/api/v1/pantry/grocery-list/${AuthenticationService.getLoggedInUserName()}`
-        getFetchWithAuth(groceryLink,(data) => {setItems(data)},(error) => {
-            console.log(error)})
-
-    }
 
     useEffect(() => {
         fetch('/api/v1/extended-ingredient')
@@ -48,11 +56,13 @@ export const GroceryList = () => {
     }, [])
 
     useEffect(() => {
-        getGroceries().catch(e => console.log(e))
-
-    },[itemAdded])
-
-
+        const groceryLink = `/api/v1/pantry/grocery-list/${AuthenticationService.getLoggedInUserName()}`
+        getFetchWithAuth(groceryLink, (data) => {
+            setItems(data)
+        }, (error) => {
+            console.log(error)
+        })
+    }, [itemAdded])
 
     const handleAddButtonClick = async () => {
         if (inputValue === "") {
@@ -67,12 +77,10 @@ export const GroceryList = () => {
     const removeItem = (id) => {
         let newList = items.filter(item => item.id !== id)
         setItems(newList)
-        deleteFetch(`/api/v1/pantry/list-item/delete/${id}`,(err) => {console.error(err)})
-
+        deleteFetch(`/api/v1/pantry/list-item/delete/${id}`, (err) => {
+            console.error(err)
+        })
     }
-
-
-
 
     function handleChange(selectedOptions) {
         setInputValue(selectedOptions);
@@ -82,13 +90,12 @@ export const GroceryList = () => {
         const newItems = [...items];
         newItems.forEach(item => {
             if (item.id === id) {
-                putFetch(`/api/v1/pantry/toggle-item-status/${item.id}`,(err) =>console.error(err));
+                putFetch(`/api/v1/pantry/toggle-item-status/${item.id}`, (err) => console.error(err));
                 item.checked = !item.checked;
             }
         })
         setItems(newItems);
     };
-
 
     function removeAllChecked() {
         let newList = items.filter(item => item.checked === true)
@@ -96,68 +103,45 @@ export const GroceryList = () => {
     }
 
     return (
-
         <div className="grocery-list-container">
 
-            <h1>Grocery List</h1>
-                 <Typeahead
-                     className="cart"
-                     onChange={handleChange}
+            <div className={"grocery-list"}>
+                <h1 className={classes.header}><FontAwesomeIcon icon={faClipboardList}/> Grocery list:</h1>
+                <List>
+                    {items && items.map((value, index) => {
+                        let bigStartingLetter = value.ingredientName.charAt(0).toUpperCase() + value.ingredientName.slice(1)
+
+                        const labelId = `checkbox-list-label-${value.id}`;
+                        return (
+                            <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button
+                                      onClick={() => toggleComplete(value.id)}>
+                                <ListItemText className={classes.listItemText} id={labelId} primary={!value.checked ? <div className={classes.listItemText}>{index + 1 + ". " + bigStartingLetter}</div>  :
+                                    <strike className={classes.listItemText}>{index+1 + ". " + bigStartingLetter}</strike>}/>
+                            </ListItem>
+                        );
+                    })}
+                </List>
+                <Typeahead
+                    className="cart"
+                    onChange={handleChange}
                     id="ingredients"
                     options={loadedIngredients}
                     placeholder="Choose an ingredient...">
 
-                    {({ onClear, selected }) => (
+                    {({onClear, selected}) => (
                         <div className="rbt-aux">
-                            {!!selected.length && <HighlightOffSharpIcon  onClick={onClear} />}
-                            {!selected.length && <Spinner animation="fade" size="sm" />}
+                            {!!selected.length && <HighlightOffSharpIcon onClick={onClear}/>}
+                            {!selected.length && <Spinner animation="fade" size="sm"/>}
                         </div>
                     )}
                 </Typeahead>
                 <Fab color="default" aria-label="add" onClick={() => handleAddButtonClick()}>
-                    <AddShoppingCartSharpIcon />
+                    <AddShoppingCartSharpIcon/>
                 </Fab>
-
-
-            <div className={"grocery-list"}>
-            <List >
-                {items && items.map((value) => {
-                    let bigStartingLetter = value.ingredientName.charAt(0).toUpperCase() + value.ingredientName.slice(1)
-
-                    const labelId = `checkbox-list-label-${value.id}`;
-                    return (
-                        <ListItem className={"grocery-item"} key={value.id} role={undefined} dense button onClick={() => toggleComplete(value.id)}>
-                            <ListItemIcon>
-                                <Checkbox
-                                    edge="start"
-                                    checked={value.checked}
-                                    color={"default"}
-                                    tabIndex={-1}
-                                    disableRipple
-                                    inputProps={{'aria-labelledby': labelId}}
-                                />
-
-                            </ListItemIcon>
-                            <ListItemText id={labelId} primary={!value.checked ? bigStartingLetter :
-                                <strike>{bigStartingLetter}</strike>}/>
-                            <ListItemSecondaryAction>
-                                <IconButton edge="end" onClick={() => removeItem(value.id)} aria-label="delete">
-                                    <KitchenIcon color={"default"}/>
-                                    {/*<RemoveShoppingCartIcon color={"default"}/>*/}
-                                </IconButton>
-                            </ListItemSecondaryAction>
-
-                        </ListItem>
-                    );
-                })}
-            </List>
             </div>
             <h3>Remove checked items</h3>
-            {/*<IconButton edge="end" aria-label="delete">*/}
-                <Fab variant="extended">Clear list<RemoveShoppingCartIcon color={"default"} onClick={removeAllChecked}/>
-
-                </Fab>
-            {/*</IconButton>*/}
+            <Fab variant="extended">Clear list<RemoveShoppingCartIcon color={"default"} onClick={removeAllChecked}/>
+            </Fab>
         </div>
 
     )

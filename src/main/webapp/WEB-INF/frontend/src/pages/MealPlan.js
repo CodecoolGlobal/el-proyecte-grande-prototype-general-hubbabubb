@@ -1,6 +1,9 @@
 import MealPlanList from "../components/mealplan/MealPlanList";
 import {LargeHeader} from "../components/Common";
-import {useState} from "react";
+import React, {useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCalendar} from "@fortawesome/free-regular-svg-icons/faCalendar";
+import {RecipesContainer} from "./RecipesByName";
 
 
 function MealPlan() {
@@ -134,11 +137,10 @@ function MealPlan() {
     // },[mealPlans])
 
     return (
-        <div>
-            <LargeHeader>
+        <RecipesContainer>
+            <LargeHeader><FontAwesomeIcon icon={faCalendar}/> Meal plans:</LargeHeader>
                 <MealPlanList plans={data} />
-            </LargeHeader>
-        </div>
+        </RecipesContainer>
     );
 
 }

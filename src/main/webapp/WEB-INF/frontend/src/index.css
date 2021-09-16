@@ -57,22 +57,26 @@ p, li, ul {
     align-items: center;
     justify-content: center;
     padding: 20px 0 20px 0;
-    border-bottom: 1px #fbc1bb solid;
+    border-bottom: 2px #fbc1bb solid;
     font-family: "Oswald", serif;
     font-size: 16px;
     color: #171616;
 }
 
 .grocery-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 80%;
     max-width: 450px;
     margin: 2%;
     height: min-content;
     align-items: center;
-    border-radius: 5px;
     padding: 20px 20px 30px;
     /*box-shadow: 10px 10px 26px 0 rgba(0, 0, 0, 0.35);*/
-    border: 2px solid #131313;
+    border: 3px solid #131313;
+    border-radius: 20px;
+    background-color: #F4D03F;
 }
 
 .grocery-list-container {
@@ -87,5 +91,17 @@ p, li, ul {
 }
 
 .cart {
-    margin: 30px;
+    background-color: #F4D03F;
+    font-family: "Oswald", sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+    height: 50px;
+    width: 100%;
+    margin: 10px;
+}
+
+.grocery_item {
+    font-family: 'Amatic SC', sans-serif;
+    font-weight: bold;
+    font-size: 56px;
 }

@@ -5,11 +5,13 @@ import './Header.css';
 import {NavLink, withRouter} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
+import {faClipboardList, faEllipsisV} from '@fortawesome/free-solid-svg-icons'
 import {SearchInput} from "../context/recipe-search-input";
 import {Badge, Divider, Grow} from "@material-ui/core";
 import AuthenticationService from "../util/AuthenticationService";
 import {UserContext} from "../context/user-context";
+import {faCalendar} from "@fortawesome/free-regular-svg-icons/faCalendar";
+import KitchenSharpIcon from "@material-ui/icons/KitchenSharp";
 
 function Header(props) {
     const {userData, setUserData} = useContext(UserContext);
@@ -46,9 +48,9 @@ function Header(props) {
                 <div className="header-dropdown">
                     <button className="header-button">Pantry</button>
                     <div className="dropdown-content">
-                        <NavLink className='navLink' to="/pantry">My Pantry</NavLink>
-                        <NavLink className='navLink' to="/grocery-list">Grocery List</NavLink>
-                        <NavLink className='navLink' to="/meal-plan">Meal Plan</NavLink>
+                        <NavLink className='navLink' to="/pantry"><KitchenSharpIcon/> My Pantry</NavLink>
+                        <NavLink className='navLink' to="/grocery-list"><FontAwesomeIcon icon={faClipboardList}/> Grocery List</NavLink>
+                        <NavLink className='navLink' to="/meal-plan"><FontAwesomeIcon icon={faCalendar}/> Meal Plan</NavLink>
                     </div>
                 </div>
             </Col>

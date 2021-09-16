@@ -10,7 +10,6 @@ import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import {Grow} from "@material-ui/core";
 
-
 function Pantry() {
     const [isInvited, setIsInvited] = useState(false);
 
