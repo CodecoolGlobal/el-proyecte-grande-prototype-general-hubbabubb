@@ -1,22 +1,36 @@
-import {useContext} from "react";
-import FavoritesContext from "../store/favorites-context";
-import RecipeList from '../components/recipe/RecipeList'
+import React, {useContext, useEffect, useState} from "react";
+import {UserContext} from "../context/user-context";
+import {LinearProgress} from "@material-ui/core";
+import {RecipesContainer} from "./RecipesByName";
+import {LargeHeader} from "../components/Common";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSadCry} from "@fortawesome/free-regular-svg-icons";
+import {faCookie} from "@fortawesome/free-solid-svg-icons";
+import RecipeList from "../components/recipe/RecipeList";
 
-// TODO: This stores favorites ONLY in memory!
 function Favorites() {
-    let favoritesContext = useContext(FavoritesContext);
+    const {userData, setUserData} = useContext(UserContext);
+    const [recipes, setRecipes] = useState([])
+    const [loading, setLoading] = useState(true);
 
-    let content;
-    if (favoritesContext.totalFavorites === 0) {
-        content = <p>No favorites yet! Let's start to add some ;)</p>
-    } else {
-        content = <RecipeList recipes={favoritesContext.favorites}/>;
+    useEffect(() => {
+        console.log(userData)
+        setRecipes(userData.favorites);
+        setLoading(false);
+    }, [])
+
+    if (loading) { return <LinearProgress variant={"query"} color={"primary"} />}
+
+    if (recipes === undefined || recipes.length === 0) {
+        return <RecipesContainer>
+            <LargeHeader><FontAwesomeIcon icon={faSadCry}/> No recipes found! Start collect recipes.</LargeHeader>
+        </RecipesContainer>
     }
 
-    return <section>
-        <h1>My Favorites</h1>
-        {content}
-    </section>
+    return <RecipesContainer>
+        <LargeHeader><FontAwesomeIcon icon={faCookie}/> Favorite recipes:</LargeHeader>
+        <RecipeList recipes={recipes} /> }
+    </RecipesContainer>
 }
 
 export default Favorites;

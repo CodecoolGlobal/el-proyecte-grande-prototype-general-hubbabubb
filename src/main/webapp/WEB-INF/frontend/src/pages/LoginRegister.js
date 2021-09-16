@@ -4,6 +4,9 @@ import LogoAnimation from "../components/LogoAnimation";
 import styled from "styled-components";
 import {withRouter} from 'react-router-dom';
 import AuthenticationService from "../util/AuthenticationService";
+import {useState} from "react";
+import {Grow} from "@material-ui/core";
+import ColoredLogo from "../components/ColoredLogo";
 
 
 const RegisterLoginContainer = styled.div`
@@ -16,6 +19,7 @@ const RegisterLoginContainer = styled.div`
 `;
 
 function LoginRegister(props) {
+    const [inProgress, setInProgress] = useState(true);
     if (AuthenticationService.isUserLoggedIn()) {
         props.history.push("/pantry");
     }
@@ -23,11 +27,11 @@ function LoginRegister(props) {
     return <Container>
         <Row className="justify-content-md-center">
             <Col >
-                <LogoAnimation />
+                {inProgress ? <LogoAnimation /> : <ColoredLogo />}
             </Col>
             <Col>
                 <RegisterLoginContainer>
-                    <LoginRegisterForm active={props.active}/>
+                    <LoginRegisterForm active={props.active} setProgress={{setInProgress}}/>
                 </RegisterLoginContainer>
             </Col>
         </Row>

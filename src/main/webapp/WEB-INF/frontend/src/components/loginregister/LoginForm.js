@@ -1,16 +1,20 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {BoxContainer, FormContainer, HighlightedText, Input, MutedLink, SubmitButton} from "../Common";
 import {validateEmail} from "./RegisterForm";
 import {AccountContext} from "./accountContext";
 import {withRouter} from 'react-router-dom';
-import AuthenticationService, {USER_NAME_SESSION_ATTRIBUTE_NAME} from "../../util/AuthenticationService";
+import AuthenticationService from "../../util/AuthenticationService";
+import {UserContext} from "../../context/user-context";
+import {getFetch} from "../../util/fetchData";
 
 function LoginForm(props) {
+    const {userData, setUserData} = useContext(UserContext);
     const {switchToRegister} = useContext(AccountContext)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function validateForm(props) {
+
+    function validateForm() {
         return email.length > 0 && password.length > 0 && validateEmail(email);
     }
 
@@ -19,10 +23,18 @@ function LoginForm(props) {
             .executeBasicAuthenticationService(email, password)
             .then(() => {
                 AuthenticationService.registerSuccessfulLogin(email, password)
-                console.log(sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME))
-                props.history.push(`/pantry`);
+                getFetch(`/api/v1/appuser/favorites/${AuthenticationService.getLoggedInUserName()}`, (favorites) => {
+                    setUserData({
+                        isLoggedIn: true,
+                        favorites: favorites,
+                        totalFavorites: favorites.length
+                    })
+                    console.log(favorites)
+                    props.history.push(`/pantry`);
+                }, (err) => console.error(err))
+
             }).catch((err) => {
-                console.log(err);
+            console.log(err);
         })
     }
 

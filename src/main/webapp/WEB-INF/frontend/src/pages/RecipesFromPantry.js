@@ -12,13 +12,9 @@ import ContentSelector from "../components/pantry/ContentSelector";
 import AuthenticationService from "../util/AuthenticationService";
 
 export const RecipesFromPantry = () => {
-
-    const sampleData =
-        [{ingredientName: 'apple'}, {ingredientName: "potatoes"}, {ingredientName: "bread"}, {ingredientName: "beef"}]
-
     const [recipes, setRecipes] = useState([])
     const [loading, setLoading] = useState(true);
-    const [content, setContent] = useState(sampleData)
+    const [content, setContent] = useState();
 
     useEffect(() => {
         const searchURL = `${hostName}/api/v1/recipe/by-ingredients/${AuthenticationService.getLoggedInUserName()}`;

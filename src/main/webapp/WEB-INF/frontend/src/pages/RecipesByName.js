@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {SearchInput} from "../store/recipe-search-input";
+import {SearchInput} from "../context/recipe-search-input";
 import RecipeList from "../components/recipe/RecipeList";
 import {hostName} from "../util/constants";
 import {getFetchWithAuth} from "../util/fetchData";

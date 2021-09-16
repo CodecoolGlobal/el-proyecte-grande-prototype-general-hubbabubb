@@ -6,6 +6,7 @@ import {postFetch} from "../../util/fetchData";
 export default function RegisterForm(props) {
     const {switchToLogin} = useContext(AccountContext)
     const {extendAndStop} = useContext(AccountContext)
+    const {setInProgress} = useContext(AccountContext)
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
     const [email, setEmail] = useState();
@@ -52,7 +53,9 @@ export default function RegisterForm(props) {
                 "email": email,
                 "password": password
             }
+            setInProgress(false);
             postFetch(`/api/v1/registration`, data, extendAndStop, (err) => { console.log(err) })
+
         }
     }
     return <BoxContainer>

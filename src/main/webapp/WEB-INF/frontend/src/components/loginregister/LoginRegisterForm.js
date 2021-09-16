@@ -96,6 +96,8 @@ export default function LoginRegisterForm(props) {
     const [active, setActive] = useState(props.active)
     const [isSuccessful, setIsSuccessful] = useState(null)
 
+    const {setInProgress} = props.setProgress;
+
     const playExpandedAnimation = () => {
         setExpanded(true);
         setTimeout(() => {
@@ -105,6 +107,11 @@ export default function LoginRegisterForm(props) {
     const extendAndStop = () => {
         setExpanded(true);
         setIsSuccessful(true);
+        setTimeout(() => {
+            setExpanded(false)
+            setIsSuccessful(null)
+            setActive("login")
+        }, 10000)
     }
 
     const switchToRegister = () => {
@@ -120,7 +127,7 @@ export default function LoginRegisterForm(props) {
         }, 400);
     };
 
-    const contextValue = { switchToRegister, switchToLogin, extendAndStop };
+    const contextValue = { switchToRegister, switchToLogin, extendAndStop, setInProgress };
 
     return (
         <AccountContext.Provider value={contextValue}>

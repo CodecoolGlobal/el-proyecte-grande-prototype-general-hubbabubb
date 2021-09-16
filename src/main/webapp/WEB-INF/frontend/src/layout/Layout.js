@@ -1,7 +1,12 @@
 import Header from "./Header";
 import styled from 'styled-components';
+import {useContext} from "react";
+import {UserContext} from "../context/user-context";
+
 
 function Layout(props) {
+    const {userData, setUserData} = useContext(UserContext);
+
     const MainContainer = styled.main`
         padding-top: 200px;
         background: rgb(228,241,235);
@@ -15,7 +20,7 @@ function Layout(props) {
     `;
 
     return <MainContainer>
-        <Header />
+        { userData.isLoggedIn && <Header />}
         <main>
             {props.children}
         </main>

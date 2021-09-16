@@ -7,7 +7,7 @@ import {CardActions, Checkbox, Chip, Collapse, FormControlLabel, IconButton} fro
 import ShareIcon from "@material-ui/icons/Share";
 import clsx from "clsx";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {cyan, green, lightBlue, red, teal, yellow} from "@material-ui/core/colors";
 
@@ -18,6 +18,8 @@ import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 
 import MealPlanDate from "./MealPlanDate";
+import {getFetch, putFetchWithCallback} from "../../util/fetchData";
+import {UserContext} from "../../context/user-context";
 
 
 const useTransitions = makeStyles((theme) => ({
@@ -84,10 +86,19 @@ const useTransitions = makeStyles((theme) => ({
 }));
 
 export default function Recipe(props) {
+    const {userData, setUserData} = useContext(UserContext);
+
     const [favorite, setFavorite] = useState(false);
     const transitionClasses = useTransitions();
     const [expanded, setExpanded] = React.useState(false);
     const [showDatePicker, setShowDatePicker] = React.useState(false);
+
+    useEffect(() => {
+        getFetch(`api/v1/appuser/is-favorite/${props.recipe.id}/${AuthenticationService.getLoggedInUserName()}`,
+            (jsonData) => {
+            setFavorite(jsonData);
+            }, (err) => console.error(err))
+    }, [props.recipe.id])
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -95,19 +106,23 @@ export default function Recipe(props) {
 
     function toggleFavorite() {
         if (!favorite) {
-            fetch(`/api/v1/recipe/${props.recipe.id}/add-to-favorite/${AuthenticationService.getLoggedInUserName()}`, {
-                method: 'PUT'
-            })
-                .catch(error => {
-                    console.error(error);
-                });
+            putFetchWithCallback(`/api/v1/recipe/${props.recipe.id}/add-to-favorite/${AuthenticationService.getLoggedInUserName()}`,
+            (jsonData) => {
+                setUserData({
+                    isLoggedIn: AuthenticationService.isUserLoggedIn(),
+                    favorites: jsonData,
+                    totalFavorites: jsonData.length
+                })
+            }, (err) => console.error(err))
         } else {
-            fetch(`/api/v1/recipe/${props.recipe.id}/remove-from-favorite/${AuthenticationService.getLoggedInUserName()}`, {
-                method: 'PUT'
-            })
-                .catch(error => {
-                    console.error(error);
-                });
+            putFetchWithCallback(`/api/v1/recipe/${props.recipe.id}/remove-from-favorite/${AuthenticationService.getLoggedInUserName()}`,
+                (jsonData) => {
+                    setUserData({
+                        isLoggedIn: AuthenticationService.isUserLoggedIn(),
+                        favorites: jsonData,
+                        totalFavorites: jsonData.length
+                    })
+                }, (err) => console.error(err))
         }
         setFavorite(!favorite);
     }
@@ -150,7 +165,7 @@ export default function Recipe(props) {
                     }
                 </div>
                 <Typography paragraph className={transitionClasses.smallTypo}>
-                    {parse(props.recipe.summary)}
+                    {props.recipe.summary != null && parse(props.recipe.summary)}
                 </Typography>
             </CardContent>
             <div>
@@ -195,7 +210,7 @@ export default function Recipe(props) {
 
                     <Typography paragraph className={transitionClasses.typography}>Preparation:</Typography>
                     <Typography paragraph className={transitionClasses.smallTypo}>
-                        {parse(props.recipe.instructions)}
+                        {props.recipe.instructions != null && parse(props.recipe.instructions)}
                     </Typography>
                 </CardContent>
             </Collapse>

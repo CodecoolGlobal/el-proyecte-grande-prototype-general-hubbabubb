@@ -7,9 +7,11 @@ import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.pantry.PantryRecipesDto;
 import com.codecool.pantry.entity.pantry.RecipeListElemDto;
 import com.codecool.pantry.entity.recipe.Recipe;
+import com.codecool.pantry.entity.recipe.RecipeDto;
 import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.recipe.RecipeService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -27,11 +29,12 @@ public class RecipeController {
 
     private final RecipeService recipeService;
     private final AppUserService appUserService;
+    private final ModelMapper modelMapper;
 
     // TODO store it in properties!!!!
-//    private final String API_KEY3 = "8dc3ef2ffcf54e6781629ee83623d725";
+    private final String API_KEY = "8dc3ef2ffcf54e6781629ee83623d725";
 //    private final String API_KEY = "a22052fbcfef4a2fac111f33a93898d8";
-    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
+//    private final String API_KEY = "2b5973da3e1542668e205f85165a8786";
 //    private final String API_KEY = "b880826d2c53495f8fb1fa608db88577";
 //    private final String API_KEY = "099bdb5cd6ad48e28faab2065fdc4467";
 
@@ -97,7 +100,7 @@ public class RecipeController {
     }
 
     @PutMapping("{recipeId}/add-to-favorite/{userEmail}")
-    public Recipe addToFavorite(@PathVariable Long recipeId, @PathVariable String userEmail) {
+    public RecipeDto[] addToFavorite(@PathVariable Long recipeId, @PathVariable String userEmail) {
         Optional<Recipe> recipe = recipeService.get(recipeId);
         AppUser appUser = appUserService.getUserByEmail(userEmail);
 
@@ -109,11 +112,11 @@ public class RecipeController {
 
         appUserService.save(appUser);
 
-        return recipe.get();
+        return getUserFavorites(appUser);
     }
 
     @PutMapping("{recipeId}/remove-from-favorite/{userEmail}")
-    public void  removeFromFavorite(@PathVariable Long recipeId, @PathVariable String userEmail) {
+    public RecipeDto[] removeFromFavorite(@PathVariable Long recipeId, @PathVariable String userEmail) {
         Optional<Recipe> recipe = recipeService.get(recipeId);
         AppUser appUser = appUserService.getUserByEmail(userEmail);
 
@@ -123,6 +126,11 @@ public class RecipeController {
 
         appUser.removeFromFavorite(recipe.get());
 
-        appUserService.save(appUser);
+        return getUserFavorites(appUser);
+    }
+
+    private RecipeDto[] getUserFavorites(AppUser user) {
+        RecipeDto[] dto = modelMapper.map(user.getFavorites(), RecipeDto[].class);
+        return dto;
     }
 }

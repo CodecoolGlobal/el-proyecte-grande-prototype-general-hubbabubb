@@ -8,8 +8,10 @@ import com.codecool.pantry.repository.mealplan.MealPlanRepository;
 import com.codecool.pantry.repository.pantry.PantryRepository;
 import com.codecool.pantry.repository.recipe.RecipeRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.PostConstruct;
@@ -29,6 +31,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         SpringApplication.run(Main.class, args);
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     @PostConstruct

@@ -31,7 +31,6 @@ const useStyles = makeStyles({
 });
 
 export default function MealPlanListItem(props) {
-    const userEmail = AuthenticationService.getLoggedInUserName();
     const classes = useStyles();
 
 
@@ -114,7 +113,7 @@ export default function MealPlanListItem(props) {
                                                    checkedIcon={<Favorite/>}
                                                    // onClick={setLikeClick(!likeClick)}
                                                    name="checkedLike"/>}
-                                label={likeCount}
+                                // label={likeCount}
                             />
                             <FormControlLabel
                                 control={<Checkbox
@@ -123,7 +122,7 @@ export default function MealPlanListItem(props) {
                                                    checkedIcon={<ThumbDownIcon/>}
                                                    // onClick={setDislikeClick(!dislikeClick)}
                                                    name="checkedDislike"/>}
-                                label={dislikeCount}
+                                // label={dislikeCount}
                             />
                         </span>
                     </div>

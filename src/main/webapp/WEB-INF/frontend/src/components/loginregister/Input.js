@@ -13,14 +13,6 @@ class Input extends Component {
 
     inputChange = (event) => {
         const value = event.target.value, name = event.target.name
-        //switch(name) {
-        //  case 'username': this.validate(name, value, /^([a-zA-Z0-9.]{4,})$/, 'invalid username')
-        //    break;
-        //  case 'password': this.validate(name, value, /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{6,}$/, 'insecure password')
-        //    break;
-        //  default:
-        //    console.warn(`unknown field ${name}`)
-        //}
         this.setState({ value: value })
     }
 

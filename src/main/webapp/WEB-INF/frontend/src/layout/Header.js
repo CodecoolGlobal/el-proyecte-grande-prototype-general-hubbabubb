@@ -6,11 +6,14 @@ import {NavLink, withRouter} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
-import {SearchInput} from "../store/recipe-search-input";
-import {Divider, Grow} from "@material-ui/core";
+import {SearchInput} from "../context/recipe-search-input";
+import {Badge, Divider, Grow} from "@material-ui/core";
 import AuthenticationService from "../util/AuthenticationService";
+import {UserContext} from "../context/user-context";
 
 function Header(props) {
+    const {userData, setUserData} = useContext(UserContext);
+
     const {setSearchField} = useContext(SearchInput);
     const navigation = useRef("navigation");
 
@@ -28,6 +31,11 @@ function Header(props) {
     }
 
     function handleLogout() {
+        setUserData({
+            isLoggedIn: false,
+            favorites: null,
+            totalFavorites: 0
+        })
         AuthenticationService.logout();
         props.history.push("/");
     }
@@ -53,7 +61,11 @@ function Header(props) {
                             onKeyPress={(e) => handleEnter(e)}
                         />
                         <NavLink className='navLink' to="/from-my-pantry">From my pantry</NavLink>
-                        <NavLink className='navLink' to="#">Favorite recipes</NavLink>
+                        <NavLink className='navLink' to="/favorites">
+                            <Badge badgeContent={userData.totalFavorites} color="primary">
+                                Favorite recipes
+                            </Badge>
+                        </NavLink>
                     </div>
                 </div>
             </Col>
@@ -79,7 +91,7 @@ function Header(props) {
                             onKeyPress={(e) => handleEnter(e)}
                         />
                         <NavLink className='navLink' to="/from-my-pantry">From my pantry</NavLink>
-                        <NavLink className='navLink' to="#">Favorite recipes</NavLink>
+                        <NavLink className='navLink' to="/favorites">Favorite recipes</NavLink>
                     </Row>
                 </div>
             </Grow>

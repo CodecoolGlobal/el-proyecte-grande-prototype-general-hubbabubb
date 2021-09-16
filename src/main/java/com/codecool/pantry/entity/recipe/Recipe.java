@@ -33,10 +33,10 @@ public class Recipe {
     private boolean dairyFree;
     private int healthScore;
 
-    @Column(length = 2000)
+    @Column(length = 5000)
     private String instructions;
 
-    @Column(length = 2000)
+    @Column(length = 5000)
     private String summary;
 
     @ManyToMany(cascade = CascadeType.MERGE)
