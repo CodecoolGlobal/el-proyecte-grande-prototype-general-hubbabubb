@@ -31,9 +31,9 @@ function MealPlanDate(props) {
         postFetchWithAuth(`${hostName}/api/v1/meal-plan/save`, body,
             (data) => {
                 console.log(data);
-                setSaved(true);
             },
             (error) => {console.log(error);})
+        setSaved(true);
     };
 
     return (

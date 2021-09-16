@@ -3,6 +3,7 @@ package com.codecool.pantry.entity.mealplan;
 import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.recipe.Recipe;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,10 +37,13 @@ public class MealPlan {
 
     private LocalDateTime date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
     private AppUser sharedBy;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pantry_id")
     private Pantry pantry;
 
     @ManyToMany(fetch = FetchType.LAZY)

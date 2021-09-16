@@ -9,7 +9,7 @@ function MealPlan() {
 
     const userId = 1;
 
-    const data = [
+    const DATA = [
         {
             id: 1,
             date: "15.09.2021",
@@ -127,18 +127,22 @@ function MealPlan() {
         }
     ];
 
-    const [mealPlans, setMealPlans] = useState(null);
-
+    // const [mealPlans, setMealPlans] = useState(null);
+    //
     // useEffect(() => {
     //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/get-all`, (data) => {
     //         setMealPlans(data)
+    //         console.log(data);
     //     }, (error) => {console.log(error)})
     // },[mealPlans])
-
+    //
+    // if (mealPlans === null) {
+    //     return <div>Loading...</div>
+    // }
     return (
         <div>
             <LargeHeader>
-                <MealPlanList plans={data} />
+                <MealPlanList plans={DATA} />
             </LargeHeader>
         </div>
     );

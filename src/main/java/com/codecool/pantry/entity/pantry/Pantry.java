@@ -54,7 +54,7 @@ public class Pantry {
     @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
     private Set<ListItem> pantryList = new HashSet<>();
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "pantry", cascade = CascadeType.MERGE)
     private Set<MealPlan> mealPlans = new HashSet<>();
 }

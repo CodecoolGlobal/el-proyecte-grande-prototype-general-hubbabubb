@@ -4,12 +4,19 @@ import com.codecool.pantry.entity.appuser.AppUser;
 import com.codecool.pantry.entity.listitem.GroceryItem;
 import com.codecool.pantry.entity.listitem.ListItem;
 import com.codecool.pantry.entity.mealplan.MealPlan;
+import com.codecool.pantry.entity.mealplan.MealPlanDto;
 import com.codecool.pantry.entity.pantry.Pantry;
+import com.codecool.pantry.entity.recipe.Recipe;
+import com.codecool.pantry.repository.appuser.AppUserRepository;
 import com.codecool.pantry.repository.pantry.PantryRepository;
+import com.codecool.pantry.repository.recipe.RecipeRepository;
+import com.codecool.pantry.service.recipe.RecipeService;
 import javassist.compiler.ast.Pair;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,6 +25,9 @@ import java.util.Set;
 public class PantryService {
 
     private PantryRepository pantryRepository;
+    private RecipeRepository recipeRepository;
+    private AppUserRepository appUserRepository;
+
 
     public Optional<Pantry> getPantryById(Long id) {
         return pantryRepository.findById(id);
@@ -114,6 +124,26 @@ public class PantryService {
         Pantry pantry = getPantryById(id).get();
         Set<MealPlan> mealPlans = pantry.getMealPlans();
         mealPlans.remove(mealPlans);
+        pantryRepository.save(pantry);
+    }
+
+    public void saveMealPlan(MealPlanDto mealPlanDto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(mealPlanDto.getDate(), formatter);
+
+        Optional<Recipe> recipe = recipeRepository.findById(mealPlanDto.getRecipeId());
+        if (recipe.isEmpty()) {
+            throw new IllegalStateException("Recipe_old not found");
+        }
+        Optional<AppUser> user = appUserRepository.findByUsername(mealPlanDto.getUserName());
+        if (user.isEmpty()) {
+            throw new IllegalStateException("User not found");
+        }
+        MealPlan mealPlan = new MealPlan(recipe.get(), dateTime, user.get());
+        Pantry pantry = user.get().getPantry();
+        Set<MealPlan> mealPlans = pantry.getMealPlans();
+        mealPlans.add(mealPlan);
+        pantry.setMealPlans(mealPlans);
         pantryRepository.save(pantry);
     }
 }

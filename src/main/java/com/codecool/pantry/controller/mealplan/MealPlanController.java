@@ -5,6 +5,7 @@ import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.mealplan.MealPlanDto;
 import com.codecool.pantry.service.appuser.AppUserService;
 import com.codecool.pantry.service.mealplan.MealPlanService;
+import com.codecool.pantry.service.pantry.PantryService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,9 @@ public class MealPlanController {
 
     private MealPlanService mealPlanService;
     private AppUserService appUserService;
+    private PantryService pantryService;
 
-    @GetMapping("/get-all")
+    @GetMapping("/get-all/{userName}")
     public List<MealPlan> getAll() {
         return mealPlanService.getAll();
     }
@@ -33,7 +35,7 @@ public class MealPlanController {
     public String saveMealPlan(@RequestBody MealPlanDto mealPlanDto) {
         System.out.println("MEALPLAN CONTROLLER");
         System.out.println(mealPlanDto.getDate());
-        mealPlanService.saveMealPlan(mealPlanDto);
+        pantryService.saveMealPlan(mealPlanDto);
         return "Meal Plan saved!";
     }
 

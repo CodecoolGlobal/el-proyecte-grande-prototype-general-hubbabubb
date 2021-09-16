@@ -37,54 +37,6 @@ export default function MealPlanListItem(props) {
     const classes = useStyles();
 
 
-    // let [liked, setLiked] = useState(false);
-    // let [disliked, setDisliked] = useState(false);
-    // let [likeClick, setLikeClick] = useState(false);
-    // let [dislikeClick, setDislikeClick] = useState(false);
-
-    // const [likeCount, setLikeCount] = useState(null);
-    // const [dislikeCount, setDislikeCount] = useState(null);
-    //
-    // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/like-count/${props.id}`, (data) => {
-    //                 setLikeCount(data);
-    //             }, (error) => {console.log(error)})
-    // }, [likeCount])
-    //
-    // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike-count/${props.id}}`, (data) => {
-    //         setDislikeCount(data);
-    //     }, (error) => {console.log(error)})
-    // }, [dislikeCount])
-
-
-    // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userEmail}`, (data) => {
-    //         console.log(data);
-    //     }, (error) => {console.log(error)})
-    //     setLiked(!liked)
-    // }, [likeClick])
-    //
-    // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike/${props.id}/${userEmail}`, (data) => {
-    //         console.log(data);
-    //     }, (error) => {console.log(error)})
-    //     setDisliked(!disliked)
-    // }, [dislikeClick])
-    //
-    // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/like-checked/${props.id}/${userEmail}`, (data) => {
-    //         setLiked(data)
-    //     }, (error) => {console.log(error)})
-    // }, [liked])
-    //
-    // useEffect(() => {
-    //     getFetchWithAuth(`${hostName}/api/v1/meal-plan/dislike-checked/${props.id}/${userEmail}`, (data) => {
-    //         setDisliked(data)
-    //     }, (error) => {console.log(error)})
-    // }, [disliked])
-
-
     return (
         <Card className={classes.root}>
             <CardHeader>
@@ -116,7 +68,7 @@ export default function MealPlanListItem(props) {
                                                    checkedIcon={<Favorite/>}
                                                    // onClick={setLikeClick(!likeClick)}
                                                    name="checkedLike"/>}
-                                label={likeCount}
+                                // label={likeCount}
                             />
                             <FormControlLabel
                                 control={<Checkbox
@@ -125,7 +77,7 @@ export default function MealPlanListItem(props) {
                                                    checkedIcon={<ThumbDownIcon/>}
                                                    // onClick={setDislikeClick(!dislikeClick)}
                                                    name="checkedDislike"/>}
-                                label={dislikeCount}
+                                // label={dislikeCount}
                             />
                         </span>
                     </div>

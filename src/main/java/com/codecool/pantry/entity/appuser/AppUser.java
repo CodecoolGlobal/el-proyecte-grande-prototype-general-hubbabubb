@@ -3,6 +3,7 @@ package com.codecool.pantry.entity.appuser;
 import com.codecool.pantry.entity.mealplan.MealPlan;
 import com.codecool.pantry.entity.pantry.Pantry;
 import com.codecool.pantry.entity.recipe.Recipe;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,8 +52,9 @@ public class AppUser implements UserDetails {
     )
     private String password;
 
+    @JsonManagedReference
     @OneToMany
-    private Set<MealPlan> sharedMealPlans;
+    private Set<MealPlan> sharedMealPlans = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private AppUserRole role = AppUserRole.FREE;
